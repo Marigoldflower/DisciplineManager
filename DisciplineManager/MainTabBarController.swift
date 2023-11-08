@@ -9,20 +9,21 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     
+    private let home = UINavigationController(rootViewController: HomeController())
+    private let motivation = UINavigationController(rootViewController: MotivationController())
+    private let achievement = UINavigationController(rootViewController: AchievementController())
+    private let deviceBlock = UINavigationController(rootViewController: DeviceBlockController())
+    private let setting = UINavigationController(rootViewController: SettingController())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setTabBarElements()
         setTabBarColor()
         setTabBarImage()
+        setTabBarName()
     }
     
     private func setTabBarElements() {
-        let home = UINavigationController(rootViewController: HomeController())
-        let motivation = UINavigationController(rootViewController: MotivationController())
-        let achievement = UINavigationController(rootViewController: AchievementController())
-        let deviceBlock = UINavigationController(rootViewController: DeviceBlockController())
-        let setting = UINavigationController(rootViewController: SettingController())
-        
         viewControllers = [home, motivation, achievement, deviceBlock, setting]
     }
     
@@ -42,6 +43,14 @@ final class MainTabBarController: UITabBarController {
         items[2].image = UIImage(systemName: "trophy.fill")
         items[3].image = UIImage(systemName: "exclamationmark.octagon.fill")
         items[4].image = UIImage(systemName: "gearshape.fill")
+    }
+    
+    private func setTabBarName() {
+        home.title = "홈"
+        motivation.title = "동기부여"
+        achievement.title = "나의 성취"
+        deviceBlock.title = "디지털 디톡스"
+        setting.title = "설정"
     }
     
 }
