@@ -20,6 +20,9 @@
 		EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */; };
 		EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF074B2AFA3E8E0000CD2E /* SettingController.swift */; };
 		EACF074E2AFB451A0000CD2E /* ViewDrawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF074D2AFB451A0000CD2E /* ViewDrawable.swift */; };
+		EACF07542AFB68E00000CD2E /* LINESeedKR-Th.otf in Resources */ = {isa = PBXBuildFile; fileRef = EACF07512AFB68E00000CD2E /* LINESeedKR-Th.otf */; };
+		EACF07552AFB68E00000CD2E /* LINESeedKR-Rg.otf in Resources */ = {isa = PBXBuildFile; fileRef = EACF07522AFB68E00000CD2E /* LINESeedKR-Rg.otf */; };
+		EACF07562AFB68E00000CD2E /* LINESeedKR-Bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceBlockController.swift; sourceTree = "<group>"; };
 		EACF074B2AFA3E8E0000CD2E /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		EACF074D2AFB451A0000CD2E /* ViewDrawable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDrawable.swift; sourceTree = "<group>"; };
+		EACF07512AFB68E00000CD2E /* LINESeedKR-Th.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LINESeedKR-Th.otf"; path = "../../../../../Downloads/LINE_SeedKR_2023.09.06/OTF/LINESeedKR-Th.otf"; sourceTree = "<group>"; };
+		EACF07522AFB68E00000CD2E /* LINESeedKR-Rg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LINESeedKR-Rg.otf"; path = "../../../../../Downloads/LINE_SeedKR_2023.09.06/OTF/LINESeedKR-Rg.otf"; sourceTree = "<group>"; };
+		EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LINESeedKR-Bd.otf"; path = "../../../../../Downloads/LINE_SeedKR_2023.09.06/OTF/LINESeedKR-Bd.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */,
+				EACF07502AFB68AD0000CD2E /* Fonts */,
 				EACF074F2AFB45F70000CD2E /* Helpers */,
 				EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */,
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
@@ -115,6 +122,16 @@
 				EACF074D2AFB451A0000CD2E /* ViewDrawable.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		EACF07502AFB68AD0000CD2E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */,
+				EACF07522AFB68E00000CD2E /* LINESeedKR-Rg.otf */,
+				EACF07512AFB68E00000CD2E /* LINESeedKR-Th.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +197,9 @@
 				EACF073C2AFA25B00000CD2E /* LaunchScreen.storyboard in Resources */,
 				EACF07392AFA25B00000CD2E /* Assets.xcassets in Resources */,
 				EACF07372AFA25AC0000CD2E /* Main.storyboard in Resources */,
+				EACF07562AFB68E00000CD2E /* LINESeedKR-Bd.otf in Resources */,
+				EACF07542AFB68E00000CD2E /* LINESeedKR-Th.otf in Resources */,
+				EACF07552AFB68E00000CD2E /* LINESeedKR-Rg.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
