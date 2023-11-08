@@ -9,21 +9,31 @@
 /* Begin PBXBuildFile section */
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
-		EACF07342AFA25AC0000CD2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* ViewController.swift */; };
+		EACF07342AFA25AC0000CD2E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* HomeController.swift */; };
 		EACF07372AFA25AC0000CD2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EACF07352AFA25AC0000CD2E /* Main.storyboard */; };
 		EACF07392AFA25B00000CD2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACF07382AFA25B00000CD2E /* Assets.xcassets */; };
 		EACF073C2AFA25B00000CD2E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EACF073A2AFA25B00000CD2E /* LaunchScreen.storyboard */; };
+		EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07432AFA26D00000CD2E /* MainTabBarController.swift */; };
+		EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07452AFA3E030000CD2E /* MotivationController.swift */; };
+		EACF07482AFA3E310000CD2E /* AchievementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07472AFA3E310000CD2E /* AchievementController.swift */; };
+		EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */; };
+		EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF074B2AFA3E8E0000CD2E /* SettingController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EACF07332AFA25AC0000CD2E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EACF07332AFA25AC0000CD2E /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		EACF07362AFA25AC0000CD2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EACF07382AFA25B00000CD2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EACF073B2AFA25B00000CD2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EACF073D2AFA25B00000CD2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EACF07432AFA26D00000CD2E /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		EACF07452AFA3E030000CD2E /* MotivationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationController.swift; sourceTree = "<group>"; };
+		EACF07472AFA3E310000CD2E /* AchievementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementController.swift; sourceTree = "<group>"; };
+		EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceBlockController.swift; sourceTree = "<group>"; };
+		EACF074B2AFA3E8E0000CD2E /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +68,12 @@
 			children = (
 				EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */,
 				EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */,
-				EACF07332AFA25AC0000CD2E /* ViewController.swift */,
+				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
+				EACF07332AFA25AC0000CD2E /* HomeController.swift */,
+				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
+				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
+				EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */,
+				EACF074B2AFA3E8E0000CD2E /* SettingController.swift */,
 				EACF07352AFA25AC0000CD2E /* Main.storyboard */,
 				EACF07382AFA25B00000CD2E /* Assets.xcassets */,
 				EACF073A2AFA25B00000CD2E /* LaunchScreen.storyboard */,
@@ -138,8 +153,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EACF07342AFA25AC0000CD2E /* ViewController.swift in Sources */,
+				EACF07342AFA25AC0000CD2E /* HomeController.swift in Sources */,
 				EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */,
+				EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */,
+				EACF07482AFA3E310000CD2E /* AchievementController.swift in Sources */,
+				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
+				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
+				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
