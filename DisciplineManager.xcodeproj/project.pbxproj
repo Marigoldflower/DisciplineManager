@@ -25,6 +25,7 @@
 		EACF07562AFB68E00000CD2E /* LINESeedKR-Bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */; };
 		EAE6696A2AFB71A200E1C378 /* HomeControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */; };
 		EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6696B2AFB743B00E1C378 /* Bindable.swift */; };
+		EAE669722AFCC5C700E1C378 /* CustomFullCalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE669712AFCC5C700E1C378 /* CustomFullCalendarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LINESeedKR-Bd.otf"; path = "../../../../../Downloads/LINE_SeedKR_2023.09.06/OTF/LINESeedKR-Bd.otf"; sourceTree = "<group>"; };
 		EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerViewModel.swift; sourceTree = "<group>"; };
 		EAE6696B2AFB743B00E1C378 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		EAE669712AFCC5C700E1C378 /* CustomFullCalendarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFullCalendarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			children = (
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
 				EACF07332AFA25AC0000CD2E /* HomeController.swift */,
+				EAE669712AFCC5C700E1C378 /* CustomFullCalendarController.swift */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
 				EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */,
@@ -284,6 +287,7 @@
 			files = (
 				EACF074E2AFB451A0000CD2E /* ViewDrawable.swift in Sources */,
 				EACF07342AFA25AC0000CD2E /* HomeController.swift in Sources */,
+				EAE669722AFCC5C700E1C378 /* CustomFullCalendarController.swift in Sources */,
 				EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */,
 				EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */,
 				EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */,

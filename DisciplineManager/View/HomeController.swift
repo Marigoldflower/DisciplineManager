@@ -75,12 +75,16 @@ extension HomeController: Bindable {
             .distinctUntilChanged()
             .map { $0 }
             .subscribe { [weak self] value in
-                
                 if value {
-                    
+                    self?.presentFullCalendar()
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func presentFullCalendar() {
+        let customFullCalendarController = CustomFullCalendarController()
+        self.present(customFullCalendarController, animated: true, completion: nil)
     }
 }
 
