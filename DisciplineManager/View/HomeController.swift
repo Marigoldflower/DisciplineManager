@@ -83,9 +83,37 @@ extension HomeController: Bindable {
     }
     
     private func presentFullCalendar() {
-        let customFullCalendarController = CustomFullCalendarController()
-        self.present(customFullCalendarController, animated: true, completion: nil)
+        let customFullCalendarView: CustomFullCalendarView = {
+            let view = CustomFullCalendarView()
+            view.layer.cornerRadius = 10
+            view.clipsToBounds = true
+            return view
+        }()
+        
+        self.view.addSubview(customFullCalendarView)
+        
+        customFullCalendarView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading).offset(10)
+            make.trailing.equalTo(view.snp.trailing).offset(-10)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            make.height.equalTo(self.view.frame.height / 2)
+        }
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.backgroundColor = UIColor.systemGray4
+        }
+        
+        UIView.animate(withDuration: 0.5) {
+            customFullCalendarView.snp.makeConstraints { make in
+                make.leading.equalTo(self.view.snp.leading).offset(10)
+                make.trailing.equalTo(self.view.snp.trailing).offset(-10)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+                make.height.equalTo(self.view.frame.height / 2)
+            }
+        }
     }
+    
+    
 }
 
 extension HomeController: ViewDrawable {
@@ -165,3 +193,4 @@ extension HomeController: ViewDrawable {
 extension HomeController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     
 }
+
