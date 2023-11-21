@@ -11,6 +11,11 @@ import SnapKit
 import ReactorKit
 import RxCocoa
 
+protocol DateSelectedDelegate: AnyObject {
+    func dateSelected(_ date: Date)
+}
+
+
 final class HomeController: UIViewController, View {
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
@@ -83,34 +88,9 @@ extension HomeController: Bindable {
     }
     
     private func presentFullCalendar() {
-        let customFullCalendarView: CustomFullCalendarView = {
-            let view = CustomFullCalendarView()
-            view.layer.cornerRadius = 10
-            view.clipsToBounds = true
-            return view
-        }()
-        
-        self.view.addSubview(customFullCalendarView)
-        
-        customFullCalendarView.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading).offset(10)
-            make.trailing.equalTo(view.snp.trailing).offset(-10)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-            make.height.equalTo(self.view.frame.height / 2)
-        }
-        
-        UIView.animate(withDuration: 0.5) {
-            self.view.backgroundColor = UIColor.systemGray4
-        }
-        
-        UIView.animate(withDuration: 0.5) {
-            customFullCalendarView.snp.makeConstraints { make in
-                make.leading.equalTo(self.view.snp.leading).offset(10)
-                make.trailing.equalTo(self.view.snp.trailing).offset(-10)
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-                make.height.equalTo(self.view.frame.height / 2)
-            }
-        }
+        let calendarSheetController = CalendarSheetController()
+        calendarSheetController.delegate = self
+        self.present(calendarSheetController, animated: true)
     }
     
     
@@ -122,7 +102,6 @@ extension HomeController: ViewDrawable {
         setBackgroundColor()
         setAutolayout()
         setCalendarUI()
-        setCalendarDelegate()
     }
     
     func setBackgroundColor() {
@@ -181,16 +160,13 @@ extension HomeController: ViewDrawable {
         calendar.appearance.titleFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
         calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Regular", size: 15.0)
     }
-    
-    // MARK: - delegate 구현부
-    private func setCalendarDelegate() {
-        calendar.delegate = self
-        calendar.dataSource = self
+}
+
+extension HomeController: DateSelectedDelegate {
+    func dateSelected(_ date: Date) {
+        calendar.today = nil
+        calendar.setCurrentPage(date, animated: true)
+        calendar.select(date)
+        calendar.appearance.selectionColor = .pur
     }
-    
 }
-
-extension HomeController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
-    
-}
-

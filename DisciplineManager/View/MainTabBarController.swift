@@ -17,6 +17,10 @@ final class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setTabBarSettings()
+    }
+    
+    private func setTabBarSettings() {
         setTabBarElements()
         setTabBarColor()
         setTabBarImage()
