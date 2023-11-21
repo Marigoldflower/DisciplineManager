@@ -167,6 +167,6 @@ extension HomeController: DateSelectedDelegate {
         calendar.today = nil
         calendar.setCurrentPage(date, animated: true)
         calendar.select(date)
-        calendar.appearance.selectionColor = .pur
+        calendar.appearance.selectionColor = .systemPurple
     }
 }
