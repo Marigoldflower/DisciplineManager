@@ -1,0 +1,151 @@
+//
+//  CalendarCheckView.swift
+//  DisciplineManager
+//
+//  Created by 황홍필 on 2023/11/22.
+//
+
+import UIKit
+import FSCalendar
+import SnapKit
+
+final class HomeHeaderView: UIView {
+    
+    // MARK: - Data Receiver
+    var selectedDate: Date?
+    
+    // MARK: - UI Components
+    let calendar = FSCalendar()
+    
+    let setDateButton_TextVersion: UIButton = {
+        let button = UIButton()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월"
+        let currentYearsAndMonths = formatter.string(from: Date())
+        button.setTitle(currentYearsAndMonths, for: .normal)
+        button.titleLabel?.font = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
+        button.setTitleColor(.systemGray, for: .normal)
+        return button
+    }()
+    
+    let setDateButton_ImageVersion: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "calendar"), for: .normal)
+        button.tintColor = .systemGray
+        return button
+    }()
+    
+    // MARK: - StackView
+    private lazy var dateButtonStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [setDateButton_TextVersion, setDateButton_ImageVersion])
+        stack.axis = .horizontal
+        stack.spacing = 4
+        return stack
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
+
+extension HomeHeaderView: ViewDrawable {
+    func configureUI() {
+        setBackgroundColor()
+        setAutolayout()
+        setCalendarUI()
+        setCalendarDelegate()
+    }
+    
+    func setBackgroundColor() {
+        self.backgroundColor = .white
+    }
+    
+    func setAutolayout() {
+        [dateButtonStackView, calendar].forEach { self.addSubview($0) }
+        
+        dateButtonStackView.snp.makeConstraints { make in
+            make.leading.equalTo(self.snp.leading).offset(20)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+        }
+        
+        calendar.snp.makeConstraints { make in
+            make.leading.equalTo(self.snp.leading)
+            make.trailing.equalTo(self.snp.trailing)
+            make.top.equalTo(dateButtonStackView.snp.bottom).offset(10)
+            make.height.equalTo(240)
+        }
+    }
+    
+    // MARK: - 나머지 UI 구현부
+    private func setCalendarUI() {
+        setCalendarTextColor()
+        hideCalendarText()
+        setCalendarAsWeek()
+        setCalendarFonts()
+        setCalendarTextBackgroundColor()
+    }
+    
+    private func setCalendarTextColor() {
+        calendar.appearance.titleDefaultColor = .black
+        calendar.appearance.titleWeekendColor = .systemPink
+        calendar.appearance.headerTitleColor = .systemPink
+        calendar.appearance.weekdayTextColor = .orange
+    }
+    
+    private func hideCalendarText() {
+        hideCalendarHeaderSideText()
+        hideCalendarHeaderTitleText()
+    }
+    
+    private func hideCalendarHeaderSideText() {
+        calendar.appearance.headerMinimumDissolvedAlpha = 0
+    }
+    
+    private func hideCalendarHeaderTitleText() {
+        calendar.headerHeight = 0
+    }
+    
+    private func setCalendarAsWeek() {
+        calendar.scope = .week
+    }
+    
+    private func setCalendarFonts() {
+        calendar.appearance.titleFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
+        calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Regular", size: 15.0)
+    }
+    
+    private func setCalendarTextBackgroundColor() {
+        calendar.appearance.todayColor = .systemOrange
+        calendar.appearance.selectionColor = .systemPurple
+    }
+    
+    // MARK: - Delegate
+    private func setCalendarDelegate() {
+        calendar.delegate = self
+    }
+}
+
+extension HomeHeaderView: FSCalendarDelegate, FSCalendarDelegateAppearance {
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        setTodayColorsIfOtherDateIsSelected()
+        setSelectionColorOnTodayAndOtherDate(date: date)
+    }
+    
+    private func setTodayColorsIfOtherDateIsSelected() {
+        calendar.appearance.todayColor = .white
+        calendar.appearance.titleTodayColor = .systemOrange
+    }
+    
+    private func setSelectionColorOnTodayAndOtherDate(date: Date) {
+        if Calendar.current.isDate(date, inSameDayAs: Date()) {
+            calendar.appearance.selectionColor = .systemOrange
+        } else {
+            calendar.appearance.selectionColor = .systemPurple
+        }
+    }
+}

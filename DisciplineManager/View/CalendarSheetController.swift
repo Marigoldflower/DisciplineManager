@@ -53,6 +53,7 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
         super.viewDidLoad()
         configureUI()
         reactor = CalendarSheetViewModel()
+        storePreviousSelectedDate()
     }
 }
 
@@ -152,6 +153,7 @@ extension CalendarSheetController: ViewDrawable {
         hideCalendarText()
         setCalendarAsWeek()
         setCalendarFonts()
+        setCalendarTextBackgroundColor()
     }
     
     private func setCalendarTextColor() {
@@ -179,6 +181,17 @@ extension CalendarSheetController: ViewDrawable {
         calendar.appearance.headerTitleFont = UIFont(name: "LINESeedSansKR-Bold", size: 17.0)
     }
     
+    private func setCalendarTextBackgroundColor() {
+        calendar.appearance.todayColor = .systemOrange
+        calendar.appearance.selectionColor = .systemPurple
+    }
+    
+    private func storePreviousSelectedDate() {
+        if let selectedDate = selectedDate {
+            calendar.select(selectedDate)
+        }
+    }
+    
     // MARK: - Delegate
     private func setCalendarDelegate() {
         calendar.delegate = self
@@ -187,6 +200,23 @@ extension CalendarSheetController: ViewDrawable {
 
 extension CalendarSheetController: FSCalendarDelegate, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print("CalendarSheet 선택된 날짜는 \(date)")
         self.selectedDate = date
+        
+        setTodayColorsIfOtherDateIsSelected()
+        setSelectionColorOnTodayAndOtherDate(date: date)
+    }
+    
+    private func setTodayColorsIfOtherDateIsSelected() {
+        calendar.appearance.todayColor = .white
+        calendar.appearance.titleTodayColor = .systemOrange
+    }
+    
+    private func setSelectionColorOnTodayAndOtherDate(date: Date) {
+        if Calendar.current.isDate(date, inSameDayAs: Date()) {
+            calendar.appearance.selectionColor = .systemOrange
+        } else {
+            calendar.appearance.selectionColor = .systemPurple
+        }
     }
 }

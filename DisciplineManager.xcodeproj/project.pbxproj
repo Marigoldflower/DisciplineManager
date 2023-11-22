@@ -25,6 +25,8 @@
 		EACF07562AFB68E00000CD2E /* LINESeedKR-Bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */; };
 		EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */; };
 		EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */; };
+		EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */; };
+		EADB7B1E2B0DB47B005015B8 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1D2B0DB47B005015B8 /* HomeHeaderView.swift */; };
 		EAE6696A2AFB71A200E1C378 /* HomeControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */; };
 		EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6696B2AFB743B00E1C378 /* Bindable.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +54,8 @@
 		EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LINESeedKR-Bd.otf"; path = "../../../../../Downloads/LINE_SeedKR_2023.09.06/OTF/LINESeedKR-Bd.otf"; sourceTree = "<group>"; };
 		EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetController.swift; sourceTree = "<group>"; };
 		EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetViewModel.swift; sourceTree = "<group>"; };
+		EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
+		EADB7B1D2B0DB47B005015B8 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerViewModel.swift; sourceTree = "<group>"; };
 		EAE6696B2AFB743B00E1C378 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,16 +144,26 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		EADB7B1C2B0DB361005015B8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		EAE669662AFB715C00E1C378 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
+				EADB7B1D2B0DB47B005015B8 /* HomeHeaderView.swift */,
 				EACF07332AFA25AC0000CD2E /* HomeController.swift */,
 				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
 				EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */,
 				EACF074B2AFA3E8E0000CD2E /* SettingController.swift */,
+				EADB7B1C2B0DB361005015B8 /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -294,8 +308,10 @@
 				EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */,
 				EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */,
 				EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */,
+				EADB7B1E2B0DB47B005015B8 /* HomeHeaderView.swift in Sources */,
 				EACF07482AFA3E310000CD2E /* AchievementController.swift in Sources */,
 				EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */,
+				EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */,
 				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
 				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,

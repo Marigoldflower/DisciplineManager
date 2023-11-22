@@ -15,38 +15,20 @@ protocol DateSelectedDelegate: AnyObject {
     func dateSelected(_ date: Date)
 }
 
-
 final class HomeController: UIViewController, View {
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
     
     // MARK: - UI Components
-    private let calendar = FSCalendar()
-    
-    private let setDateButton_TextVersion: UIButton = {
-        let button = UIButton()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월"
-        let currentYearsAndMonths = formatter.string(from: Date())
-        button.setTitle(currentYearsAndMonths, for: .normal)
-        button.titleLabel?.font = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
-        button.setTitleColor(.systemGray, for: .normal)
-        return button
+    private let homeHeaderView: HomeHeaderView = {
+        let view = HomeHeaderView()
+        return view
     }()
     
-    private let setDateButton_ImageVersion: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "calendar"), for: .normal)
-        button.tintColor = .systemGray
-        return button
-    }()
-    
-    // MARK: - StackView
-    private lazy var dateButtonStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [setDateButton_TextVersion, setDateButton_ImageVersion])
-        stack.axis = .horizontal
-        stack.spacing = 4
-        return stack
+    private lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
+        return table
     }()
     
     override func viewDidLoad() {
@@ -63,12 +45,12 @@ extension HomeController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
-        setDateButton_TextVersion.rx.tap
+        homeHeaderView.setDateButton_TextVersion.rx.tap
             .map { HomeControllerViewModel.Action.setDateButton_TextVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        setDateButton_ImageVersion.rx.tap
+        homeHeaderView.setDateButton_ImageVersion.rx.tap
             .map { HomeControllerViewModel.Action.setDateButton_ImageVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -90,6 +72,7 @@ extension HomeController: Bindable {
     private func presentFullCalendar() {
         let calendarSheetController = CalendarSheetController()
         calendarSheetController.delegate = self
+        calendarSheetController.selectedDate = homeHeaderView.selectedDate
         self.present(calendarSheetController, animated: true)
     }
     
@@ -101,7 +84,6 @@ extension HomeController: ViewDrawable {
     func configureUI() {
         setBackgroundColor()
         setAutolayout()
-        setCalendarUI()
     }
     
     func setBackgroundColor() {
@@ -109,64 +91,43 @@ extension HomeController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [dateButtonStackView, calendar].forEach { view.addSubview($0) }
+        [homeHeaderView, tableView].forEach { view.addSubview($0) }
         
-        dateButtonStackView.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading).offset(20)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-10)
-        }
-        
-        calendar.snp.makeConstraints { make in
+        homeHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
-            make.top.equalTo(dateButtonStackView.snp.bottom).offset(10)
-            make.height.equalTo(240)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(250)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalTo(homeHeaderView.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     
-    // MARK: - 나머지 UI 구현부
-    private func setCalendarUI() {
-        setCalendarTextColor()
-        hideCalendarText()
-        setCalendarAsWeek()
-        setCalendarFonts()
-    }
-    
-    private func setCalendarTextColor() {
-        calendar.appearance.titleDefaultColor = .black
-        calendar.appearance.titleWeekendColor = .systemPink
-        calendar.appearance.headerTitleColor = .systemPink
-        calendar.appearance.weekdayTextColor = .orange
-    }
-    
-    private func hideCalendarText() {
-        hideCalendarHeaderSideText()
-        hideCalendarHeaderTitleText()
-    }
-    
-    private func hideCalendarHeaderSideText() {
-        calendar.appearance.headerMinimumDissolvedAlpha = 0
-    }
-    
-    private func hideCalendarHeaderTitleText() {
-        calendar.headerHeight = 0
-    }
-    
-    private func setCalendarAsWeek() {
-        calendar.scope = .week
-    }
-    
-    private func setCalendarFonts() {
-        calendar.appearance.titleFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
-        calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Regular", size: 15.0)
-    }
 }
 
 extension HomeController: DateSelectedDelegate {
     func dateSelected(_ date: Date) {
-        calendar.today = nil
-        calendar.setCurrentPage(date, animated: true)
-        calendar.select(date)
-        calendar.appearance.selectionColor = .systemPurple
+        homeHeaderView.calendar.setCurrentPage(date, animated: true)
+        homeHeaderView.calendar.select(date)
+        setTodayColorsIfOtherDateIsSelected()
+        setSelectionColorOnTodayAndOtherDate(date: date)
+    }
+    
+    private func setTodayColorsIfOtherDateIsSelected() {
+        homeHeaderView.calendar.appearance.todayColor = .white
+        homeHeaderView.calendar.appearance.titleTodayColor = .systemOrange
+    }
+    
+    private func setSelectionColorOnTodayAndOtherDate(date: Date) {
+        if Calendar.current.isDate(date, inSameDayAs: Date()) {
+            homeHeaderView.calendar.appearance.selectionColor = .systemOrange
+        } else {
+            homeHeaderView.calendar.appearance.selectionColor = .systemPurple
+        }
     }
 }
