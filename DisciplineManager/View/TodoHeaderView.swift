@@ -9,7 +9,7 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-final class HomeHeaderView: UIView {
+final class TodoHeaderView: UIView {
     
     // MARK: - Data Receiver
     var selectedDate: Date?
@@ -53,7 +53,7 @@ final class HomeHeaderView: UIView {
     }
 }
 
-extension HomeHeaderView: ViewDrawable {
+extension TodoHeaderView: ViewDrawable {
     func configureUI() {
         setBackgroundColor()
         setAutolayout()
@@ -130,7 +130,7 @@ extension HomeHeaderView: ViewDrawable {
     }
 }
 
-extension HomeHeaderView: FSCalendarDelegate, FSCalendarDelegateAppearance {
+extension TodoHeaderView: FSCalendarDelegate, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         setTodayColorsIfOtherDateIsSelected()
         setSelectionColorOnTodayAndOtherDate(date: date)

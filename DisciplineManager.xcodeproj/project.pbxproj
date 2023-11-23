@@ -10,7 +10,7 @@
 		A990A680E36039286119C647 /* Pods_DisciplineManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4C05F3C9A96D99F167C603 /* Pods_DisciplineManager.framework */; };
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
-		EACF07342AFA25AC0000CD2E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* HomeController.swift */; };
+		EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* TodoController.swift */; };
 		EACF07372AFA25AC0000CD2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EACF07352AFA25AC0000CD2E /* Main.storyboard */; };
 		EACF07392AFA25B00000CD2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EACF07382AFA25B00000CD2E /* Assets.xcassets */; };
 		EACF073C2AFA25B00000CD2E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EACF073A2AFA25B00000CD2E /* LaunchScreen.storyboard */; };
@@ -26,8 +26,9 @@
 		EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */; };
 		EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */; };
 		EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */; };
-		EADB7B1E2B0DB47B005015B8 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1D2B0DB47B005015B8 /* HomeHeaderView.swift */; };
-		EAE6696A2AFB71A200E1C378 /* HomeControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */; };
+		EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */; };
+		EADB7B202B0E0C9E005015B8 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */; };
+		EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE669692AFB71A200E1C378 /* TodoViewModel.swift */; };
 		EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6696B2AFB743B00E1C378 /* Bindable.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +39,7 @@
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EACF07332AFA25AC0000CD2E /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		EACF07332AFA25AC0000CD2E /* TodoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoController.swift; sourceTree = "<group>"; };
 		EACF07362AFA25AC0000CD2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EACF07382AFA25B00000CD2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EACF073B2AFA25B00000CD2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,8 +56,9 @@
 		EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetController.swift; sourceTree = "<group>"; };
 		EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetViewModel.swift; sourceTree = "<group>"; };
 		EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
-		EADB7B1D2B0DB47B005015B8 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
-		EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerViewModel.swift; sourceTree = "<group>"; };
+		EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHeaderView.swift; sourceTree = "<group>"; };
+		EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
+		EAE669692AFB71A200E1C378 /* TodoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewModel.swift; sourceTree = "<group>"; };
 		EAE6696B2AFB743B00E1C378 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,8 +158,8 @@
 			isa = PBXGroup;
 			children = (
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
-				EADB7B1D2B0DB47B005015B8 /* HomeHeaderView.swift */,
-				EACF07332AFA25AC0000CD2E /* HomeController.swift */,
+				EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */,
+				EACF07332AFA25AC0000CD2E /* TodoController.swift */,
 				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
@@ -171,7 +173,7 @@
 		EAE669672AFB717100E1C378 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				EAE669692AFB71A200E1C378 /* HomeControllerViewModel.swift */,
+				EAE669692AFB71A200E1C378 /* TodoViewModel.swift */,
 				EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */,
 			);
 			path = ViewModel;
@@ -180,6 +182,7 @@
 		EAE669682AFB717900E1C378 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -303,12 +306,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EACF074E2AFB451A0000CD2E /* ViewDrawable.swift in Sources */,
-				EACF07342AFA25AC0000CD2E /* HomeController.swift in Sources */,
+				EADB7B202B0E0C9E005015B8 /* TodoModel.swift in Sources */,
+				EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */,
 				EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */,
 				EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */,
 				EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */,
 				EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */,
-				EADB7B1E2B0DB47B005015B8 /* HomeHeaderView.swift in Sources */,
+				EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */,
 				EACF07482AFA3E310000CD2E /* AchievementController.swift in Sources */,
 				EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */,
 				EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */,
@@ -316,7 +320,7 @@
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
 				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
-				EAE6696A2AFB71A200E1C378 /* HomeControllerViewModel.swift in Sources */,
+				EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

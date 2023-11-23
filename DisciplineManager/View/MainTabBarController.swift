@@ -9,7 +9,7 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     
-    private let home = UINavigationController(rootViewController: HomeController())
+    private let home = UINavigationController(rootViewController: TodoController())
     private let motivation = UINavigationController(rootViewController: MotivationController())
     private let achievement = UINavigationController(rootViewController: AchievementController())
     private let deviceBlock = UINavigationController(rootViewController: DeviceBlockController())

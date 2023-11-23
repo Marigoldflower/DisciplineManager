@@ -9,19 +9,23 @@ import UIKit
 import FSCalendar
 import SnapKit
 import ReactorKit
+import RxRelay
 import RxCocoa
 
 protocol DateSelectedDelegate: AnyObject {
     func dateSelected(_ date: Date)
 }
 
-final class HomeController: UIViewController, View {
+final class TodoController: UIViewController, View {
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
     
+    // MARK: - ViewModel
+    let todoViewModel = TodoViewModel()
+    
     // MARK: - UI Components
-    private let homeHeaderView: HomeHeaderView = {
-        let view = HomeHeaderView()
+    private let todoHeaderView: TodoHeaderView = {
+        let view = TodoHeaderView()
         return view
     }()
     
@@ -34,24 +38,44 @@ final class HomeController: UIViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        reactor = HomeControllerViewModel()
+        getTodoList()
+        reactor = TodoViewModel()
+    }
+    
+    private func getTodoList() {
+        todoViewModel.getTodoList()
+        
+        todoViewModel.todo.asObservable()
+            .bind(to: tableView.rx.items(cellIdentifier: HomeCell.identifier, cellType: HomeCell.self)) { index, element, cell in
+                cell.timeLabel.text = element.time
+                cell.iconButton.setImage(element.iconImage, for: .normal)
+                cell.whatToDo.setTitle(element.whatToDo, for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
+        todoViewModel.todoObserver
+            .observe(on: MainScheduler.instance)
+            .subscribe { _ in
+                self.tableView.reloadData()
+            }
+            .disposed(by: disposeBag)
     }
 }
 
-extension HomeController: Bindable {
-    func bind(reactor: HomeControllerViewModel) {
+extension TodoController: Bindable {
+    func bind(reactor: TodoViewModel) {
         bindAction(reactor)
         bindState(reactor)
     }
     
     func bindAction(_ reactor: Reactor) {
-        homeHeaderView.setDateButton_TextVersion.rx.tap
-            .map { HomeControllerViewModel.Action.setDateButton_TextVersionTapped }
+        todoHeaderView.setDateButton_TextVersion.rx.tap
+            .map { TodoViewModel.Action.setDateButton_TextVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        homeHeaderView.setDateButton_ImageVersion.rx.tap
-            .map { HomeControllerViewModel.Action.setDateButton_ImageVersionTapped }
+        todoHeaderView.setDateButton_ImageVersion.rx.tap
+            .map { TodoViewModel.Action.setDateButton_ImageVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -72,14 +96,12 @@ extension HomeController: Bindable {
     private func presentFullCalendar() {
         let calendarSheetController = CalendarSheetController()
         calendarSheetController.delegate = self
-        calendarSheetController.selectedDate = homeHeaderView.selectedDate
+        calendarSheetController.selectedDate = todoHeaderView.selectedDate
         self.present(calendarSheetController, animated: true)
     }
-    
-    
 }
 
-extension HomeController: ViewDrawable {
+extension TodoController: ViewDrawable {
     // MARK: - protocol 구현부
     func configureUI() {
         setBackgroundColor()
@@ -91,43 +113,42 @@ extension HomeController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [homeHeaderView, tableView].forEach { view.addSubview($0) }
+        [todoHeaderView, tableView].forEach { view.addSubview($0) }
         
-        homeHeaderView.snp.makeConstraints { make in
+        todoHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(250)
+            make.height.equalTo(110)
         }
         
         tableView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
-            make.top.equalTo(homeHeaderView.snp.bottom)
+            make.top.equalTo(todoHeaderView.snp.bottom)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
 }
 
-extension HomeController: DateSelectedDelegate {
+extension TodoController: DateSelectedDelegate {
     func dateSelected(_ date: Date) {
-        homeHeaderView.calendar.setCurrentPage(date, animated: true)
-        homeHeaderView.calendar.select(date)
+        todoHeaderView.calendar.setCurrentPage(date, animated: true)
+        todoHeaderView.calendar.select(date)
         setTodayColorsIfOtherDateIsSelected()
         setSelectionColorOnTodayAndOtherDate(date: date)
     }
     
     private func setTodayColorsIfOtherDateIsSelected() {
-        homeHeaderView.calendar.appearance.todayColor = .white
-        homeHeaderView.calendar.appearance.titleTodayColor = .systemOrange
+        todoHeaderView.calendar.appearance.todayColor = .white
+        todoHeaderView.calendar.appearance.titleTodayColor = .systemOrange
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            homeHeaderView.calendar.appearance.selectionColor = .systemOrange
+            todoHeaderView.calendar.appearance.selectionColor = .systemOrange
         } else {
-            homeHeaderView.calendar.appearance.selectionColor = .systemPurple
+            todoHeaderView.calendar.appearance.selectionColor = .systemPurple
         }
     }
 }

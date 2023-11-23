@@ -5,10 +5,25 @@
 //  Created by 황홍필 on 2023/11/08.
 //
 
-import Foundation
+import UIKit
 import ReactorKit
+import RxRelay
 
-final class HomeControllerViewModel: Reactor {
+final class TodoViewModel: Reactor {
+    
+    var todo = BehaviorRelay<[TodoModel]>(value: [])
+    var todoObserver: Observable<[TodoModel]> {
+        return todo.asObservable()
+    }
+    
+    func getTodoList() {
+        self.todo.accept(todoList)
+    }
+    var todoList: [TodoModel] = [
+        TodoModel(time: "오전 7:20", iconImage: UIImage(systemName: "alarm.fill"), whatToDo: "기상 시간"),
+        TodoModel(time: "오후 11:00", iconImage: UIImage(systemName: "moon.fill"), whatToDo: "잘 자요!")
+    ]
+    
     enum Action {
         case setDateButton_TextVersionTapped
         case setDateButton_ImageVersionTapped
