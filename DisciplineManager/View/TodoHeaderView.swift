@@ -9,10 +9,21 @@ import UIKit
 import FSCalendar
 import SnapKit
 
+protocol HeaderViewSelectedDateDelegate: AnyObject {
+    func sendSelectedDate(date: Date)
+}
+
 final class TodoHeaderView: UIView {
     
     // MARK: - Data Receiver
-    var selectedDate: Date?
+    var selectedDate: Date? {
+        didSet {
+            print("HeaderView SelectedDate에 들어가는 date는 \(selectedDate!)")
+        }
+    }
+    
+    // MARK: - Delegate
+    weak var delegate: HeaderViewSelectedDateDelegate?
     
     // MARK: - UI Components
     let calendar = FSCalendar()
@@ -51,6 +62,11 @@ final class TodoHeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
+    private func sendSelectedDateFromTodoHeaderViewToCalendarSheet(_ date: Date) {
+        delegate?.sendSelectedDate(date: date)
+    }
+    
 }
 
 extension TodoHeaderView: ViewDrawable {
@@ -91,9 +107,8 @@ extension TodoHeaderView: ViewDrawable {
     }
     
     private func setCalendarTextColor() {
-        calendar.appearance.titleDefaultColor = .black
-        calendar.appearance.titleWeekendColor = .systemPink
-        calendar.appearance.headerTitleColor = .systemPink
+        calendar.appearance.titleDefaultColor = .disciplineBlack
+        calendar.appearance.titleWeekendColor = .disciplineRed
         calendar.appearance.weekdayTextColor = .orange
     }
     
@@ -120,8 +135,8 @@ extension TodoHeaderView: ViewDrawable {
     }
     
     private func setCalendarTextBackgroundColor() {
-        calendar.appearance.todayColor = .systemOrange
-        calendar.appearance.selectionColor = .systemPurple
+        calendar.appearance.todayColor = .disciplineYellow
+        calendar.appearance.selectionColor = .disciplineRed
     }
     
     // MARK: - Delegate
@@ -132,20 +147,21 @@ extension TodoHeaderView: ViewDrawable {
 
 extension TodoHeaderView: FSCalendarDelegate, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        selectedDate = date
         setTodayColorsIfOtherDateIsSelected()
         setSelectionColorOnTodayAndOtherDate(date: date)
     }
     
     private func setTodayColorsIfOtherDateIsSelected() {
         calendar.appearance.todayColor = .white
-        calendar.appearance.titleTodayColor = .systemOrange
+        calendar.appearance.titleTodayColor = .disciplineYellow
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            calendar.appearance.selectionColor = .systemOrange
+            calendar.appearance.selectionColor = .disciplineYellow
         } else {
-            calendar.appearance.selectionColor = .systemPurple
+            calendar.appearance.selectionColor = .disciplineRed
         }
     }
 }

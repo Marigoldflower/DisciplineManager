@@ -17,7 +17,12 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
     var disposeBag = DisposeBag()
     
     // MARK: - Data Receiver
-    var selectedDate: Date?
+    var selectedDate: Date? {
+        didSet {
+            calendar.setCurrentPage(selectedDate ?? Date(), animated: true)
+            calendar.select(selectedDate)
+        }
+    }
     
     // MARK: - Delegate
     weak var delegate: DateSelectedDelegate?
@@ -43,7 +48,7 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
         button.setTitle("날짜 선택", for: .normal)
         button.titleLabel?.font = UIFont(name: "LINESeedSansKR-Bold", size: 18.0)
         button.titleLabel?.textColor = .white
-        button.backgroundColor = .systemOrange
+        button.backgroundColor = .disciplineYellow
         button.layer.cornerRadius = 17
         button.layer.masksToBounds = true
         return button
@@ -53,8 +58,9 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
         super.viewDidLoad()
         configureUI()
         reactor = CalendarSheetViewModel()
-        storePreviousSelectedDate()
     }
+    
+   
 }
 
 extension CalendarSheetController: Bindable {
@@ -159,7 +165,7 @@ extension CalendarSheetController: ViewDrawable {
     private func setCalendarTextColor() {
         calendar.appearance.titleDefaultColor = .black
         calendar.appearance.titleWeekendColor = .systemPink
-        calendar.appearance.headerTitleColor = .systemOrange
+        calendar.appearance.headerTitleColor = .disciplineYellow
         calendar.appearance.weekdayTextColor = .orange
     }
     
@@ -182,14 +188,8 @@ extension CalendarSheetController: ViewDrawable {
     }
     
     private func setCalendarTextBackgroundColor() {
-        calendar.appearance.todayColor = .systemOrange
-        calendar.appearance.selectionColor = .systemPurple
-    }
-    
-    private func storePreviousSelectedDate() {
-        if let selectedDate = selectedDate {
-            calendar.select(selectedDate)
-        }
+        calendar.appearance.todayColor = .disciplineYellow
+        calendar.appearance.selectionColor = .disciplineRed
     }
     
     // MARK: - Delegate
@@ -200,7 +200,6 @@ extension CalendarSheetController: ViewDrawable {
 
 extension CalendarSheetController: FSCalendarDelegate, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("CalendarSheet 선택된 날짜는 \(date)")
         self.selectedDate = date
         
         setTodayColorsIfOtherDateIsSelected()
@@ -209,14 +208,14 @@ extension CalendarSheetController: FSCalendarDelegate, FSCalendarDelegateAppeara
     
     private func setTodayColorsIfOtherDateIsSelected() {
         calendar.appearance.todayColor = .white
-        calendar.appearance.titleTodayColor = .systemOrange
+        calendar.appearance.titleTodayColor = .disciplineYellow
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            calendar.appearance.selectionColor = .systemOrange
+            calendar.appearance.selectionColor = .disciplineYellow
         } else {
-            calendar.appearance.selectionColor = .systemPurple
+            calendar.appearance.selectionColor = .disciplineRed
         }
     }
 }

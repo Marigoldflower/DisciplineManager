@@ -28,6 +28,7 @@
 		EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */; };
 		EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */; };
 		EADB7B202B0E0C9E005015B8 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */; };
+		EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B222B1860C3005015B8 /* AppColors.swift */; };
 		EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE669692AFB71A200E1C378 /* TodoViewModel.swift */; };
 		EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6696B2AFB743B00E1C378 /* Bindable.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHeaderView.swift; sourceTree = "<group>"; };
 		EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
+		EADB7B222B1860C3005015B8 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		EAE669692AFB71A200E1C378 /* TodoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewModel.swift; sourceTree = "<group>"; };
 		EAE6696B2AFB743B00E1C378 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +134,7 @@
 			children = (
 				EACF074D2AFB451A0000CD2E /* ViewDrawable.swift */,
 				EAE6696B2AFB743B00E1C378 /* Bindable.swift */,
+				EADB7B222B1860C3005015B8 /* AppColors.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */,
 				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
+				EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */,
 				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
 				EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */,

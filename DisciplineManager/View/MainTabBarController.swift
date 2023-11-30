@@ -36,7 +36,7 @@ final class MainTabBarController: UITabBarController {
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
         tabBar.backgroundColor = .white
-        tabBar.tintColor = .systemOrange
+        tabBar.tintColor = .disciplineYellow
     }
     
     private func setTabBarImage() {

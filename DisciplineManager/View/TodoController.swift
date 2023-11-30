@@ -29,6 +29,12 @@ final class TodoController: UIViewController, View {
         return view
     }()
     
+    private let divideLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray4
+        return view
+    }()
+    
     private lazy var tableView: UITableView = {
         let table = UITableView()
         table.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
@@ -38,14 +44,14 @@ final class TodoController: UIViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        getTodoList()
         reactor = TodoViewModel()
+        getTodoList()
     }
     
     private func getTodoList() {
         todoViewModel.getTodoList()
         
-        todoViewModel.todo.asObservable()
+        todoViewModel.todo
             .bind(to: tableView.rx.items(cellIdentifier: HomeCell.identifier, cellType: HomeCell.self)) { index, element, cell in
                 cell.timeLabel.text = element.time
                 cell.iconButton.setImage(element.iconImage, for: .normal)
@@ -88,6 +94,7 @@ extension TodoController: Bindable {
             .subscribe { [weak self] value in
                 if value {
                     self?.presentFullCalendar()
+                    self?.sendSelectedDateFromTodoHeaderViewToCalendarSheet()
                 }
             }
             .disposed(by: disposeBag)
@@ -98,6 +105,10 @@ extension TodoController: Bindable {
         calendarSheetController.delegate = self
         calendarSheetController.selectedDate = todoHeaderView.selectedDate
         self.present(calendarSheetController, animated: true)
+    }
+    
+    private func sendSelectedDateFromTodoHeaderViewToCalendarSheet() {
+        
     }
 }
 
@@ -113,7 +124,7 @@ extension TodoController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [todoHeaderView, tableView].forEach { view.addSubview($0) }
+        [todoHeaderView, divideLine, tableView].forEach { view.addSubview($0) }
         
         todoHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
@@ -122,10 +133,18 @@ extension TodoController: ViewDrawable {
             make.height.equalTo(110)
         }
         
-        tableView.snp.makeConstraints { make in
+        divideLine.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(todoHeaderView.snp.bottom)
+            make.bottom.equalTo(tableView.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(2)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalTo(divideLine.snp.bottom)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
@@ -135,20 +154,29 @@ extension TodoController: DateSelectedDelegate {
     func dateSelected(_ date: Date) {
         todoHeaderView.calendar.setCurrentPage(date, animated: true)
         todoHeaderView.calendar.select(date)
+        todoHeaderView.delegate = self
         setTodayColorsIfOtherDateIsSelected()
         setSelectionColorOnTodayAndOtherDate(date: date)
     }
     
     private func setTodayColorsIfOtherDateIsSelected() {
         todoHeaderView.calendar.appearance.todayColor = .white
-        todoHeaderView.calendar.appearance.titleTodayColor = .systemOrange
+        todoHeaderView.calendar.appearance.titleTodayColor = .disciplineYellow
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            todoHeaderView.calendar.appearance.selectionColor = .systemOrange
+            todoHeaderView.calendar.appearance.selectionColor = .disciplineYellow
         } else {
-            todoHeaderView.calendar.appearance.selectionColor = .systemPurple
+            todoHeaderView.calendar.appearance.selectionColor = .disciplineRed
         }
     }
+}
+
+extension TodoController: HeaderViewSelectedDateDelegate {
+    func sendSelectedDate(date: Date) {
+        
+    }
+    
+    
 }

@@ -27,6 +27,7 @@ final class HomeCell: UITableViewCell {
     let whatToDo: UIButton = {
         let button = UIButton()
         button.setTitle("", for: .normal)
+        button.setTitleColor(.systemPink, for: .normal)
         return button
     }()
     
@@ -70,7 +71,7 @@ extension HomeCell: ViewDrawable {
         }
         
         whatToDo.snp.makeConstraints { make in
-            make.leading.equalTo(whatToDo.snp.trailing).offset(10)
+            make.leading.equalTo(iconButton.snp.trailing).offset(10)
             make.centerY.equalTo(self.snp.centerY)
         }
         
