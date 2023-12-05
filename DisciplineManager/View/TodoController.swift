@@ -23,6 +23,9 @@ final class TodoController: UIViewController, View {
     // MARK: - ViewModel
     let todoViewModel = TodoViewModel()
     
+    // MARK: - Data Sender & Receiver
+    var selectedDate: Date?
+    
     // MARK: - UI Components
     private let todoHeaderView: TodoHeaderView = {
         let view = TodoHeaderView()
@@ -40,6 +43,8 @@ final class TodoController: UIViewController, View {
         table.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
         return table
     }()
+    
+    var calendarSheetController: CalendarSheetController! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,21 +99,21 @@ extension TodoController: Bindable {
             .subscribe { [weak self] value in
                 if value {
                     self?.presentFullCalendar()
-                    self?.sendSelectedDateFromTodoHeaderViewToCalendarSheet()
                 }
             }
             .disposed(by: disposeBag)
     }
     
     private func presentFullCalendar() {
-        let calendarSheetController = CalendarSheetController()
-        calendarSheetController.delegate = self
-        calendarSheetController.selectedDate = todoHeaderView.selectedDate
+        calendarSheetController = CalendarSheetController()
+        calendarSheetController.delegate = self // DateSelectedDelegate가 작동하게 하기 위한 위임자
+        todoHeaderView.delegate = self // HeaderViewSelectedDateDelegate가 작동하게 하기 위한 위임자
+        calendarSheetController.sharedDateWithHeaderView = selectedDate
         self.present(calendarSheetController, animated: true)
     }
     
-    private func sendSelectedDateFromTodoHeaderViewToCalendarSheet() {
-        
+    private func sendSelectedDateFromTodoHeaderViewToCalendarSheet(date: Date) {
+        calendarSheetController.sharedDateWithHeaderView = date
     }
 }
 
@@ -150,11 +155,11 @@ extension TodoController: ViewDrawable {
     }
 }
 
+// CalendarController로부터 받은 Date값을 HeaderView에게 넘겨주는 역할 ⭐️
 extension TodoController: DateSelectedDelegate {
     func dateSelected(_ date: Date) {
-        todoHeaderView.calendar.setCurrentPage(date, animated: true)
+        todoHeaderView.dateWhichIsSentToCalendarController = date
         todoHeaderView.calendar.select(date)
-        todoHeaderView.delegate = self
         setTodayColorsIfOtherDateIsSelected()
         setSelectionColorOnTodayAndOtherDate(date: date)
     }
@@ -173,10 +178,9 @@ extension TodoController: DateSelectedDelegate {
     }
 }
 
+// HeaderView로부터 받은 Date 값을 CalendarController에게 넘겨주는 역할 ⭐️
 extension TodoController: HeaderViewSelectedDateDelegate {
     func sendSelectedDate(date: Date) {
-        
+        self.selectedDate = date
     }
-    
-    
 }

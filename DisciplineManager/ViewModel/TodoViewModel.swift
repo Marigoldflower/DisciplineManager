@@ -19,6 +19,7 @@ final class TodoViewModel: Reactor {
     func getTodoList() {
         self.todo.accept(todoList)
     }
+    
     var todoList: [TodoModel] = [
         TodoModel(time: "오전 7:20", iconImage: UIImage(systemName: "alarm.fill"), whatToDo: "기상 시간"),
         TodoModel(time: "오후 11:00", iconImage: UIImage(systemName: "moon.fill"), whatToDo: "잘 자요!")

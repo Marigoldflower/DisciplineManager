@@ -17,10 +17,17 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
     var disposeBag = DisposeBag()
     
     // MARK: - Data Receiver
-    var selectedDate: Date? {
+    // CalendarController에서 선택한 Date
+    var selectedDate: Date?
+    
+    var sharedDateWithHeaderView: Date? {
         didSet {
-            calendar.setCurrentPage(selectedDate ?? Date(), animated: true)
-            calendar.select(selectedDate)
+            print("sharedDateWithHeaderView의 값은 현재 \(sharedDateWithHeaderView)")
+            calendar.select(sharedDateWithHeaderView)
+            if sharedDateWithHeaderView != nil {
+                setSelectionColorOnTodayAndOtherDate(date: sharedDateWithHeaderView!)
+            }
+            
         }
     }
     
@@ -59,8 +66,6 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
         configureUI()
         reactor = CalendarSheetViewModel()
     }
-    
-   
 }
 
 extension CalendarSheetController: Bindable {
@@ -219,3 +224,4 @@ extension CalendarSheetController: FSCalendarDelegate, FSCalendarDelegateAppeara
         }
     }
 }
+

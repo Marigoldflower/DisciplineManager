@@ -16,9 +16,17 @@ protocol HeaderViewSelectedDateDelegate: AnyObject {
 final class TodoHeaderView: UIView {
     
     // MARK: - Data Receiver
+    // CalendarController에서 선택한 날짜
+    var dateWhichIsSentToCalendarController: Date? {
+        didSet {
+            delegate?.sendSelectedDate(date: dateWhichIsSentToCalendarController!)
+        }
+    }
+    
+    // HeaderView에서 특정 날짜를 선택했을 때 CalendarController에게 보낼 요소
     var selectedDate: Date? {
         didSet {
-            print("HeaderView SelectedDate에 들어가는 date는 \(selectedDate!)")
+            delegate?.sendSelectedDate(date: selectedDate!)
         }
     }
     
@@ -62,11 +70,6 @@ final class TodoHeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    private func sendSelectedDateFromTodoHeaderViewToCalendarSheet(_ date: Date) {
-        delegate?.sendSelectedDate(date: date)
-    }
-    
 }
 
 extension TodoHeaderView: ViewDrawable {
@@ -147,7 +150,9 @@ extension TodoHeaderView: ViewDrawable {
 
 extension TodoHeaderView: FSCalendarDelegate, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        selectedDate = date
+        print("HeaderView에서 선택된 날짜는 \(date)")
+        self.selectedDate = date
+        
         setTodayColorsIfOtherDateIsSelected()
         setSelectionColorOnTodayAndOtherDate(date: date)
     }
