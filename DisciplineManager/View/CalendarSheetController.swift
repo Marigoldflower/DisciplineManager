@@ -27,7 +27,6 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
             if sharedDateWithHeaderView != nil {
                 setSelectionColorOnTodayAndOtherDate(date: sharedDateWithHeaderView!)
             }
-            
         }
     }
     
@@ -55,7 +54,7 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
         button.setTitle("날짜 선택", for: .normal)
         button.titleLabel?.font = UIFont(name: "LINESeedSansKR-Bold", size: 18.0)
         button.titleLabel?.textColor = .white
-        button.backgroundColor = .disciplineYellow
+        button.backgroundColor = .disciplinePurple
         button.layer.cornerRadius = 17
         button.layer.masksToBounds = true
         return button
@@ -125,7 +124,7 @@ extension CalendarSheetController: ViewDrawable {
     }
     
     func setBackgroundColor() {
-        view.backgroundColor = .white
+        view.backgroundColor = .disciplineBackground
     }
     
     func setAutolayout() {
@@ -168,10 +167,10 @@ extension CalendarSheetController: ViewDrawable {
     }
     
     private func setCalendarTextColor() {
-        calendar.appearance.titleDefaultColor = .black
-        calendar.appearance.titleWeekendColor = .systemPink
-        calendar.appearance.headerTitleColor = .disciplineYellow
-        calendar.appearance.weekdayTextColor = .orange
+        calendar.appearance.titleDefaultColor = .disciplineBlack
+        calendar.appearance.titleWeekendColor = .disciplinePink
+        calendar.appearance.headerTitleColor = .disciplineBlack
+        calendar.appearance.weekdayTextColor = .disciplineBlack
     }
     
     private func hideCalendarText() {
@@ -188,13 +187,13 @@ extension CalendarSheetController: ViewDrawable {
     
     private func setCalendarFonts() {
         calendar.appearance.titleFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
-        calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Regular", size: 15.0)
+        calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
         calendar.appearance.headerTitleFont = UIFont(name: "LINESeedSansKR-Bold", size: 17.0)
     }
     
     private func setCalendarTextBackgroundColor() {
-        calendar.appearance.todayColor = .disciplineYellow
-        calendar.appearance.selectionColor = .disciplineRed
+        calendar.appearance.todayColor = .disciplineBlue
+        calendar.appearance.selectionColor = .disciplinePink
     }
     
     // MARK: - Delegate
@@ -213,14 +212,14 @@ extension CalendarSheetController: FSCalendarDelegate, FSCalendarDelegateAppeara
     
     private func setTodayColorsIfOtherDateIsSelected() {
         calendar.appearance.todayColor = .white
-        calendar.appearance.titleTodayColor = .disciplineYellow
+        calendar.appearance.titleTodayColor = .disciplineBlue
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            calendar.appearance.selectionColor = .disciplineYellow
+            calendar.appearance.selectionColor = .disciplineBlue
         } else {
-            calendar.appearance.selectionColor = .disciplineRed
+            calendar.appearance.selectionColor = .disciplinePink
         }
     }
 }

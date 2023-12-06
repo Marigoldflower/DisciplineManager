@@ -32,16 +32,23 @@ final class TodoController: UIViewController, View {
         return view
     }()
     
-    private let divideLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray4
-        return view
+    private let todoList_Label: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "LINESeedSansKR-Bold", size: 21.0)
+        label.textColor = .disciplineBlack
+        label.text = "TODO LIST"
+        return label
     }()
     
-    private lazy var tableView: UITableView = {
-        let table = UITableView()
-        table.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
-        return table
+    private let toDoList: UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.disciplinePurple.cgColor
+        view.layer.borderWidth = 2
+//        view.backgroundColor = .disciplinePurple
+        view.layer.cornerRadius = 20
+        view.backgroundColor = .disciplineBackground
+        view.layer.masksToBounds = true
+        return view
     }()
     
     var calendarSheetController: CalendarSheetController! = nil
@@ -56,20 +63,7 @@ final class TodoController: UIViewController, View {
     private func getTodoList() {
         todoViewModel.getTodoList()
         
-        todoViewModel.todo
-            .bind(to: tableView.rx.items(cellIdentifier: HomeCell.identifier, cellType: HomeCell.self)) { index, element, cell in
-                cell.timeLabel.text = element.time
-                cell.iconButton.setImage(element.iconImage, for: .normal)
-                cell.whatToDo.setTitle(element.whatToDo, for: .normal)
-            }
-            .disposed(by: disposeBag)
         
-        todoViewModel.todoObserver
-            .observe(on: MainScheduler.instance)
-            .subscribe { _ in
-                self.tableView.reloadData()
-            }
-            .disposed(by: disposeBag)
     }
 }
 
@@ -125,11 +119,11 @@ extension TodoController: ViewDrawable {
     }
     
     func setBackgroundColor() {
-        view.backgroundColor = .white
+        view.backgroundColor = .disciplineBackground
     }
     
     func setAutolayout() {
-        [todoHeaderView, divideLine, tableView].forEach { view.addSubview($0) }
+        [todoHeaderView, todoList_Label, toDoList].forEach { view.addSubview($0) }
         
         todoHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
@@ -138,19 +132,17 @@ extension TodoController: ViewDrawable {
             make.height.equalTo(110)
         }
         
-        divideLine.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading)
-            make.trailing.equalTo(view.snp.trailing)
-            make.top.equalTo(todoHeaderView.snp.bottom)
-            make.bottom.equalTo(tableView.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(2)
+        todoList_Label.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading).offset(20)
+            make.top.equalTo(todoHeaderView.snp.bottom).offset(20)
+//            make.height.equalTo(110)
         }
         
-        tableView.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading)
-            make.trailing.equalTo(view.snp.trailing)
-            make.top.equalTo(divideLine.snp.bottom)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        toDoList.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading).offset(20)
+            make.trailing.equalTo(view.snp.trailing).offset(-20)
+            make.top.equalTo(todoList_Label.snp.bottom).offset(20)
+            make.height.equalTo(110)
         }
     }
 }
@@ -166,14 +158,14 @@ extension TodoController: DateSelectedDelegate {
     
     private func setTodayColorsIfOtherDateIsSelected() {
         todoHeaderView.calendar.appearance.todayColor = .white
-        todoHeaderView.calendar.appearance.titleTodayColor = .disciplineYellow
+        todoHeaderView.calendar.appearance.titleTodayColor = .disciplineBlue
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            todoHeaderView.calendar.appearance.selectionColor = .disciplineYellow
+            todoHeaderView.calendar.appearance.selectionColor = .disciplineBlue
         } else {
-            todoHeaderView.calendar.appearance.selectionColor = .disciplineRed
+            todoHeaderView.calendar.appearance.selectionColor = .disciplinePink
         }
     }
 }
