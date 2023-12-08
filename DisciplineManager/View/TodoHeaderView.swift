@@ -42,7 +42,7 @@ final class TodoHeaderView: UIView {
         formatter.dateFormat = "yyyy년 MM월"
         let currentYearsAndMonths = formatter.string(from: Date())
         button.setTitle(currentYearsAndMonths, for: .normal)
-        button.titleLabel?.font = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
+        button.titleLabel?.font = .LINESeedRegular(size: 15.0)
         button.setTitleColor(.systemGray, for: .normal)
         return button
     }()
@@ -111,7 +111,7 @@ extension TodoHeaderView: ViewDrawable {
     
     private func setCalendarTextColor() {
         calendar.appearance.titleDefaultColor = .disciplineBlack
-        calendar.appearance.titleWeekendColor = .disciplinePink
+        calendar.appearance.titleWeekendColor = .disciplinePurple
         calendar.appearance.weekdayTextColor = .disciplineBlack
     }
     
@@ -133,13 +133,13 @@ extension TodoHeaderView: ViewDrawable {
     }
     
     private func setCalendarFonts() {
-        calendar.appearance.titleFont = UIFont(name: "LINESeedSansKR-Bold", size: 16.0)
-        calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
+        calendar.appearance.titleFont = .LINESeedRegular(size: 16.0)
+        calendar.appearance.weekdayFont = .LINESeedRegular(size: 15.0)
     }
     
     private func setCalendarTextBackgroundColor() {
-        calendar.appearance.todayColor = .disciplineBlue
-        calendar.appearance.selectionColor = .disciplinePink
+        calendar.appearance.todayColor = .disciplinePurple
+        calendar.appearance.selectionColor = .disciplineBlue
     }
     
     // MARK: - Delegate
@@ -159,14 +159,14 @@ extension TodoHeaderView: FSCalendarDelegate, FSCalendarDelegateAppearance {
     
     private func setTodayColorsIfOtherDateIsSelected() {
         calendar.appearance.todayColor = .disciplineBackground
-        calendar.appearance.titleTodayColor = .disciplineBlue
+        calendar.appearance.titleTodayColor = .disciplinePurple
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            calendar.appearance.selectionColor = .disciplineBlue
+            calendar.appearance.selectionColor = .disciplinePurple
         } else {
-            calendar.appearance.selectionColor = .disciplinePink
+            calendar.appearance.selectionColor = .disciplineBlue
         }
     }
 }

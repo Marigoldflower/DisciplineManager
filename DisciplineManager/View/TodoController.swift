@@ -27,26 +27,24 @@ final class TodoController: UIViewController, View {
     var selectedDate: Date?
     
     // MARK: - UI Components
-    private let todoHeaderView: TodoHeaderView = {
+    private let todoHeaderView: TodoHeaderView = {  
         let view = TodoHeaderView()
         return view
     }()
     
     private let todoList_Label: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "LINESeedSansKR-Bold", size: 21.0)
+        label.font = .LINESeedRegular(size: 21.0)
         label.textColor = .disciplineBlack
         label.text = "TODO LIST"
         return label
     }()
     
-    private let toDoList: UIView = {
-        let view = UIView()
+    private let toDoListView: ToDoListView = {
+        let view = ToDoListView()
         view.layer.borderColor = UIColor.disciplinePurple.cgColor
         view.layer.borderWidth = 2
-//        view.backgroundColor = .disciplinePurple
         view.layer.cornerRadius = 20
-        view.backgroundColor = .disciplineBackground
         view.layer.masksToBounds = true
         return view
     }()
@@ -63,7 +61,6 @@ final class TodoController: UIViewController, View {
     private func getTodoList() {
         todoViewModel.getTodoList()
         
-        
     }
 }
 
@@ -74,6 +71,7 @@ extension TodoController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
+        // MARK: - HeaderView Binding
         todoHeaderView.setDateButton_TextVersion.rx.tap
             .map { TodoViewModel.Action.setDateButton_TextVersionTapped }
             .bind(to: reactor.action)
@@ -83,9 +81,21 @@ extension TodoController: Bindable {
             .map { TodoViewModel.Action.setDateButton_ImageVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        // MARK: - TodoListView Binding
+        toDoListView.checkButton.rx.tap
+            .map { TodoViewModel.Action.taskIsFinishedButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        toDoListView.trashButton.rx.tap
+            .map { TodoViewModel.Action.trashButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
+        // MARK: - HeaderView State
         reactor.state
             .map { $0.isFullCalendarShown }
             .distinctUntilChanged()
@@ -95,6 +105,40 @@ extension TodoController: Bindable {
                     self?.presentFullCalendar()
                 }
             }
+            .disposed(by: disposeBag)
+        
+        // MARK: - TodoListView State
+        reactor.state
+            .observe(on: MainScheduler.instance)
+            .map { $0.taskCheckBoxIsChecked }
+            .distinctUntilChanged()
+            .map { $0 }
+            .subscribe(onNext: { [weak self] value in
+                if value {
+                    print("value의 값은 \(value)")
+                    
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.toDoListView.checkButton.isSelected = !(self?.toDoListView.checkButton.isSelected)!
+                        self?.toDoListView.checkButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                        
+                    }) { _ in
+                        UIView.animate(withDuration: 0.2) {
+                            self?.toDoListView.checkButton.transform = CGAffineTransform.identity
+                        }
+                    }
+                } 
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.eraseTodoList }
+            .distinctUntilChanged()
+            .map { $0 }
+            .subscribe(onNext: { [weak self] value in
+                if value {
+                    
+                }
+            })
             .disposed(by: disposeBag)
     }
     
@@ -123,7 +167,7 @@ extension TodoController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [todoHeaderView, todoList_Label, toDoList].forEach { view.addSubview($0) }
+        [todoHeaderView, todoList_Label, toDoListView].forEach { view.addSubview($0) }
         
         todoHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
@@ -135,10 +179,9 @@ extension TodoController: ViewDrawable {
         todoList_Label.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading).offset(20)
             make.top.equalTo(todoHeaderView.snp.bottom).offset(20)
-//            make.height.equalTo(110)
         }
         
-        toDoList.snp.makeConstraints { make in
+        toDoListView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading).offset(20)
             make.trailing.equalTo(view.snp.trailing).offset(-20)
             make.top.equalTo(todoList_Label.snp.bottom).offset(20)
@@ -158,14 +201,14 @@ extension TodoController: DateSelectedDelegate {
     
     private func setTodayColorsIfOtherDateIsSelected() {
         todoHeaderView.calendar.appearance.todayColor = .white
-        todoHeaderView.calendar.appearance.titleTodayColor = .disciplineBlue
+        todoHeaderView.calendar.appearance.titleTodayColor = .disciplinePurple
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            todoHeaderView.calendar.appearance.selectionColor = .disciplineBlue
+            todoHeaderView.calendar.appearance.selectionColor = .disciplinePurple
         } else {
-            todoHeaderView.calendar.appearance.selectionColor = .disciplinePink
+            todoHeaderView.calendar.appearance.selectionColor = .disciplineBlue
         }
     }
 }

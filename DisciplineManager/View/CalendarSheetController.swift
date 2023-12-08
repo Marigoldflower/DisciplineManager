@@ -52,7 +52,7 @@ final class CalendarSheetController: UIViewController, UISheetPresentationContro
     private lazy var selectButton: UIButton = {
         let button = UIButton()
         button.setTitle("날짜 선택", for: .normal)
-        button.titleLabel?.font = UIFont(name: "LINESeedSansKR-Bold", size: 18.0)
+        button.titleLabel?.font = .LINESeedRegular(size: 18.0)
         button.titleLabel?.textColor = .white
         button.backgroundColor = .disciplinePurple
         button.layer.cornerRadius = 17
@@ -168,7 +168,7 @@ extension CalendarSheetController: ViewDrawable {
     
     private func setCalendarTextColor() {
         calendar.appearance.titleDefaultColor = .disciplineBlack
-        calendar.appearance.titleWeekendColor = .disciplinePink
+        calendar.appearance.titleWeekendColor = .disciplinePurple
         calendar.appearance.headerTitleColor = .disciplineBlack
         calendar.appearance.weekdayTextColor = .disciplineBlack
     }
@@ -186,14 +186,14 @@ extension CalendarSheetController: ViewDrawable {
     }
     
     private func setCalendarFonts() {
-        calendar.appearance.titleFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
-        calendar.appearance.weekdayFont = UIFont(name: "LINESeedSansKR-Bold", size: 15.0)
-        calendar.appearance.headerTitleFont = UIFont(name: "LINESeedSansKR-Bold", size: 17.0)
+        calendar.appearance.titleFont = .LINESeedRegular(size: 15.0)
+        calendar.appearance.weekdayFont = .LINESeedRegular(size: 15.0)
+        calendar.appearance.headerTitleFont = .LINESeedRegular(size: 17.0)
     }
     
     private func setCalendarTextBackgroundColor() {
-        calendar.appearance.todayColor = .disciplineBlue
-        calendar.appearance.selectionColor = .disciplinePink
+        calendar.appearance.todayColor = .disciplinePurple
+        calendar.appearance.selectionColor = .disciplineBlue
     }
     
     // MARK: - Delegate
@@ -212,14 +212,14 @@ extension CalendarSheetController: FSCalendarDelegate, FSCalendarDelegateAppeara
     
     private func setTodayColorsIfOtherDateIsSelected() {
         calendar.appearance.todayColor = .white
-        calendar.appearance.titleTodayColor = .disciplineBlue
+        calendar.appearance.titleTodayColor = .disciplinePurple
     }
     
     private func setSelectionColorOnTodayAndOtherDate(date: Date) {
         if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            calendar.appearance.selectionColor = .disciplineBlue
+            calendar.appearance.selectionColor = .disciplinePurple
         } else {
-            calendar.appearance.selectionColor = .disciplinePink
+            calendar.appearance.selectionColor = .disciplineBlue
         }
     }
 }

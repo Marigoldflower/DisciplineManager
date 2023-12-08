@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A990A680E36039286119C647 /* Pods_DisciplineManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4C05F3C9A96D99F167C603 /* Pods_DisciplineManager.framework */; };
+		EA208E692B2054DE00CA3A67 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208E682B2054DE00CA3A67 /* ToDoListView.swift */; };
+		EA208E6B2B22B32A00CA3A67 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208E6A2B22B32A00CA3A67 /* Fonts.swift */; };
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
 		EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* TodoController.swift */; };
@@ -37,6 +39,8 @@
 		7B4E7907976E3811B0DF7102 /* Pods-DisciplineManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisciplineManager.debug.xcconfig"; path = "Target Support Files/Pods-DisciplineManager/Pods-DisciplineManager.debug.xcconfig"; sourceTree = "<group>"; };
 		8B2595B71D532FF4A3149125 /* Pods-DisciplineManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisciplineManager.release.xcconfig"; path = "Target Support Files/Pods-DisciplineManager/Pods-DisciplineManager.release.xcconfig"; sourceTree = "<group>"; };
 		9B4C05F3C9A96D99F167C603 /* Pods_DisciplineManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DisciplineManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA208E682B2054DE00CA3A67 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		EA208E6A2B22B32A00CA3A67 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				EACF074D2AFB451A0000CD2E /* ViewDrawable.swift */,
 				EAE6696B2AFB743B00E1C378 /* Bindable.swift */,
 				EADB7B222B1860C3005015B8 /* AppColors.swift */,
+				EA208E6A2B22B32A00CA3A67 /* Fonts.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
 				EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */,
 				EACF07332AFA25AC0000CD2E /* TodoController.swift */,
+				EA208E682B2054DE00CA3A67 /* ToDoListView.swift */,
 				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
@@ -309,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EACF074E2AFB451A0000CD2E /* ViewDrawable.swift in Sources */,
+				EA208E692B2054DE00CA3A67 /* ToDoListView.swift in Sources */,
 				EADB7B202B0E0C9E005015B8 /* TodoModel.swift in Sources */,
 				EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */,
 				EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */,
@@ -324,6 +331,7 @@
 				EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */,
 				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
+				EA208E6B2B22B32A00CA3A67 /* Fonts.swift in Sources */,
 				EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
