@@ -27,7 +27,7 @@
 		EACF07562AFB68E00000CD2E /* LINESeedKR-Bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */; };
 		EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */; };
 		EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */; };
-		EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */; };
+		EADB7B1B2B0DB35E005015B8 /* ToDoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1A2B0DB35E005015B8 /* ToDoListCell.swift */; };
 		EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */; };
 		EADB7B202B0E0C9E005015B8 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */; };
 		EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB7B222B1860C3005015B8 /* AppColors.swift */; };
@@ -60,7 +60,7 @@
 		EACF07532AFB68E00000CD2E /* LINESeedKR-Bd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LINESeedKR-Bd.otf"; path = "../../../../../Downloads/LINE_SeedKR_2023.09.06/OTF/LINESeedKR-Bd.otf"; sourceTree = "<group>"; };
 		EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetController.swift; sourceTree = "<group>"; };
 		EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetViewModel.swift; sourceTree = "<group>"; };
-		EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
+		EADB7B1A2B0DB35E005015B8 /* ToDoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListCell.swift; sourceTree = "<group>"; };
 		EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHeaderView.swift; sourceTree = "<group>"; };
 		EADB7B1F2B0E0C9E005015B8 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
 		EADB7B222B1860C3005015B8 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -157,7 +157,8 @@
 		EADB7B1C2B0DB361005015B8 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				EADB7B1A2B0DB35E005015B8 /* HomeCell.swift */,
+				EADB7B1A2B0DB35E005015B8 /* ToDoListCell.swift */,
+				EA208E682B2054DE00CA3A67 /* ToDoListView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -168,7 +169,6 @@
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
 				EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */,
 				EACF07332AFA25AC0000CD2E /* TodoController.swift */,
-				EA208E682B2054DE00CA3A67 /* ToDoListView.swift */,
 				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
@@ -325,7 +325,7 @@
 				EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */,
 				EACF07482AFA3E310000CD2E /* AchievementController.swift in Sources */,
 				EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */,
-				EADB7B1B2B0DB35E005015B8 /* HomeCell.swift in Sources */,
+				EADB7B1B2B0DB35E005015B8 /* ToDoListCell.swift in Sources */,
 				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
 				EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */,

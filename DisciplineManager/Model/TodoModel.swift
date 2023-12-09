@@ -9,6 +9,5 @@ import UIKit
 
 struct TodoModel {
     var time: String
-    var iconImage: UIImage?
     var whatToDo: String
 }

@@ -21,14 +21,14 @@ final class ToDoListView: UIView {
     let time: UILabel = {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 15.0)
-        label.text = "오전 9:00"
+        label.text = ""
         return label
     }()
     
     let whatToDo: UILabel = {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 15.0)
-        label.text = "빨래하고 밥 먹고 공부하고 피자 치킨 마요네즈 먹고 운동하고 잠자기"
+        label.text = ""
         label.numberOfLines = 0
         return label
     }()
@@ -36,7 +36,6 @@ final class ToDoListView: UIView {
     lazy var whatToDoErased: UILabel = {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 15.0)
-        label.text = "빨래하고 밥 먹고 공부하고 피자 치킨 마요네즈 먹고 운동하고 잠자기"
         label.numberOfLines = 0
         let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: whatToDo.text!)
         attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
@@ -55,7 +54,7 @@ final class ToDoListView: UIView {
     private lazy var timeAndWhatToDoStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [time, whatToDo])
         stack.axis = .vertical
-        stack.spacing = 0
+        stack.spacing = 8
         return stack
     }()
     

@@ -40,13 +40,13 @@ final class TodoController: UIViewController, View {
         return label
     }()
     
-    private let toDoListView: ToDoListView = {
-        let view = ToDoListView()
-        view.layer.borderColor = UIColor.disciplinePurple.cgColor
-        view.layer.borderWidth = 2
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
+    private lazy var todoListTableView: UITableView = {
+        let table = UITableView()
+        table.register(ToDoListCell.self, forCellReuseIdentifier: ToDoListCell.identifier)
+        table.backgroundColor = .disciplineBackground
+        table.separatorStyle = .none
+        table.delegate = self
+        return table
     }()
     
     var calendarSheetController: CalendarSheetController! = nil
@@ -61,6 +61,22 @@ final class TodoController: UIViewController, View {
     private func getTodoList() {
         todoViewModel.getTodoList()
         
+        todoViewModel.todo
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.todoListTableView.rx.items(cellIdentifier: ToDoListCell.identifier, cellType: ToDoListCell.self)) { index, element, cell in
+                cell.selectionStyle = .none
+                
+                cell.toDoListView.time.text = element.time
+                cell.toDoListView.whatToDo.text = element.whatToDo
+            }
+            .disposed(by: disposeBag)
+        
+        todoViewModel.todoObserver
+            .observe(on: MainScheduler.instance)
+            .subscribe({ [weak self] _ in
+                self?.todoListTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -83,15 +99,7 @@ extension TodoController: Bindable {
             .disposed(by: disposeBag)
         
         // MARK: - TodoListView Binding
-        toDoListView.checkButton.rx.tap
-            .map { TodoViewModel.Action.taskIsFinishedButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
         
-        toDoListView.trashButton.rx.tap
-            .map { TodoViewModel.Action.trashButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
@@ -108,27 +116,29 @@ extension TodoController: Bindable {
             .disposed(by: disposeBag)
         
         // MARK: - TodoListView State
-        reactor.state
-            .observe(on: MainScheduler.instance)
-            .map { $0.taskCheckBoxIsChecked }
-            .distinctUntilChanged()
-            .map { $0 }
-            .subscribe(onNext: { [weak self] value in
-                if value {
-                    print("value의 값은 \(value)")
-                    
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self?.toDoListView.checkButton.isSelected = !(self?.toDoListView.checkButton.isSelected)!
-                        self?.toDoListView.checkButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-                        
-                    }) { _ in
-                        UIView.animate(withDuration: 0.2) {
-                            self?.toDoListView.checkButton.transform = CGAffineTransform.identity
-                        }
-                    }
-                } 
-            })
-            .disposed(by: disposeBag)
+        
+        
+//        reactor.state
+//            .observe(on: MainScheduler.instance)
+//            .map { $0.taskCheckBoxIsChecked }
+//            .distinctUntilChanged()
+//            .map { $0 }
+//            .subscribe(onNext: { [weak self] value in
+//                if value {
+//                    print("value의 값은 \(value)")
+//
+//                    UIView.animate(withDuration: 0.2, animations: {
+//                        self?.toDoListView.checkButton.isSelected = !(self?.toDoListView.checkButton.isSelected)!
+//                        self?.toDoListView.checkButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+//
+//                    }) { _ in
+//                        UIView.animate(withDuration: 0.2) {
+//                            self?.toDoListView.checkButton.transform = CGAffineTransform.identity
+//                        }
+//                    }
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         reactor.state
             .map { $0.eraseTodoList }
@@ -149,10 +159,6 @@ extension TodoController: Bindable {
         calendarSheetController.sharedDateWithHeaderView = selectedDate
         self.present(calendarSheetController, animated: true)
     }
-    
-    private func sendSelectedDateFromTodoHeaderViewToCalendarSheet(date: Date) {
-        calendarSheetController.sharedDateWithHeaderView = date
-    }
 }
 
 extension TodoController: ViewDrawable {
@@ -167,7 +173,7 @@ extension TodoController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [todoHeaderView, todoList_Label, toDoListView].forEach { view.addSubview($0) }
+        [todoHeaderView, todoList_Label, todoListTableView].forEach { view.addSubview($0) }
         
         todoHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
@@ -181,11 +187,11 @@ extension TodoController: ViewDrawable {
             make.top.equalTo(todoHeaderView.snp.bottom).offset(20)
         }
         
-        toDoListView.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading).offset(20)
-            make.trailing.equalTo(view.snp.trailing).offset(-20)
+        todoListTableView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(todoList_Label.snp.bottom).offset(20)
-            make.height.equalTo(110)
+            make.bottom.equalTo(view.snp.bottom)
         }
     }
 }
@@ -217,5 +223,11 @@ extension TodoController: DateSelectedDelegate {
 extension TodoController: HeaderViewSelectedDateDelegate {
     func sendSelectedDate(date: Date) {
         self.selectedDate = date
+    }
+}
+
+extension TodoController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
 }
