@@ -9,12 +9,17 @@ import UIKit
 import SnapKit
 
 final class ToDoListView: UIView {
+    
+    // MARK: - Delegate
+    weak var delegate: CellCheckBoxTappedDelegate?
+    
     // MARK: - UI Components
-    let checkButton: UIButton = {
+    lazy var checkButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "square"), for: .normal)
         button.setImage(UIImage(systemName: "checkmark.square.fill"), for: .selected)
         button.tintColor = .disciplinePurple
+        button.addTarget(self, action: #selector(checkBoxButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -66,6 +71,13 @@ final class ToDoListView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
+    // MARK: - objc
+    @objc func checkBoxButtonTapped(_ sender: UIButton) {
+        delegate?.checkBoxTapped()
+        print("버튼 눌렸으면 말 좀 해줘")
+    }
+    
 }
 
 extension ToDoListView: ViewDrawable {

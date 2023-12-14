@@ -16,6 +16,10 @@ protocol DateSelectedDelegate: AnyObject {
     func dateSelected(_ date: Date)
 }
 
+protocol CellCheckBoxTappedDelegate: AnyObject {
+    func checkBoxTapped()
+}
+
 final class TodoController: UIViewController, View {
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
@@ -65,7 +69,7 @@ final class TodoController: UIViewController, View {
             .asDriver(onErrorJustReturn: [])
             .drive(self.todoListTableView.rx.items(cellIdentifier: ToDoListCell.identifier, cellType: ToDoListCell.self)) { index, element, cell in
                 cell.selectionStyle = .none
-                
+                cell.toDoListView.delegate = self
                 cell.toDoListView.time.text = element.time
                 cell.toDoListView.whatToDo.text = element.whatToDo
             }
@@ -110,6 +114,7 @@ extension TodoController: Bindable {
             .map { $0 }
             .subscribe { [weak self] value in
                 if value {
+                    print("클릭됨 \(value)")
                     self?.presentFullCalendar()
                 }
             }
@@ -223,6 +228,13 @@ extension TodoController: DateSelectedDelegate {
 extension TodoController: HeaderViewSelectedDateDelegate {
     func sendSelectedDate(date: Date) {
         self.selectedDate = date
+    }
+}
+
+// ToDoListCell로부터 받은 Button Event 값을 CalendarController에게 넘겨주는 역할 ⭐️
+extension TodoController: CellCheckBoxTappedDelegate {
+    func checkBoxTapped() {
+        print("혹시 체크박스 버튼 눌렸니?")
     }
 }
 
