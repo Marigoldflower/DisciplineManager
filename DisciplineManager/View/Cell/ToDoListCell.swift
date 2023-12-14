@@ -16,12 +16,15 @@ final class ToDoListCell: UITableViewCell {
     
     static let identifier = "HomeCell"
     
-    let toDoListView: ToDoListView = {
+    lazy var toDoListView: ToDoListView = {
         let view = ToDoListView()
         view.layer.borderColor = UIColor.disciplinePurple.cgColor
         view.layer.borderWidth = 2
         view.layer.cornerRadius = 20
         view.layer.masksToBounds = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGestureRecognizer)
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -35,6 +38,19 @@ final class ToDoListCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    // MARK: - @objc
+    @objc private func handleTap() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.toDoListView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            self.toDoListView.backgroundColor = UIColor.systemGray5
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.toDoListView.transform = CGAffineTransform.identity
+                self.toDoListView.backgroundColor = UIColor.clear
+            }
+        }
     }
 }
 

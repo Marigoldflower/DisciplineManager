@@ -27,7 +27,7 @@ final class TodoController: UIViewController, View {
     var selectedDate: Date?
     
     // MARK: - UI Components
-    private let todoHeaderView: TodoHeaderView = {  
+    private let todoHeaderView: TodoHeaderView = {
         let view = TodoHeaderView()
         return view
     }()
@@ -188,8 +188,24 @@ extension TodoController: HeaderViewSelectedDateDelegate {
 }
 
 extension TodoController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            //                UserDefaults.standard.userDataList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //                self.userDefaultsCount -= 1
+            completionHandler(true)
+        }
+        let pointConfiguration = UIImage.SymbolConfiguration(pointSize: 13.5)
+        deleteAction.image = UIImage(systemName: "trash", withConfiguration: pointConfiguration)
+        deleteAction.backgroundColor = .disciplineGreen
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
 }
 
