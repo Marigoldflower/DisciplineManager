@@ -16,10 +16,6 @@ protocol DateSelectedDelegate: AnyObject {
     func dateSelected(_ date: Date)
 }
 
-protocol CellCheckBoxTappedDelegate: AnyObject {
-    func checkBoxTapped()
-}
-
 final class TodoController: UIViewController, View {
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
@@ -69,7 +65,6 @@ final class TodoController: UIViewController, View {
             .asDriver(onErrorJustReturn: [])
             .drive(self.todoListTableView.rx.items(cellIdentifier: ToDoListCell.identifier, cellType: ToDoListCell.self)) { index, element, cell in
                 cell.selectionStyle = .none
-                cell.toDoListView.delegate = self
                 cell.toDoListView.time.text = element.time
                 cell.toDoListView.whatToDo.text = element.whatToDo
             }
@@ -101,9 +96,6 @@ extension TodoController: Bindable {
             .map { TodoViewModel.Action.setDateButton_ImageVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        // MARK: - TodoListView Binding
-        
     }
     
     func bindState(_ reactor: Reactor) {
@@ -118,42 +110,6 @@ extension TodoController: Bindable {
                     self?.presentFullCalendar()
                 }
             }
-            .disposed(by: disposeBag)
-        
-        // MARK: - TodoListView State
-        
-        
-//        reactor.state
-//            .observe(on: MainScheduler.instance)
-//            .map { $0.taskCheckBoxIsChecked }
-//            .distinctUntilChanged()
-//            .map { $0 }
-//            .subscribe(onNext: { [weak self] value in
-//                if value {
-//                    print("value의 값은 \(value)")
-//
-//                    UIView.animate(withDuration: 0.2, animations: {
-//                        self?.toDoListView.checkButton.isSelected = !(self?.toDoListView.checkButton.isSelected)!
-//                        self?.toDoListView.checkButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-//
-//                    }) { _ in
-//                        UIView.animate(withDuration: 0.2) {
-//                            self?.toDoListView.checkButton.transform = CGAffineTransform.identity
-//                        }
-//                    }
-//                }
-//            })
-//            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map { $0.eraseTodoList }
-            .distinctUntilChanged()
-            .map { $0 }
-            .subscribe(onNext: { [weak self] value in
-                if value {
-                    
-                }
-            })
             .disposed(by: disposeBag)
     }
     
@@ -231,15 +187,9 @@ extension TodoController: HeaderViewSelectedDateDelegate {
     }
 }
 
-// ToDoListCell로부터 받은 Button Event 값을 CalendarController에게 넘겨주는 역할 ⭐️
-extension TodoController: CellCheckBoxTappedDelegate {
-    func checkBoxTapped() {
-        print("혹시 체크박스 버튼 눌렸니?")
-    }
-}
-
 extension TodoController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
 }
+

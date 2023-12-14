@@ -11,7 +11,7 @@ import SnapKit
 final class ToDoListView: UIView {
     
     // MARK: - Delegate
-    weak var delegate: CellCheckBoxTappedDelegate?
+    weak var delegate: CheckBoxTappedDelegate?
     
     // MARK: - UI Components
     lazy var checkButton: UIButton = {
@@ -19,7 +19,7 @@ final class ToDoListView: UIView {
         button.setImage(UIImage(systemName: "square"), for: .normal)
         button.setImage(UIImage(systemName: "checkmark.square.fill"), for: .selected)
         button.tintColor = .disciplinePurple
-        button.addTarget(self, action: #selector(checkBoxButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -48,18 +48,11 @@ final class ToDoListView: UIView {
         return label
     }()
     
-    let trashButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "trash"), for: .normal)
-        button.tintColor = .disciplinePurple
-        return button
-    }()
-    
     // MARK: - StackView
     private lazy var timeAndWhatToDoStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [time, whatToDo])
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 12
         return stack
     }()
     
@@ -73,11 +66,9 @@ final class ToDoListView: UIView {
     }
     
     // MARK: - objc
-    @objc func checkBoxButtonTapped(_ sender: UIButton) {
+    @objc func checkButtonTapped() {
         delegate?.checkBoxTapped()
-        print("버튼 눌렸으면 말 좀 해줘")
     }
-    
 }
 
 extension ToDoListView: ViewDrawable {
@@ -91,7 +82,7 @@ extension ToDoListView: ViewDrawable {
     }
     
     func setAutolayout() {
-        [checkButton, timeAndWhatToDoStack, whatToDoErased, trashButton].forEach { self.addSubview($0)}
+        [checkButton, timeAndWhatToDoStack, whatToDoErased].forEach { self.addSubview($0)}
         
         checkButton.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading).offset(20)
@@ -100,18 +91,12 @@ extension ToDoListView: ViewDrawable {
         
         timeAndWhatToDoStack.snp.makeConstraints { make in
             make.leading.equalTo(checkButton.snp.trailing).offset(30)
-            make.trailing.equalTo(trashButton.snp.leading).offset(-30)
             make.centerY.equalTo(self.snp.centerY)
         }
         
         // 할 일 목록 지워진 버전을 할 일 목록과 겹쳐놓는다.
         whatToDoErased.snp.makeConstraints { make in
             make.edges.equalTo(whatToDo)
-        }
-        
-        trashButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.snp.trailing).offset(-20)
-            make.centerY.equalTo(self.snp.centerY)
         }
     }
 }
