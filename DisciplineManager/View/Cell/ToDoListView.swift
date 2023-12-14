@@ -10,8 +10,8 @@ import SnapKit
 
 final class ToDoListView: UIView {
     
-    // MARK: - Delegate
-    weak var delegate: CheckBoxTappedDelegate?
+    // MARK: - Erased Label Data
+    var isStrikethrough: Bool = false
     
     // MARK: - UI Components
     lazy var checkButton: UIButton = {
@@ -26,6 +26,7 @@ final class ToDoListView: UIView {
     let time: UILabel = {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 15.0)
+        label.textColor = .systemGray
         label.text = ""
         return label
     }()
@@ -33,6 +34,7 @@ final class ToDoListView: UIView {
     let whatToDo: UILabel = {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 15.0)
+        label.textColor = .disciplineBlack
         label.text = ""
         label.numberOfLines = 0
         return label
@@ -52,7 +54,7 @@ final class ToDoListView: UIView {
     private lazy var timeAndWhatToDoStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [time, whatToDo])
         stack.axis = .vertical
-        stack.spacing = 12
+        stack.spacing = 8
         return stack
     }()
     
@@ -66,8 +68,49 @@ final class ToDoListView: UIView {
     }
     
     // MARK: - objc
-    @objc func checkButtonTapped() {
-        delegate?.checkBoxTapped()
+    @objc func checkButtonTapped(_ sender: UIButton) {
+        setCheckAnimationWhenCheckBoxTapped()
+        setHapticsWhenCheckBoxTapped()
+        setTodoListErasedWhenCheckBoxTapped()
+    }
+    
+    private func setCheckAnimationWhenCheckBoxTapped() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.checkButton.isSelected = !(self.checkButton.isSelected)
+            self.checkButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.checkButton.transform = CGAffineTransform.identity
+            }
+        }
+    }
+    
+    private func setHapticsWhenCheckBoxTapped() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
+    }
+    
+    private func setTodoListErasedWhenCheckBoxTapped() {
+        if isStrikethrough {
+            // 취소선이 있으면 취소선을 제거하고 변수를 업데이트합니다.
+            UIView.transition(with: self.whatToDo, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                let normalString = NSAttributedString(string: self.whatToDo.text ?? "")
+                self.whatToDo.attributedText = normalString
+                self.whatToDo.textColor = .disciplineBlack
+                self.whatToDo.backgroundColor = .disciplineBackground
+            }, completion: nil)
+            isStrikethrough = false
+        } else {
+            // 취소선이 없으면 취소선을 추가하고 변수를 업데이트합니다.
+            UIView.transition(with: self.whatToDo, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                self.whatToDo.attributedText = self.whatToDo.text?.strikeThrough()
+                self.whatToDo.backgroundColor = .disciplineBackground
+                self.whatToDo.textColor = .systemGray
+            }, completion: nil)
+            isStrikethrough = true
+        }
     }
 }
 

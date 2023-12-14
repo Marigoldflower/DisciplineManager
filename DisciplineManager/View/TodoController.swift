@@ -49,6 +49,15 @@ final class TodoController: UIViewController, View {
         return table
     }()
     
+    private let addTodoListButton: UIButton = {
+        let button = UIButton()
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 26, weight: .bold, scale: .large)
+        let largeCloseImage = UIImage(systemName: "plus.circle.fill", withConfiguration: largeConfig)
+        button.setImage(largeCloseImage, for: .normal)
+        button.tintColor = .disciplineBlue
+        return button
+    }()
+    
     var calendarSheetController: CalendarSheetController! = nil
     
     override func viewDidLoad() {
@@ -190,11 +199,15 @@ extension TodoController: HeaderViewSelectedDateDelegate {
 extension TodoController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 105
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
+        return setCellSwipeDeleteConfiguration(tableView: tableView, indexPath: indexPath)
+    }
+    
+    private func setCellSwipeDeleteConfiguration(tableView: UITableView, indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
             //                UserDefaults.standard.userDataList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -205,6 +218,7 @@ extension TodoController: UITableViewDelegate {
         deleteAction.image = UIImage(systemName: "trash", withConfiguration: pointConfiguration)
         deleteAction.backgroundColor = .disciplineGreen
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
         return configuration
     }
 }
