@@ -49,9 +49,10 @@ final class TodoController: UIViewController, View {
         return table
     }()
     
+    // 내일 이거 레이아웃 잡고 여기서부터 시작하면 됨
     private let addTodoListButton: UIButton = {
         let button = UIButton()
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 26, weight: .bold, scale: .large)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
         let largeCloseImage = UIImage(systemName: "plus.circle.fill", withConfiguration: largeConfig)
         button.setImage(largeCloseImage, for: .normal)
         button.tintColor = .disciplineBlue
@@ -143,7 +144,7 @@ extension TodoController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [todoHeaderView, todoList_Label, todoListTableView].forEach { view.addSubview($0) }
+        [todoHeaderView, todoList_Label, addTodoListButton, todoListTableView].forEach { view.addSubview($0) }
         
         todoHeaderView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
@@ -155,6 +156,11 @@ extension TodoController: ViewDrawable {
         todoList_Label.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading).offset(20)
             make.top.equalTo(todoHeaderView.snp.bottom).offset(20)
+        }
+        
+        addTodoListButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.snp.trailing).offset(-20)
+            make.centerY.equalTo(todoList_Label.snp.centerY)
         }
         
         todoListTableView.snp.makeConstraints { make in
