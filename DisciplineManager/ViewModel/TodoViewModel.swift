@@ -28,20 +28,17 @@ final class TodoViewModel: Reactor {
     enum Action {
         case setDateButton_TextVersionTapped
         case setDateButton_ImageVersionTapped
-        case taskIsFinishedButtonTapped
-        case trashButtonTapped
+        case addTodoListButtonTapped
     }
     
     enum Mutation {
         case showFullCalendar(Bool)
-        case checkingTaskCheckBox(Bool)
-        case eraseTodoList(Bool)
+        case showPlanner(Bool)
     }
 
     struct State {
         var isFullCalendarShown: Bool = false
-        var taskCheckBoxIsChecked: Bool = false
-        var eraseTodoList: Bool = false
+        var isPlannerShown: Bool = false
     }
     
     var initialState: State
@@ -64,16 +61,10 @@ final class TodoViewModel: Reactor {
                 Observable.just(Mutation.showFullCalendar(false))
             ])
             
-        case .taskIsFinishedButtonTapped:
+        case .addTodoListButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.checkingTaskCheckBox(true)),
-                Observable.just(Mutation.checkingTaskCheckBox(false))
-            ])
-            
-        case .trashButtonTapped:
-            return Observable.concat([
-                Observable.just(Mutation.eraseTodoList(true)),
-                Observable.just(Mutation.eraseTodoList(false))
+                Observable.just(Mutation.showPlanner(true)),
+                Observable.just(Mutation.showPlanner(false))
             ])
         }
     }
@@ -85,11 +76,8 @@ final class TodoViewModel: Reactor {
         case .showFullCalendar(let value):
             newState.isFullCalendarShown = value
             
-        case .checkingTaskCheckBox(let value):
-            newState.taskCheckBoxIsChecked = value
-            
-        case .eraseTodoList(let value):
-            newState.eraseTodoList = value
+        case .showPlanner(let value):
+            newState.isPlannerShown = value
         }
         
         return newState

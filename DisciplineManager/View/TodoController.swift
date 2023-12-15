@@ -106,6 +106,12 @@ extension TodoController: Bindable {
             .map { TodoViewModel.Action.setDateButton_ImageVersionTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        // MARK: - AddTodoList Button Binding
+        addTodoListButton.rx.tap
+            .map { TodoViewModel.Action.setDateButton_TextVersionTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
@@ -121,6 +127,18 @@ extension TodoController: Bindable {
                 }
             }
             .disposed(by: disposeBag)
+        
+        // MARK: - AddTodoList Button State
+        reactor.state
+            .map { $0.isPlannerShown }
+            .distinctUntilChanged()
+            .map { $0 }
+            .subscribe { [weak self] value in
+                if value {
+                    self?.presentPlanner()
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     private func presentFullCalendar() {
@@ -129,6 +147,11 @@ extension TodoController: Bindable {
         todoHeaderView.delegate = self // HeaderViewSelectedDateDelegate가 작동하게 하기 위한 위임자
         calendarSheetController.sharedDateWithHeaderView = selectedDate
         self.present(calendarSheetController, animated: true)
+    }
+    
+    // 오늘 하루 계획을 짜는 뷰를 띄우기 (여기서부터 진행)
+    private func presentPlanner() {
+        
     }
 }
 
