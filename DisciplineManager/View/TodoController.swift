@@ -36,7 +36,7 @@ final class TodoController: UIViewController, View {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 21.0)
         label.textColor = .disciplineBlack
-        label.text = "TODO LIST"
+        label.text = "할 일 리스트"
         return label
     }()
     
@@ -49,7 +49,6 @@ final class TodoController: UIViewController, View {
         return table
     }()
     
-    // 내일 이거 레이아웃 잡고 여기서부터 시작하면 됨
     private let addTodoListButton: UIButton = {
         let button = UIButton()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large)
@@ -59,7 +58,9 @@ final class TodoController: UIViewController, View {
         return button
     }()
     
+    // MARK: - PresentView
     var calendarSheetController: CalendarSheetController! = nil
+    var plannerController: PlannerController! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +110,7 @@ extension TodoController: Bindable {
         
         // MARK: - AddTodoList Button Binding
         addTodoListButton.rx.tap
-            .map { TodoViewModel.Action.setDateButton_TextVersionTapped }
+            .map { TodoViewModel.Action.addTodoListButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -122,7 +123,6 @@ extension TodoController: Bindable {
             .map { $0 }
             .subscribe { [weak self] value in
                 if value {
-                    print("클릭됨 \(value)")
                     self?.presentFullCalendar()
                 }
             }
@@ -151,7 +151,41 @@ extension TodoController: Bindable {
     
     // 오늘 하루 계획을 짜는 뷰를 띄우기 (여기서부터 진행)
     private func presentPlanner() {
-        
+        plannerController = PlannerController()
+        setNavigationTitleAndButton(at: plannerController)
+        setNavigationController(appearance: customNavigationBar())
+    }
+    
+    private func customNavigationBar() -> UINavigationBarAppearance {
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .disciplinePurple // UINavigationBar의 bar 색상 설정
+        navigationBarAppearance.titleTextAttributes = [
+            .font: UIFont.LINESeedRegular(size: 17) as Any, // 텍스트 폰트 설정
+            .foregroundColor: UIColor.white // 텍스트 색상 설정
+        ]
+        return navigationBarAppearance
+    }
+    
+    private func setNavigationController(appearance: UINavigationBarAppearance) {
+        let navigation = UINavigationController(rootViewController: plannerController)
+        navigation.modalPresentationStyle = .fullScreen
+        navigation.navigationBar.standardAppearance = appearance
+        navigation.navigationBar.scrollEdgeAppearance = appearance
+        present(navigation, animated: true)
+    }
+    
+    private func setNavigationTitleAndButton(at view: PlannerController) {
+        view.navigationItem.title = "할 일 생성"
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 19, weight: .bold, scale: .large)
+        let largeCloseImage = UIImage(systemName: "x.circle.fill", withConfiguration: largeConfig)
+        let rightButton = UIBarButtonItem(image: largeCloseImage, style: .plain, target: self, action: #selector(rightButtonAction))
+        rightButton.tintColor = .white
+        view.navigationItem.rightBarButtonItem = rightButton
+    }
+    
+    @objc func rightButtonAction() {
+        self.dismiss(animated: true)
     }
 }
 

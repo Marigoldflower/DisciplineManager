@@ -11,6 +11,7 @@
 		EA208E692B2054DE00CA3A67 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208E682B2054DE00CA3A67 /* ToDoListView.swift */; };
 		EA208E6B2B22B32A00CA3A67 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208E6A2B22B32A00CA3A67 /* Fonts.swift */; };
 		EA208F2D2B2B3AD200CA3A67 /* StringEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */; };
+		EA208F302B2C954100CA3A67 /* PlannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F2F2B2C954100CA3A67 /* PlannerController.swift */; };
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
 		EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* TodoController.swift */; };
@@ -43,6 +44,7 @@
 		EA208E682B2054DE00CA3A67 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		EA208E6A2B22B32A00CA3A67 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEffect.swift; sourceTree = "<group>"; };
+		EA208F2F2B2C954100CA3A67 /* PlannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerController.swift; sourceTree = "<group>"; };
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,15 @@
 				EACF07432AFA26D00000CD2E /* MainTabBarController.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		EA208F2E2B2C951C00CA3A67 /* Present View */ = {
+			isa = PBXGroup;
+			children = (
+				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
+				EA208F2F2B2C954100CA3A67 /* PlannerController.swift */,
+			);
+			path = "Present View";
 			sourceTree = "<group>";
 		};
 		EACF07232AFA25AC0000CD2E = {
@@ -180,7 +191,7 @@
 				EA208F292B2B364300CA3A67 /* TabBar */,
 				EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */,
 				EACF07332AFA25AC0000CD2E /* TodoController.swift */,
-				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
+				EA208F2E2B2C951C00CA3A67 /* Present View */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
 				EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */,
@@ -333,6 +344,7 @@
 				EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */,
 				EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */,
 				EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */,
+				EA208F302B2C954100CA3A67 /* PlannerController.swift in Sources */,
 				EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */,
 				EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */,
 				EACF07482AFA3E310000CD2E /* AchievementController.swift in Sources */,
