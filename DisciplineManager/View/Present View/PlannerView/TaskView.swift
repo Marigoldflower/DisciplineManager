@@ -59,7 +59,7 @@ extension TaskView: ViewDrawable {
     }
     
     func setBackgroundColor() {
-        self.backgroundColor = .red
+        self.backgroundColor = .disciplineBackground
     }
     
     func setAutolayout() {

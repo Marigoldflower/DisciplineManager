@@ -19,13 +19,10 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    private lazy var startDatePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .time
-        datePicker.date = Date()
-        datePicker.timeZone = TimeZone.current
-        datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
-        datePicker.setValue(UIColor.disciplinePurple, forKeyPath: "textColor")
+    private lazy var startDatePicker: CustomDatePicker = {
+        let datePicker = CustomDatePicker()
+        datePicker.layer.borderWidth = 1.0
+        datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
         return datePicker
     }()
     
@@ -107,7 +104,7 @@ extension TimeSettingView: ViewDrawable {
         }
         
         startDatePicker.snp.makeConstraints { make in
-            make.width.equalTo(100)
+            make.width.equalTo(130)
             make.height.equalTo(40)
         }
         

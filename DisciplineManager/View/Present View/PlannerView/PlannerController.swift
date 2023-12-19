@@ -83,7 +83,7 @@ extension PlannerController: ViewDrawable {
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(taskView.snp.bottom)
-            make.height.equalTo(80)
+            make.height.equalTo(110)
         }
     }
 }
