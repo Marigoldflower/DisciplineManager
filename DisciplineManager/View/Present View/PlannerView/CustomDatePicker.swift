@@ -23,22 +23,16 @@ final class CustomDatePicker: UIView {
         return imageView
     }()
     
-    private lazy var timePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        let datePickerContainer = UIView()
-        datePickerContainer.backgroundColor = .white
-        datePickerContainer.addSubview(datePicker)
-        datePicker.datePickerMode = .time
-        datePicker.date = Date()
-        datePicker.timeZone = TimeZone.current
-        datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
-        datePicker.setValue(UIColor.disciplinePurple, forKeyPath: "textColor")
-        return datePicker
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .LINESeedRegular(size: 16)
+        label.text = "오늘 시간은"
+        return label
     }()
     
     // MARK: - Stack
     private lazy var customDatePicker: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [clockImageView, timePicker])
+        let stack = UIStackView(arrangedSubviews: [clockImageView, timeLabel])
         stack.axis = .horizontal
         stack.spacing = 1
         stack.distribution = .fill
@@ -85,7 +79,7 @@ extension CustomDatePicker: ViewDrawable {
             make.width.height.equalTo(25)
         }
         
-        timePicker.snp.makeConstraints { make in
+        timeLabel.snp.makeConstraints { make in
             make.width.equalTo(200)
             make.height.equalTo(40)
         }

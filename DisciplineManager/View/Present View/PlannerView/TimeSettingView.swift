@@ -30,7 +30,7 @@ final class TimeSettingView: UIView {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 18)
         label.textColor = .disciplineBlack
-        label.text = "해야 할 일"
+        label.text = "종료 시간"
         return label
     }()
     

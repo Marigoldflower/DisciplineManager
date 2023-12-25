@@ -168,11 +168,11 @@ extension TodoController: Bindable {
     }
     
     private func setNavigationController(appearance: UINavigationBarAppearance) {
-        let navigation = UINavigationController(rootViewController: plannerController)
-        navigation.modalPresentationStyle = .fullScreen
-        navigation.navigationBar.standardAppearance = appearance
-        navigation.navigationBar.scrollEdgeAppearance = appearance
-        present(navigation, animated: true)
+            let navigation = UINavigationController(rootViewController: plannerController)
+            navigation.modalPresentationStyle = .fullScreen
+            navigation.navigationBar.standardAppearance = appearance
+            navigation.navigationBar.scrollEdgeAppearance = appearance
+            present(navigation, animated: true)
     }
     
     private func setNavigationTitleAndButton(at view: PlannerController) {
