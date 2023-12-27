@@ -21,8 +21,10 @@ final class TimeSettingView: UIView {
     
     private lazy var startDatePicker: CustomDatePicker = {
         let datePicker = CustomDatePicker()
-        datePicker.layer.borderWidth = 1.0
         datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
+        datePicker.layer.borderWidth = 1.0
+        datePicker.layer.cornerRadius = 10
+        datePicker.layer.masksToBounds = true
         return datePicker
     }()
     
@@ -34,12 +36,12 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    private lazy var endDatePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .time
-        datePicker.date = Date()
-        datePicker.timeZone = TimeZone.current
-        datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
+    private lazy var endDatePicker: CustomDatePicker = {
+        let datePicker = CustomDatePicker()
+        datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
+        datePicker.layer.borderWidth = 1.0
+        datePicker.layer.cornerRadius = 10
+        datePicker.layer.masksToBounds = true
         return datePicker
     }()
     
@@ -98,18 +100,16 @@ extension TimeSettingView: ViewDrawable {
         
         totalStack.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading).offset(20)
-//            make.trailing.equalTo(self.snp.trailing).offset(-20)
             make.top.equalTo(self.snp.top).offset(20)
-            
         }
         
         startDatePicker.snp.makeConstraints { make in
-            make.width.equalTo(130)
+            make.width.equalTo(160)
             make.height.equalTo(40)
         }
         
         endDatePicker.snp.makeConstraints { make in
-            make.width.equalTo(100)
+            make.width.equalTo(160)
             make.height.equalTo(40)
         }
     }

@@ -18,26 +18,19 @@ final class CustomDatePicker: UIView {
     // MARK: - UI Components
     private let clockImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "clock")
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .large)
+        let largeCloseImage = UIImage(systemName: "clock", withConfiguration: largeConfig)
+        imageView.image = largeCloseImage
         imageView.tintColor = .disciplinePurple
         return imageView
     }()
     
-    private let timeLabel: UILabel = {
-        let label = UILabel()
-        label.font = .LINESeedRegular(size: 16)
-        label.text = "오늘 시간은"
-        return label
-    }()
-    
-    // MARK: - Stack
-    private lazy var customDatePicker: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [clockImageView, timeLabel])
-        stack.axis = .horizontal
-        stack.spacing = 1
-        stack.distribution = .fill
-        stack.alignment = .center
-        return stack
+    private let timeSelect: UIButton = {
+        let button = UIButton()
+        button.setTitle("06:00 PM", for: .normal)
+        button.setTitleColor(.disciplineBlack, for: .normal)
+        button.titleLabel?.font = .LINESeedRegular(size: 15)
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -69,52 +62,16 @@ extension CustomDatePicker: ViewDrawable {
     }
     
     func setAutolayout() {
-        [customDatePicker].forEach { self.addSubview($0) }
-        
-        customDatePicker.snp.makeConstraints { make in
-            make.center.equalTo(self.snp.center)
-        }
+        [clockImageView, timeSelect].forEach { self.addSubview($0) }
         
         clockImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(25)
+            make.centerY.equalTo(self.snp.centerY)
+            make.leading.equalTo(self.snp.leading).offset(10)
         }
         
-        timeLabel.snp.makeConstraints { make in
-            make.width.equalTo(200)
-            make.height.equalTo(40)
+        timeSelect.snp.makeConstraints { make in
+            make.centerY.equalTo(self.snp.centerY)
+            make.leading.equalTo(clockImageView.snp.trailing).offset(10)
         }
-    }
-}
-
-extension CustomDatePicker: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if component == 0 {
-            return periods.count
-        } else if component == 1 {
-            return hours.count
-        } else {
-            return minutes.count
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if component == 0 {
-            return periods[row]
-        } else if component == 1 {
-            return "\(hours[row]) 시"
-        } else {
-            return String(format: "%02d 분", minutes[row])
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let selectedPeriod = periods[pickerView.selectedRow(inComponent: 0)]
-        let selectedHour = hours[pickerView.selectedRow(inComponent: 1)]
-        let selectedMinute = minutes[pickerView.selectedRow(inComponent: 2)]
-        print("Selected time: \(selectedPeriod) \(selectedHour)시 \(selectedMinute)분")
     }
 }
