@@ -19,7 +19,7 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    private lazy var startDatePicker: CustomDatePicker = {
+    lazy var startDatePicker: CustomDatePicker = {
         let datePicker = CustomDatePicker()
         datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
         datePicker.layer.borderWidth = 1.0
@@ -36,7 +36,7 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    private lazy var endDatePicker: CustomDatePicker = {
+    lazy var endDatePicker: CustomDatePicker = {
         let datePicker = CustomDatePicker()
         datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
         datePicker.layer.borderWidth = 1.0
@@ -75,14 +75,7 @@ final class TimeSettingView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    // MARK: - objc
-    @objc func datePickerChanged(picker: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        let selectedTime = timeFormatter.string(from: picker.date)
-        print("Selected time: \(selectedTime)")
-    }
+   
 }
 
 extension TimeSettingView: ViewDrawable {

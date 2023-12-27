@@ -7,8 +7,15 @@
 
 import UIKit
 import SnapKit
+import ReactorKit
+import RxCocoa
 
-final class PlannerController: UIViewController {
+final class PlannerController: UIViewController, View {
+    // MARK: - DisposeBag
+    var disposeBag = DisposeBag()
+    
+    // MARK: - ViewModel
+    let plannerViewModel = PlannerViewModel()
     
     // MARK: - UI Components
     private let taskView: TaskView = {
@@ -16,7 +23,7 @@ final class PlannerController: UIViewController {
         return view
     }()
     
-    private let timeSettingView: TimeSettingView = {
+    let timeSettingView: TimeSettingView = {
         let view = TimeSettingView()
         return view
     }()
@@ -54,10 +61,41 @@ final class PlannerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reactor = plannerViewModel
         configureUI()
     }
-
 }
+
+extension PlannerController: Bindable {
+    func bind(reactor: PlannerViewModel) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    func bindAction(_ reactor: Reactor) {
+        timeSettingView.startDatePicker.rx.tap
+            .map { PlannerViewModel.Action.timeSelectButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        timeSettingView.endDatePicker.rx.tap
+            .map { PlannerViewModel.Action.timeSelectButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.datePickerIsPresented }
+            .subscribe(onNext: { [weak self] timeSelectButtonTapped in
+                if timeSelectButtonTapped {
+                    print("버튼이 눌렸습니다!")
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
 
 extension PlannerController: ViewDrawable {
     func configureUI() {

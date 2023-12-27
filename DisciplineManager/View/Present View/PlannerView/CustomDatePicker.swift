@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class CustomDatePicker: UIView {
+final class CustomDatePicker: UIButton {
     
     // MARK: - Time Data
     let periods = ["오전", "오후"]
@@ -25,12 +25,12 @@ final class CustomDatePicker: UIView {
         return imageView
     }()
     
-    private let timeSelect: UIButton = {
-        let button = UIButton()
-        button.setTitle("06:00 PM", for: .normal)
-        button.setTitleColor(.disciplineBlack, for: .normal)
-        button.titleLabel?.font = .LINESeedRegular(size: 15)
-        return button
+    private let timeSelect: UILabel = {
+        let label = UILabel()
+        label.text = "06:00 PM"
+        label.textColor = .disciplineBlack
+        label.font = .LINESeedRegular(size: 15)
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -42,13 +42,6 @@ final class CustomDatePicker: UIView {
         fatalError()
     }
     
-    // MARK: - objc
-    @objc func datePickerChanged(picker: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        let selectedTime = timeFormatter.string(from: picker.date)
-        print("Selected time: \(selectedTime)")
-    }
 }
 
 extension CustomDatePicker: ViewDrawable {
