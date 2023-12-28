@@ -19,8 +19,8 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    lazy var startDatePicker: CustomDatePicker = {
-        let datePicker = CustomDatePicker()
+    lazy var startDatePicker: DatePickerButton = {
+        let datePicker = DatePickerButton()
         datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
         datePicker.layer.borderWidth = 1.0
         datePicker.layer.cornerRadius = 10
@@ -36,8 +36,8 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    lazy var endDatePicker: CustomDatePicker = {
-        let datePicker = CustomDatePicker()
+    lazy var endDatePicker: DatePickerButton = {
+        let datePicker = DatePickerButton()
         datePicker.layer.borderColor = UIColor.disciplinePurple.cgColor
         datePicker.layer.borderWidth = 1.0
         datePicker.layer.cornerRadius = 10

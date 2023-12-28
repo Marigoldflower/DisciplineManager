@@ -17,6 +17,9 @@ final class PlannerController: UIViewController, View {
     // MARK: - ViewModel
     let plannerViewModel = PlannerViewModel()
     
+    // MARK: - PresentView
+    var customDatePickerController: CustomDatePickerController! = nil
+    
     // MARK: - UI Components
     private let taskView: TaskView = {
         let view = TaskView()
@@ -44,7 +47,7 @@ final class PlannerController: UIViewController, View {
         button.titleLabel?.font = .LINESeedRegular(size: 18.0)
         button.titleLabel?.textColor = .white
         button.backgroundColor = .disciplinePurple
-        button.layer.cornerRadius = 17
+        button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
         return button
     }()
@@ -89,10 +92,16 @@ extension PlannerController: Bindable {
             .map { $0.datePickerIsPresented }
             .subscribe(onNext: { [weak self] timeSelectButtonTapped in
                 if timeSelectButtonTapped {
-                    print("버튼이 눌렸습니다!")
+                    print("Time Select Button이 클릭되었습니다.")
+                    self?.presentCustomDatePickerController()
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func presentCustomDatePickerController() {
+        customDatePickerController = CustomDatePickerController()
+        present(customDatePickerController, animated: true)
     }
 }
 
@@ -122,6 +131,13 @@ extension PlannerController: ViewDrawable {
             make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(taskView.snp.bottom)
             make.height.equalTo(110)
+        }
+        
+        createPlanButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading).offset(20)
+            make.trailing.equalTo(view.snp.trailing).offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            make.height.equalTo(45)
         }
     }
 }
