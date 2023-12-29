@@ -25,6 +25,7 @@ final class TimeSettingView: UIView {
         datePicker.layer.borderWidth = 1.0
         datePicker.layer.cornerRadius = 10
         datePicker.layer.masksToBounds = true
+        datePicker.timeSelect.text = setStartTimeLabel()
         return datePicker
     }()
     
@@ -42,6 +43,7 @@ final class TimeSettingView: UIView {
         datePicker.layer.borderWidth = 1.0
         datePicker.layer.cornerRadius = 10
         datePicker.layer.masksToBounds = true
+        datePicker.timeSelect.text = setEndTimeLabel()
         return datePicker
     }()
     
@@ -76,6 +78,22 @@ final class TimeSettingView: UIView {
         fatalError()
     }
    
+    private func setStartTimeLabel() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a hh:mm"
+        let startTime = formatter.string(from: Date())
+        
+        return startTime
+    }
+    
+    private func setEndTimeLabel() -> String {
+        let threeHoursLater = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a hh:mm"
+        let endTime = formatter.string(from: threeHoursLater ?? Date())
+        
+        return endTime
+    }
 }
 
 extension TimeSettingView: ViewDrawable {

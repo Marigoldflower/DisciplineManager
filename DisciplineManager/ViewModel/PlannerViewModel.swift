@@ -11,15 +11,18 @@ import ReactorKit
 final class PlannerViewModel: Reactor {
     
     enum Action {
-        case timeSelectButtonTapped
+        case startDatePickerButtonTapped
+        case endDatePickerButtonTapped
     }
     
     enum Mutation {
-        case presentDatePicker(Bool)
+        case presentStartDatePicker(Bool)
+        case presentEndDatePicker(Bool)
     }
 
     struct State {
-        var datePickerIsPresented: Bool = false
+        var startDatePickerIsPresented: Bool = false
+        var endDatePickerIsPresented: Bool = false
     }
     
     var initialState: State
@@ -30,10 +33,16 @@ final class PlannerViewModel: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .timeSelectButtonTapped:
+        case .startDatePickerButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.presentDatePicker(true)),
-                Observable.just(Mutation.presentDatePicker(false))
+                Observable.just(Mutation.presentStartDatePicker(true)),
+                Observable.just(Mutation.presentStartDatePicker(false))
+            ])
+            
+        case .endDatePickerButtonTapped:
+            return Observable.concat([
+                Observable.just(Mutation.presentEndDatePicker(true)),
+                Observable.just(Mutation.presentEndDatePicker(false))
             ])
         }
     }
@@ -42,8 +51,11 @@ final class PlannerViewModel: Reactor {
         var newState = state
         
         switch mutation {
-        case .presentDatePicker(let value):
-            newState.datePickerIsPresented = value
+        case .presentStartDatePicker(let value):
+            newState.startDatePickerIsPresented = value
+            
+        case .presentEndDatePicker(let value):
+            newState.endDatePickerIsPresented = value
         }
         
         return newState

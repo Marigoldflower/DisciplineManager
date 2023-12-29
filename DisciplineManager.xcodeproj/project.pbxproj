@@ -18,7 +18,7 @@
 		EA208F392B2DCBA300CA3A67 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F382B2DCBA300CA3A67 /* AlertView.swift */; };
 		EA208F3B2B2F155F00CA3A67 /* DatePickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F3A2B2F155F00CA3A67 /* DatePickerButton.swift */; };
 		EA6397642B3C400400DF4702 /* PlannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397632B3C400400DF4702 /* PlannerViewModel.swift */; };
-		EA6397662B3D802B00DF4702 /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397652B3D802B00DF4702 /* CustomDatePicker.swift */; };
+		EA6397902B3EAE6800DF4702 /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63978F2B3EAE6800DF4702 /* CustomDatePickerView.swift */; };
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
 		EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* TodoController.swift */; };
@@ -58,7 +58,7 @@
 		EA208F382B2DCBA300CA3A67 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		EA208F3A2B2F155F00CA3A67 /* DatePickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerButton.swift; sourceTree = "<group>"; };
 		EA6397632B3C400400DF4702 /* PlannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerViewModel.swift; sourceTree = "<group>"; };
-		EA6397652B3D802B00DF4702 /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
+		EA63978F2B3EAE6800DF4702 /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
+				EA63978F2B3EAE6800DF4702 /* CustomDatePickerView.swift */,
 				EA208F332B2DCB1C00CA3A67 /* PlannerView */,
 			);
 			path = "Present View";
@@ -139,7 +140,6 @@
 				EA208F312B2DCB1800CA3A67 /* TaskView.swift */,
 				EA208F342B2DCB5100CA3A67 /* TimeSettingView.swift */,
 				EA208F3A2B2F155F00CA3A67 /* DatePickerButton.swift */,
-				EA6397652B3D802B00DF4702 /* CustomDatePicker.swift */,
 				EA208F362B2DCB8500CA3A67 /* PriorityView.swift */,
 				EA208F382B2DCBA300CA3A67 /* AlertView.swift */,
 			);
@@ -377,7 +377,6 @@
 				EADB7B172B0C745E005015B8 /* CalendarSheetController.swift in Sources */,
 				EACF07442AFA26D00000CD2E /* MainTabBarController.swift in Sources */,
 				EA208F322B2DCB1800CA3A67 /* TaskView.swift in Sources */,
-				EA6397662B3D802B00DF4702 /* CustomDatePicker.swift in Sources */,
 				EA208F302B2C954100CA3A67 /* PlannerController.swift in Sources */,
 				EAE6696C2AFB743B00E1C378 /* Bindable.swift in Sources */,
 				EADB7B1E2B0DB47B005015B8 /* TodoHeaderView.swift in Sources */,
@@ -385,6 +384,7 @@
 				EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */,
 				EADB7B1B2B0DB35E005015B8 /* ToDoListCell.swift in Sources */,
 				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
+				EA6397902B3EAE6800DF4702 /* CustomDatePickerView.swift in Sources */,
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
 				EA208F352B2DCB5100CA3A67 /* TimeSettingView.swift in Sources */,
 				EA208F3B2B2F155F00CA3A67 /* DatePickerButton.swift in Sources */,

@@ -15,4 +15,5 @@ extension UIColor {
     static let disciplineYellow = UIColor(red: 0.98, green: 0.79, blue: 0.29, alpha: 1.00)
     static let disciplineBlue = UIColor(red: 0.41, green: 0.73, blue: 0.95, alpha: 1.00)
     static let disciplineBlack = UIColor(red: 0.06, green: 0.16, blue: 0.32, alpha: 1.00)
+    static let disciplineCustomDateBackground = UIColor(red: 0.91, green: 0.91, blue: 1.00, alpha: 1.00)
 }

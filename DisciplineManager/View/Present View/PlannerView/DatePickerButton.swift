@@ -20,9 +20,8 @@ final class DatePickerButton: UIButton {
         return imageView
     }()
     
-    private let timeSelect: UILabel = {
+    let timeSelect: UILabel = {
         let label = UILabel()
-        label.text = "06:00 PM"
         label.textColor = .disciplineBlack
         label.font = .LINESeedRegular(size: 15)
         return label
