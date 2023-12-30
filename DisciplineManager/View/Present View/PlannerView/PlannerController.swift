@@ -18,7 +18,7 @@ final class PlannerController: UIViewController, View {
     let plannerViewModel = PlannerViewModel()
     
     // MARK: - PresentView
-    var customDatePicker: CustomDatePickerView! = nil
+    
     
     // MARK: - UI Components
     private let taskView: TaskView = {
@@ -67,6 +67,8 @@ final class PlannerController: UIViewController, View {
         reactor = plannerViewModel
         configureUI()
     }
+    
+    
 }
 
 extension PlannerController: Bindable {
@@ -76,49 +78,41 @@ extension PlannerController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
-        timeSettingView.startDatePicker.rx.tap
-            .map { PlannerViewModel.Action.startDatePickerButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        timeSettingView.endDatePicker.rx.tap
-            .map { PlannerViewModel.Action.endDatePickerButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+//        timeSettingView.startDatePicker.rx.tap
+//            .map { PlannerViewModel.Action.startDatePickerButtonTapped }
+//            .bind(to: reactor.action)
+//            .disposed(by: disposeBag)
+//
+//        timeSettingView.endDatePicker.rx.tap
+//            .map { PlannerViewModel.Action.endDatePickerButtonTapped }
+//            .bind(to: reactor.action)
+//            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
-        reactor.state
-            .map { $0.startDatePickerIsPresented }
-            .subscribe(onNext: { [weak self] startDateButtonTapped in
-                if startDateButtonTapped {
-                    print("Start Button이 눌렸습니다")
-                    self?.presentStartDatePicker()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map { $0.endDatePickerIsPresented }
-            .subscribe(onNext: { [weak self] endDateButtonTapped in
-                if endDateButtonTapped {
-                    print("End Button이 눌렸습니다")
-                    self?.presentEndDatePicker()
-                }
-            })
-            .disposed(by: disposeBag)
+//        reactor.state
+//            .map { $0.startDatePickerIsPresented }
+//            .subscribe(onNext: { [weak self] startDateButtonTapped in
+//                if startDateButtonTapped {
+//                    print("Start Button이 눌렸습니다")
+//                    self?.presentStartDatePicker()
+//                }
+//            })
+//            .disposed(by: disposeBag)
+//        
+//        reactor.state
+//            .map { $0.endDatePickerIsPresented }
+//            .subscribe(onNext: { [weak self] endDateButtonTapped in
+//                if endDateButtonTapped {
+//                    print("End Button이 눌렸습니다")
+//                    self?.presentEndDatePicker()
+//                }
+//            })
+//            .disposed(by: disposeBag)
     }
     
     private func presentStartDatePicker() {
-        customDatePicker = CustomDatePickerView()
         
-        [customDatePicker].forEach { view.addSubview($0) }
-        
-        customDatePicker.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading).offset(20)
-            make.top.equalTo(timeSettingView.snp.bottom)
-            make.width.height.equalTo(160)
-        }
     }
     
     private func presentEndDatePicker() {
