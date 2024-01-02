@@ -19,14 +19,16 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    private lazy var startDateView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    lazy var startDatePickerEntity: CustomDatePickerEntity = {
-        let datePickerEntity = CustomDatePickerEntity()
-        return datePickerEntity
+    lazy var startDateButton: CustomDatePickerView = {
+        let button = UIButton()
+        button.layer.borderWidth = 1.0
+        button.layer.borderColor = UIColor.disciplinePurple.cgColor
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        let clockImage = UIImage(systemName: "clock")?.withTintColor(.disciplinePurple)
+        button.setImage(clockImage, for: .normal)
+        button.setTitle(setStartTimeLabel(), for: .normal)
+        return button
     }()
     
     private let endTimeLabel: UILabel = {
@@ -37,26 +39,25 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    private lazy var endDateView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    lazy var endDatePickerEntity: CustomDatePickerEntity = {
-        let datePickerEntity = CustomDatePickerEntity()
-        return datePickerEntity
+    lazy var endDateButton: UIButton = {
+        let button = UIButton()
+        button.layer.borderWidth = 1.0
+        button.layer.borderColor = UIColor.disciplinePurple.cgColor
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        return button
     }()
     
     // MARK: - StackView
     private lazy var startStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [startTimeLabel, startDateView])
+        let stack = UIStackView(arrangedSubviews: [startTimeLabel, startDateButton])
         stack.axis = .vertical
         stack.spacing = 15
         return stack
     }()
     
     private lazy var endStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [endTimeLabel, endDateView])
+        let stack = UIStackView(arrangedSubviews: [endTimeLabel, endDateButton])
         stack.axis = .vertical
         stack.spacing = 15
         return stack
@@ -100,10 +101,6 @@ extension TimeSettingView: ViewDrawable {
     func configureUI() {
         setBackgroundColor()
         setAutolayout()
-        setTextFieldUI(of: startTextField)
-        setTextFieldUI(of: endTextField)
-        makeCustom(datePicker: startDatePicker, with: startTextField)
-        makeCustom(datePicker: endDatePicker, with: endTextField)
     }
     
     func setBackgroundColor() {
@@ -118,63 +115,14 @@ extension TimeSettingView: ViewDrawable {
             make.top.equalTo(self.snp.top).offset(20)
         }
         
-        endDateView.snp.makeConstraints { make in
+        startDateButton.snp.makeConstraints { make in
             make.width.equalTo(160)
             make.height.equalTo(40)
         }
         
-        endTextField.snp.makeConstraints { make in
+        endDateButton.snp.makeConstraints { make in
             make.width.equalTo(160)
             make.height.equalTo(40)
         }
-    }
-    
-    private func makeCustom(datePicker: CustomDatePicker, with textField: UITextField) {
-        textField.inputView = datePicker.inputView
-    }
-    
-    private func setTextFieldUI(of textField: UITextField) {
-        setTextFieldBorder(of: textField)
-        setTextFieldPadding(of: textField)
-        setTextFieldImage(of: textField)
-        setTextFieldText(of: textField)
-        removeTextFieldCursor(of: textField)
-    }
-    
-    private func setTextFieldBorder(of textField: UITextField) {
-        textField.layer.cornerRadius = 15
-        textField.layer.borderColor = UIColor.disciplinePurple.cgColor
-        textField.layer.borderWidth = 1.0
-    }
-    
-    private func setTextFieldPadding(of textField: UITextField) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 35, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-    }
-    
-    private func setTextFieldImage(of textField: UITextField) {
-        let imageView = UIImageView()
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .large)
-        let largeCloseImage = UIImage(systemName: "clock", withConfiguration: largeConfig)
-        imageView.image = largeCloseImage
-        imageView.tintColor = .disciplinePurple
-        textField.rightView = imageView
-        textField.rightViewMode = .always
-    }
-    
-    private func setTextFieldText(of textField: UITextField) {
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.disciplineBlack])
-        textField.font = .LINESeedRegular(size: 15)
-    }
-    
-    private func removeTextFieldCursor(of textField: UITextField) {
-        textField.tintColor = .clear
-    }
-}
-
-extension TimeSettingView: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return false
     }
 }

@@ -74,6 +74,7 @@ extension CalendarSheetController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
+        
         exitButton.rx.tap
             .map { CalendarSheetViewModel.Action.exitButtonTapped }
             .bind(to: reactor.action)

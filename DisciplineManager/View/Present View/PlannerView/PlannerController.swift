@@ -78,37 +78,22 @@ extension PlannerController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
-//        timeSettingView.startDatePicker.rx.tap
-//            .map { PlannerViewModel.Action.startDatePickerButtonTapped }
-//            .bind(to: reactor.action)
-//            .disposed(by: disposeBag)
-//
-//        timeSettingView.endDatePicker.rx.tap
-//            .map { PlannerViewModel.Action.endDatePickerButtonTapped }
-//            .bind(to: reactor.action)
-//            .disposed(by: disposeBag)
+        timeSettingView.startDateButton.rx.tap
+            .map { PlannerViewModel.Action.startDatePickerButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
-//        reactor.state
-//            .map { $0.startDatePickerIsPresented }
-//            .subscribe(onNext: { [weak self] startDateButtonTapped in
-//                if startDateButtonTapped {
-//                    print("Start Button이 눌렸습니다")
-//                    self?.presentStartDatePicker()
-//                }
-//            })
-//            .disposed(by: disposeBag)
-//        
-//        reactor.state
-//            .map { $0.endDatePickerIsPresented }
-//            .subscribe(onNext: { [weak self] endDateButtonTapped in
-//                if endDateButtonTapped {
-//                    print("End Button이 눌렸습니다")
-//                    self?.presentEndDatePicker()
-//                }
-//            })
-//            .disposed(by: disposeBag)
+        reactor.state
+            .map { $0.startDatePickerIsPresented }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] startDateButtonTapped in
+                if startDateButtonTapped {
+                    print("시작 버튼이 눌렸습니다")
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func presentStartDatePicker() {
