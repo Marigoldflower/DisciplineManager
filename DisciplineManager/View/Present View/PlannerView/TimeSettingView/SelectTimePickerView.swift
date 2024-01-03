@@ -29,7 +29,7 @@ final class SelectTimePickerView: UIView {
     private lazy var stackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [clockImage, currentTime])
         stack.axis = .horizontal
-        stack.spacing = 2
+        stack.spacing = 10
         return stack
     }()
 

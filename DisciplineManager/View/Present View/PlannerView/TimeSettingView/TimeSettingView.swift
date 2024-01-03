@@ -8,28 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol CurrentTimeDelegate: AnyObject {
-    func sendCurrentTime(_ time: String)
-}
-
 final class TimeSettingView: UIView {
-    
-    // MARK: - Data Sender
-    var startTimeSender = String() {
-        didSet {
-            print("현재 들어온 값은 \(startTimeSender)")
-            currentTimeDelegate?.sendCurrentTime(startTimeSender)
-        }
-    }
-    var endTimeSender = String() {
-        didSet {
-            currentTimeDelegate?.sendCurrentTime(endTimeSender)
-        }
-    }
-    
-    // MARK: - Delegate
-    weak var currentTimeDelegate: CurrentTimeDelegate?
-    
     // MARK: - UI Components
     private let startTimeLabel: UILabel = {
         let label = UILabel()
@@ -91,22 +70,16 @@ final class TimeSettingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        sendTimeData()
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    private func sendTimeData() {
-        startTimeSender = setStartTimeLabel()
-        endTimeSender = setEndTimeLabel()
-    }
    
     private func setStartTimeLabel() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "  a hh:mm"
+        formatter.dateFormat = "a hh:mm"
         let startTime = formatter.string(from: Date())
         
         return startTime
@@ -115,12 +88,11 @@ final class TimeSettingView: UIView {
     private func setEndTimeLabel() -> String {
         let threeHoursLater = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
         let formatter = DateFormatter()
-        formatter.dateFormat = "  a hh:mm"
+        formatter.dateFormat = "a hh:mm"
         let endTime = formatter.string(from: threeHoursLater ?? Date())
         
         return endTime
     }
-    
 }
 
 extension TimeSettingView: ViewDrawable {

@@ -28,6 +28,12 @@ final class TimePickerView: UIView {
     let minutes = (0...59).map { String(format: "%02d", $0) }
     
     // MARK: - UI Components
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setTitle("", for: .normal)
+        return button
+    }()
+    
     private lazy var pickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.delegate = self
@@ -49,7 +55,9 @@ final class TimePickerView: UIView {
         let calendar = Calendar.current
         
         let hour = calendar.component(.hour, from: time)
+        print("hour는 \(hour)")
         let minute = calendar.component(.minute, from: time)
+        print("minute는 \(minute)")
         
         let amPmRow = hour < 12 ? 0 : 1
         pickerView.selectRow(amPmRow, inComponent: 0, animated: false)

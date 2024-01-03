@@ -11,7 +11,6 @@ import ReactorKit
 import RxCocoa
 
 final class PlannerController: UIViewController, View {
-    
     // MARK: - Tap Gestures
     lazy var startTapGestures = UITapGestureRecognizer(target: self, action: #selector(startTimeIsTapped))
     lazy var endTapGestures = UITapGestureRecognizer(target: self, action: #selector(endTimeIsTapped))
@@ -71,7 +70,6 @@ final class PlannerController: UIViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         setTapGestures()
-//        setCurrentTimeDelegate()
         reactor = plannerViewModel
         configureUI()
     }
@@ -97,7 +95,7 @@ final class PlannerController: UIViewController, View {
     private func setTapGestures() {
         timeSettingView.startDateButton.addGestureRecognizer(startTapGestures)
         timeSettingView.endDateButton.addGestureRecognizer(endTapGestures)
-        timeSettingView.currentTimeDelegate = self
+        
     }
     
     // MARK: - objc
@@ -108,6 +106,8 @@ final class PlannerController: UIViewController, View {
         }
         
         setStartTimePicker()
+        sendStartTimeToPicker()
+        
     }
     
     @objc func endTimeIsTapped() {
@@ -117,6 +117,7 @@ final class PlannerController: UIViewController, View {
         }
         
         setEndTimePicker()
+        sendEndTimeToPicker()
     }
     
     private func setStartTimePicker() {
@@ -157,6 +158,16 @@ final class PlannerController: UIViewController, View {
         UIView.animate(withDuration: 0.3) {
             self.endTimePicker.alpha = 1
         }
+    }
+    
+    private func sendStartTimeToPicker() {
+        let currentTime = Date()
+        startTimePicker.startTime = currentTime
+    }
+    
+    private func sendEndTimeToPicker() {
+        guard let threeHoursLater = Calendar.current.date(byAdding: .hour, value: 3, to: Date()) else { return }
+        endTimePicker.endTime = threeHoursLater
     }
 }
 
@@ -210,11 +221,5 @@ extension PlannerController: ViewDrawable {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             make.height.equalTo(45)
         }
-    }
-}
-
-extension PlannerController: CurrentTimeDelegate {
-    func sendCurrentTime(_ time: String) {
-        print("현재 들어온 시간은 \(time)")
     }
 }
