@@ -1,15 +1,14 @@
 //
-//  DatePickerView.swift
+//  SelectTimePickerView.swift
 //  DisciplineManager
 //
-//  Created by 황홍필 on 2023/12/29.
+//  Created by 황홍필 on 2024/01/02.
 //
 
 import UIKit
 import SnapKit
 
-// 여기에 "clock" 이미지와 현재 시간을 적은 label을 만들면 된다.
-final class CustomDatePickerView: UIView {
+final class SelectTimePickerView: UIView {
     
     // MARK: - UI Components
     private let clockImage: UIImageView = {
@@ -19,7 +18,7 @@ final class CustomDatePickerView: UIView {
         return imageView
     }()
 
-    let currentTime: UILabel = {
+    lazy var currentTime: UILabel = {
         let label = UILabel()
         label.font = .LINESeedRegular(size: 16)
         label.textColor = .disciplineBlack
@@ -44,7 +43,7 @@ final class CustomDatePickerView: UIView {
     }
 }
 
-extension CustomDatePickerView: ViewDrawable {
+extension SelectTimePickerView: ViewDrawable {
     func configureUI() {
         setBackgroundColor()
         setAutolayout()
@@ -63,6 +62,3 @@ extension CustomDatePickerView: ViewDrawable {
         }
     }
 }
-
-
-

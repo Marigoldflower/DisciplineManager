@@ -8,7 +8,27 @@
 import UIKit
 import SnapKit
 
+protocol CurrentTimeDelegate: AnyObject {
+    func sendCurrentTime(_ time: String)
+}
+
 final class TimeSettingView: UIView {
+    
+    // MARK: - Data Sender
+    var startTimeSender = String() {
+        didSet {
+            print("현재 들어온 값은 \(startTimeSender)")
+            currentTimeDelegate?.sendCurrentTime(startTimeSender)
+        }
+    }
+    var endTimeSender = String() {
+        didSet {
+            currentTimeDelegate?.sendCurrentTime(endTimeSender)
+        }
+    }
+    
+    // MARK: - Delegate
+    weak var currentTimeDelegate: CurrentTimeDelegate?
     
     // MARK: - UI Components
     private let startTimeLabel: UILabel = {
@@ -19,16 +39,14 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    lazy var startDateButton: CustomDatePickerView = {
-        let button = UIButton()
-        button.layer.borderWidth = 1.0
-        button.layer.borderColor = UIColor.disciplinePurple.cgColor
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        let clockImage = UIImage(systemName: "clock")?.withTintColor(.disciplinePurple)
-        button.setImage(clockImage, for: .normal)
-        button.setTitle(setStartTimeLabel(), for: .normal)
-        return button
+    lazy var startDateButton: SelectTimePickerView = {
+        let view = SelectTimePickerView()
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor.disciplinePurple.cgColor
+        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
+        view.currentTime.text = setStartTimeLabel()
+        return view
     }()
     
     private let endTimeLabel: UILabel = {
@@ -39,13 +57,14 @@ final class TimeSettingView: UIView {
         return label
     }()
     
-    lazy var endDateButton: UIButton = {
-        let button = UIButton()
-        button.layer.borderWidth = 1.0
-        button.layer.borderColor = UIColor.disciplinePurple.cgColor
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        return button
+    lazy var endDateButton: SelectTimePickerView = {
+        let view = SelectTimePickerView()
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor.disciplinePurple.cgColor
+        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
+        view.currentTime.text = setEndTimeLabel()
+        return view
     }()
     
     // MARK: - StackView
@@ -72,11 +91,17 @@ final class TimeSettingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        sendTimeData()
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    private func sendTimeData() {
+        startTimeSender = setStartTimeLabel()
+        endTimeSender = setEndTimeLabel()
     }
    
     private func setStartTimeLabel() -> String {
@@ -95,6 +120,7 @@ final class TimeSettingView: UIView {
         
         return endTime
     }
+    
 }
 
 extension TimeSettingView: ViewDrawable {

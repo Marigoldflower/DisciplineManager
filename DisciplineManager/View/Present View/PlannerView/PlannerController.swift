@@ -11,6 +11,11 @@ import ReactorKit
 import RxCocoa
 
 final class PlannerController: UIViewController, View {
+    
+    // MARK: - Tap Gestures
+    lazy var startTapGestures = UITapGestureRecognizer(target: self, action: #selector(startTimeIsTapped))
+    lazy var endTapGestures = UITapGestureRecognizer(target: self, action: #selector(endTimeIsTapped))
+    
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
     
@@ -18,7 +23,8 @@ final class PlannerController: UIViewController, View {
     let plannerViewModel = PlannerViewModel()
     
     // MARK: - PresentView
-    
+    var startTimePicker: TimePickerView! = nil
+    var endTimePicker: TimePickerView! = nil
     
     // MARK: - UI Components
     private let taskView: TaskView = {
@@ -26,7 +32,7 @@ final class PlannerController: UIViewController, View {
         return view
     }()
     
-    let timeSettingView: TimeSettingView = {
+    lazy var timeSettingView: TimeSettingView = {
         let view = TimeSettingView()
         return view
     }()
@@ -64,11 +70,94 @@ final class PlannerController: UIViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setTapGestures()
+//        setCurrentTimeDelegate()
         reactor = plannerViewModel
         configureUI()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        
+        if startTimePicker != nil {
+            if touch != startTimePicker {
+                startTimePicker.removeFromSuperview()
+                startTimePicker = nil
+            }
+        }
+        
+        if endTimePicker != nil {
+            if touch != endTimePicker {
+                endTimePicker.removeFromSuperview()
+                endTimePicker = nil
+            }
+        }
+    }
     
+    private func setTapGestures() {
+        timeSettingView.startDateButton.addGestureRecognizer(startTapGestures)
+        timeSettingView.endDateButton.addGestureRecognizer(endTapGestures)
+        timeSettingView.currentTimeDelegate = self
+    }
+    
+    // MARK: - objc
+    @objc func startTimeIsTapped() {
+        if endTimePicker != nil {
+            endTimePicker.removeFromSuperview()
+            endTimePicker = nil
+        }
+        
+        setStartTimePicker()
+    }
+    
+    @objc func endTimeIsTapped() {
+        if startTimePicker != nil {
+            startTimePicker.removeFromSuperview()
+            startTimePicker = nil
+        }
+        
+        setEndTimePicker()
+    }
+    
+    private func setStartTimePicker() {
+        startTimePicker = TimePickerView()
+        startTimePicker.layer.cornerRadius = 15
+        startTimePicker.layer.masksToBounds = true
+        startTimePicker.alpha = 0
+
+        [startTimePicker].forEach { view.addSubview($0) }
+        
+        startTimePicker.snp.makeConstraints { make in
+            make.leading.equalTo(timeSettingView.startDateButton.snp.leading)
+            make.top.equalTo(timeSettingView.snp.bottom)
+            make.width.equalTo(160)
+            make.height.equalTo(130)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.startTimePicker.alpha = 1
+        }
+    }
+    
+    private func setEndTimePicker() {
+        endTimePicker = TimePickerView()
+        endTimePicker.layer.cornerRadius = 15
+        endTimePicker.layer.masksToBounds = true
+        endTimePicker.alpha = 0
+        
+        [endTimePicker].forEach { view.addSubview($0) }
+        
+        endTimePicker.snp.makeConstraints { make in
+            make.trailing.equalTo(timeSettingView.endDateButton.snp.trailing)
+            make.top.equalTo(timeSettingView.snp.bottom)
+            make.width.equalTo(160)
+            make.height.equalTo(130)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.endTimePicker.alpha = 1
+        }
+    }
 }
 
 extension PlannerController: Bindable {
@@ -78,31 +167,13 @@ extension PlannerController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
-        timeSettingView.startDateButton.rx.tap
-            .map { PlannerViewModel.Action.startDatePickerButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+        
     }
     
     func bindState(_ reactor: Reactor) {
-        reactor.state
-            .map { $0.startDatePickerIsPresented }
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] startDateButtonTapped in
-                if startDateButtonTapped {
-                    print("시작 버튼이 눌렸습니다")
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func presentStartDatePicker() {
         
     }
     
-    private func presentEndDatePicker() {
-        
-    }
 }
 
 
@@ -142,3 +213,8 @@ extension PlannerController: ViewDrawable {
     }
 }
 
+extension PlannerController: CurrentTimeDelegate {
+    func sendCurrentTime(_ time: String) {
+        print("현재 들어온 시간은 \(time)")
+    }
+}
