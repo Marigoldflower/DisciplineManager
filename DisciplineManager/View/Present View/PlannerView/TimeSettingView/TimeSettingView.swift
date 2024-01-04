@@ -9,6 +9,19 @@ import UIKit
 import SnapKit
 
 final class TimeSettingView: UIView {
+    
+    // MARK: - StartTime & EndTime
+    lazy var startTime = setStartTimeLabel() {
+        didSet {
+            startDateButton.currentTime.text = startTime
+        }
+    }
+    lazy var endTime = setEndTimeLabel() {
+        didSet {
+            endDateButton.currentTime.text = endTime
+        }
+    }
+    
     // MARK: - UI Components
     private let startTimeLabel: UILabel = {
         let label = UILabel()
@@ -24,7 +37,7 @@ final class TimeSettingView: UIView {
         view.layer.borderColor = UIColor.disciplinePurple.cgColor
         view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
-        view.currentTime.text = setStartTimeLabel()
+        view.currentTime.text = startTime
         return view
     }()
     
@@ -42,7 +55,7 @@ final class TimeSettingView: UIView {
         view.layer.borderColor = UIColor.disciplinePurple.cgColor
         view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
-        view.currentTime.text = setEndTimeLabel()
+        view.currentTime.text = endTime
         return view
     }()
     

@@ -13,24 +13,33 @@ final class TimePickerView: UIView {
     // MARK: - Data Receiver
     var startTime = Date() {
         didSet {
+            setTimeToTimeSettingView(startTime)
             setDefaultTime(startTime)
         }
     }
     var endTime = Date() {
         didSet {
+            setTimeToTimeSettingView(endTime)
             setDefaultTime(endTime)
         }
     }
     
+    // MARK: - Selected PickerData
+    var selectedAmPm = String()
+    var selectedHour = String()
+    var selectedMinute = String()
+    
     // MARK: - Picker Data
     let amPm = ["오전", "오후"]
-    let hours = (0...12).map { String(format: "%02d", $0) }
+    let hours = (1...12).map { String(format: "%02d", $0) }
     let minutes = (0...59).map { String(format: "%02d", $0) }
     
     // MARK: - UI Components
-    private let button: UIButton = {
+    let selectButton: UIButton = {
         let button = UIButton()
-        button.setTitle("", for: .normal)
+        button.setTitle("선택", for: .normal)
+        button.setTitleColor(.disciplinePurple, for: .normal)
+        button.titleLabel?.font = .LINESeedRegular(size: 15)
         return button
     }()
     
@@ -52,19 +61,34 @@ final class TimePickerView: UIView {
     }
     
     private func setDefaultTime(_ time: Date) {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "a hh mm"
+
+        let timeString = formatter.string(from: time)
+        let timeComponents = timeString.components(separatedBy: " ")
+
+        if timeComponents.count == 3 {
+            selectedAmPm = timeComponents[0]
+            selectedHour = timeComponents[1]
+            selectedMinute = timeComponents[2]
+        }
+    }
+    
+    private func setTimeToTimeSettingView(_ time: Date) {
         let calendar = Calendar.current
-        
+
         let hour = calendar.component(.hour, from: time)
         print("hour는 \(hour)")
         let minute = calendar.component(.minute, from: time)
         print("minute는 \(minute)")
-        
+
         let amPmRow = hour < 12 ? 0 : 1
         pickerView.selectRow(amPmRow, inComponent: 0, animated: false)
-        
+
         let hourRow = hour % 12
-        pickerView.selectRow(hourRow, inComponent: 1, animated: false)
-        
+        pickerView.selectRow(hourRow - 1, inComponent: 1, animated: false)
+
         pickerView.selectRow(minute, inComponent: 2, animated: false)
     }
 }
@@ -80,12 +104,17 @@ extension TimePickerView: ViewDrawable {
     }
     
     func setAutolayout() {
-        [pickerView].forEach { self.addSubview($0) }
+        [selectButton, pickerView].forEach { self.addSubview($0) }
+        
+        selectButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.snp.trailing).offset(-10)
+            make.top.equalTo(self.snp.top).offset(5)
+        }
         
         pickerView.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading)
             make.trailing.equalTo(self.snp.trailing)
-            make.top.equalTo(self.snp.top)
+            make.top.equalTo(selectButton.snp.bottom)
             make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
     }
@@ -144,7 +173,12 @@ extension TimePickerView: UIPickerViewDelegate, UIPickerViewDataSource {
         let selectedAmPm = amPm[pickerView.selectedRow(inComponent: 0)]
         let selectedHour = hours[pickerView.selectedRow(inComponent: 1)]
         let selectedMinute = minutes[pickerView.selectedRow(inComponent: 2)]
-        print("\(selectedAmPm) \(selectedHour):\(selectedMinute)")
+        
+        print("현재의 시간? \(selectedAmPm) \(selectedHour) \(selectedMinute)")
+        
+        self.selectedAmPm = selectedAmPm
+        self.selectedHour = selectedHour
+        self.selectedMinute = selectedMinute 
     }
 }
 

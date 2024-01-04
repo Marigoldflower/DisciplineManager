@@ -69,8 +69,8 @@ final class PlannerController: UIViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTapGestures()
         reactor = plannerViewModel
+        setTapGestures()
         configureUI()
     }
     
@@ -106,8 +106,7 @@ final class PlannerController: UIViewController, View {
         }
         
         setStartTimePicker()
-        sendStartTimeToPicker()
-        
+        sendTimeSettingViewStartTimetoPicker()
     }
     
     @objc func endTimeIsTapped() {
@@ -117,7 +116,7 @@ final class PlannerController: UIViewController, View {
         }
         
         setEndTimePicker()
-        sendEndTimeToPicker()
+        sendTimeSettingViewEndTimetoPicker()
     }
     
     private func setStartTimePicker() {
@@ -131,13 +130,15 @@ final class PlannerController: UIViewController, View {
         startTimePicker.snp.makeConstraints { make in
             make.leading.equalTo(timeSettingView.startDateButton.snp.leading)
             make.top.equalTo(timeSettingView.snp.bottom)
-            make.width.equalTo(160)
-            make.height.equalTo(130)
+            make.width.equalTo(200)
+            make.height.equalTo(175)
         }
         
         UIView.animate(withDuration: 0.3) {
             self.startTimePicker.alpha = 1
         }
+        
+        startTimePicker.selectButton.addTarget(self, action: #selector(sendPickerStartTimetoTimeSettingView), for: .touchUpInside)
     }
     
     private func setEndTimePicker() {
@@ -151,23 +152,61 @@ final class PlannerController: UIViewController, View {
         endTimePicker.snp.makeConstraints { make in
             make.trailing.equalTo(timeSettingView.endDateButton.snp.trailing)
             make.top.equalTo(timeSettingView.snp.bottom)
-            make.width.equalTo(160)
-            make.height.equalTo(130)
+            make.width.equalTo(200)
+            make.height.equalTo(175)
         }
         
         UIView.animate(withDuration: 0.3) {
             self.endTimePicker.alpha = 1
         }
+        
+        endTimePicker.selectButton.addTarget(self, action: #selector(sendPickerEndTimetoTimeSettingView), for: .touchUpInside)
     }
     
-    private func sendStartTimeToPicker() {
-        let currentTime = Date()
-        startTimePicker.startTime = currentTime
+    // TimeSettingView의 시작 시간을 StartPicker에 보내는 함수
+    private func sendTimeSettingViewStartTimetoPicker() {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "a hh:mm"
+        
+        guard let startTime = timeFormatter.date(from: self.timeSettingView.startTime) else { return }
+        
+        startTimePicker.startTime = startTime
     }
     
-    private func sendEndTimeToPicker() {
-        guard let threeHoursLater = Calendar.current.date(byAdding: .hour, value: 3, to: Date()) else { return }
-        endTimePicker.endTime = threeHoursLater
+    // TimeSettingView의 종료 시간을 EndPicker에 보내는 함수
+    private func sendTimeSettingViewEndTimetoPicker() {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "a hh:mm"
+        
+        guard let endTime = timeFormatter.date(from: self.timeSettingView.endTime) else { return }
+        
+        endTimePicker.endTime = endTime
+    }
+    
+    // StartPicker의 시작 시간을 TimeSettingView의 시작 시간에 보내는 함수
+    @objc func sendPickerStartTimetoTimeSettingView() {
+        let amPm = startTimePicker.selectedAmPm
+        let hour = startTimePicker.selectedHour
+        let minute = startTimePicker.selectedMinute
+        let startTime = amPm + " " + hour + ":" + minute
+        
+        self.timeSettingView.startTime = startTime
+        
+        startTimePicker.removeFromSuperview()
+        startTimePicker = nil
+    }
+    
+    // EndPicker의 종료 시간을 TimeSettingView의 종료 시간에 보내는 함수 
+    @objc func sendPickerEndTimetoTimeSettingView() {
+        let amPm = endTimePicker.selectedAmPm
+        let hour = endTimePicker.selectedHour
+        let minute = endTimePicker.selectedMinute
+        let endTime = amPm + " " + hour + ":" + minute
+        
+        self.timeSettingView.endTime = endTime
+        
+        endTimePicker.removeFromSuperview()
+        endTimePicker = nil
     }
 }
 

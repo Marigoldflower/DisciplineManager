@@ -11,18 +11,18 @@ import ReactorKit
 final class PlannerViewModel: Reactor {
     
     enum Action {
-        case startDatePickerButtonTapped
-        case endDatePickerButtonTapped
+        case startTimePickerSelectButtonTapped
+        case endTimePickerSelectButtonTapped
     }
     
     enum Mutation {
-        case presentStartDatePicker(Bool)
-        case presentEndDatePicker(Bool)
+        case settingStartTime(Bool)
+        case settingEndTime(Bool)
     }
 
     struct State {
-        var startDatePickerIsPresented: Bool = false
-        var endDatePickerIsPresented: Bool = false
+        var startTime: Bool = false
+        var endTime: Bool = false
     }
     
     var initialState: State
@@ -33,16 +33,16 @@ final class PlannerViewModel: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .startDatePickerButtonTapped:
+        case .startTimePickerSelectButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.presentStartDatePicker(true)),
-                Observable.just(Mutation.presentStartDatePicker(false))
+                Observable.just(Mutation.settingStartTime(true)),
+                Observable.just(Mutation.settingStartTime(false))
             ])
             
-        case .endDatePickerButtonTapped:
+        case .endTimePickerSelectButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.presentEndDatePicker(true)),
-                Observable.just(Mutation.presentEndDatePicker(false))
+                Observable.just(Mutation.settingEndTime(true)),
+                Observable.just(Mutation.settingEndTime(false))
             ])
         }
     }
@@ -51,11 +51,11 @@ final class PlannerViewModel: Reactor {
         var newState = state
         
         switch mutation {
-        case .presentStartDatePicker(let value):
-            newState.startDatePickerIsPresented = value
+        case .settingStartTime(let value):
+            newState.startTime = value
             
-        case .presentEndDatePicker(let value):
-            newState.endDatePickerIsPresented = value
+        case .settingEndTime(let value):
+            newState.endTime = value
         }
         
         return newState
