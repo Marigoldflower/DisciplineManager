@@ -76,22 +76,33 @@ final class TimePickerView: UIView {
     }
     
     private func setTimeToPickerViewIndex(with time: Date) {
-        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "a hh mm"
 
-        let hour = calendar.component(.hour, from: time)
-        let minute = calendar.component(.minute, from: time)
-
-        let amPmRow = hour < 12 ? 0 : 1
-        pickerView.selectRow(amPmRow, inComponent: 0, animated: false)
-
-        var hourRow = hour % 13
-        if hour == 12 {
-            hourRow = 11
-            pickerView.selectRow(hourRow, inComponent: 1, animated: false)
+        let timeString = formatter.string(from: time)
+        let timeComponents = timeString.components(separatedBy: " ")
+        
+        setAmPm(with: timeComponents[0])
+        setHour(with: timeComponents[1])
+        setMinute(with: timeComponents[2])
+    }
+    
+    private func setAmPm(with timeComponents: String) {
+        if timeComponents == "오전" {
+            pickerView.selectRow(0, inComponent: 0, animated: false)
         } else {
-            pickerView.selectRow(hourRow, inComponent: 1, animated: false)
+            pickerView.selectRow(1, inComponent: 0, animated: false)
         }
-
+    }
+    
+    private func setHour(with timeComponents: String) {
+        guard let hour = Int(timeComponents) else { return }
+        pickerView.selectRow(hour - 1, inComponent: 1, animated: false)
+    }
+    
+    private func setMinute(with timeComponents: String) {
+        guard let minute = Int(timeComponents) else { return }
         pickerView.selectRow(minute, inComponent: 2, animated: false)
     }
 }
