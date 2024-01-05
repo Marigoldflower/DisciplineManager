@@ -170,7 +170,7 @@ final class PlannerController: UIViewController, View {
         
         guard let startTime = timeFormatter.date(from: self.timeSettingView.startTime) else { return }
         
-        startTimePicker.startTime = startTime
+        startTimePicker.startTimeReceiver = startTime
     }
     
     // TimeSettingView의 종료 시간을 EndPicker에 보내는 함수
@@ -180,7 +180,7 @@ final class PlannerController: UIViewController, View {
         
         guard let endTime = timeFormatter.date(from: self.timeSettingView.endTime) else { return }
         
-        endTimePicker.endTime = endTime
+        endTimePicker.endTimeReceiver = endTime
     }
     
     // StartPicker의 시작 시간을 TimeSettingView의 시작 시간에 보내는 함수
@@ -196,7 +196,7 @@ final class PlannerController: UIViewController, View {
         startTimePicker = nil
     }
     
-    // EndPicker의 종료 시간을 TimeSettingView의 종료 시간에 보내는 함수 
+    // EndPicker의 종료 시간을 TimeSettingView의 종료 시간에 보내는 함수
     @objc func sendPickerEndTimetoTimeSettingView() {
         let amPm = endTimePicker.selectedAmPm
         let hour = endTimePicker.selectedHour

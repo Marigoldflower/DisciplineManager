@@ -11,16 +11,16 @@ import SnapKit
 final class TimePickerView: UIView {
     
     // MARK: - Data Receiver
-    var startTime = Date() {
+    var startTimeReceiver = Date() {
         didSet {
-            setTimeToTimeSettingView(startTime)
-            setDefaultTime(startTime)
+            setTimeToPickerViewIndex(with: startTimeReceiver)
+            setTimeWhenSelectButtonIsTapped(with: startTimeReceiver)
         }
     }
-    var endTime = Date() {
+    var endTimeReceiver = Date() {
         didSet {
-            setTimeToTimeSettingView(endTime)
-            setDefaultTime(endTime)
+            setTimeToPickerViewIndex(with: endTimeReceiver)
+            setTimeWhenSelectButtonIsTapped(with: endTimeReceiver)
         }
     }
     
@@ -60,7 +60,7 @@ final class TimePickerView: UIView {
         fatalError()
     }
     
-    private func setDefaultTime(_ time: Date) {
+    private func setTimeWhenSelectButtonIsTapped(with time: Date) {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "a hh mm"
@@ -75,19 +75,22 @@ final class TimePickerView: UIView {
         }
     }
     
-    private func setTimeToTimeSettingView(_ time: Date) {
+    private func setTimeToPickerViewIndex(with time: Date) {
         let calendar = Calendar.current
 
         let hour = calendar.component(.hour, from: time)
-        print("hour는 \(hour)")
         let minute = calendar.component(.minute, from: time)
-        print("minute는 \(minute)")
 
         let amPmRow = hour < 12 ? 0 : 1
         pickerView.selectRow(amPmRow, inComponent: 0, animated: false)
 
-        let hourRow = hour % 12
-        pickerView.selectRow(hourRow - 1, inComponent: 1, animated: false)
+        var hourRow = hour % 13
+        if hour == 12 {
+            hourRow = 11
+            pickerView.selectRow(hourRow, inComponent: 1, animated: false)
+        } else {
+            pickerView.selectRow(hourRow, inComponent: 1, animated: false)
+        }
 
         pickerView.selectRow(minute, inComponent: 2, animated: false)
     }
