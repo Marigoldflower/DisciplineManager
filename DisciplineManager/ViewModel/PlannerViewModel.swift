@@ -11,18 +11,21 @@ import ReactorKit
 final class PlannerViewModel: Reactor {
     
     enum Action {
-        case startTimePickerSelectButtonTapped
-        case endTimePickerSelectButtonTapped
+        case highButtonTapped
+        case mediumButtonTapped
+        case lowButtonTapped
     }
     
     enum Mutation {
-        case settingStartTime(Bool)
-        case settingEndTime(Bool)
+        case settingHighColor(Bool)
+        case settingMediumColor(Bool)
+        case settingLowColor(Bool)
     }
 
     struct State {
-        var startTime: Bool = false
-        var endTime: Bool = false
+        var highButtonIsSelected: Bool = false
+        var mediumButtonIsSelected: Bool = false
+        var lowButtonIsSelected: Bool = false
     }
     
     var initialState: State
@@ -33,16 +36,22 @@ final class PlannerViewModel: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .startTimePickerSelectButtonTapped:
+        case .highButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.settingStartTime(true)),
-                Observable.just(Mutation.settingStartTime(false))
+                Observable.just(Mutation.settingHighColor(true)),
+                Observable.just(Mutation.settingHighColor(false))
             ])
             
-        case .endTimePickerSelectButtonTapped:
+        case .mediumButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.settingEndTime(true)),
-                Observable.just(Mutation.settingEndTime(false))
+                Observable.just(Mutation.settingMediumColor(true)),
+                Observable.just(Mutation.settingMediumColor(false))
+            ])
+            
+        case .lowButtonTapped:
+            return Observable.concat([
+                Observable.just(Mutation.settingLowColor(true)),
+                Observable.just(Mutation.settingLowColor(false))
             ])
         }
     }
@@ -51,11 +60,14 @@ final class PlannerViewModel: Reactor {
         var newState = state
         
         switch mutation {
-        case .settingStartTime(let value):
-            newState.startTime = value
+        case .settingHighColor(let value):
+            newState.highButtonIsSelected = value
             
-        case .settingEndTime(let value):
-            newState.endTime = value
+        case .settingMediumColor(let value):
+            newState.mediumButtonIsSelected = value
+            
+        case .settingLowColor(let value):
+            newState.lowButtonIsSelected = value
         }
         
         return newState

@@ -20,6 +20,7 @@
 		EA6397922B3EBF4600DF4702 /* CustomDatePickerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397912B3EBF4600DF4702 /* CustomDatePickerEntity.swift */; };
 		EA6397992B4416E100DF4702 /* SelectTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */; };
 		EA63979B2B441B3800DF4702 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63979A2B441B3800DF4702 /* TimePickerView.swift */; };
+		EA63979D2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */; };
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
 		EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* TodoController.swift */; };
@@ -61,6 +62,7 @@
 		EA6397912B3EBF4600DF4702 /* CustomDatePickerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerEntity.swift; sourceTree = "<group>"; };
 		EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTimePickerView.swift; sourceTree = "<group>"; };
 		EA63979A2B441B3800DF4702 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
+		EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowManyTimesToRepeatTheTask.swift; sourceTree = "<group>"; };
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,10 +141,11 @@
 			isa = PBXGroup;
 			children = (
 				EA208F2F2B2C954100CA3A67 /* PlannerController.swift */,
-				EA208F312B2DCB1800CA3A67 /* TaskView.swift */,
+				EA6397A12B482FEB00DF4702 /* TaskView */,
 				EA6397972B4416C100DF4702 /* TimeSettingView */,
-				EA208F362B2DCB8500CA3A67 /* PriorityView.swift */,
-				EA208F382B2DCBA300CA3A67 /* AlertView.swift */,
+				EA6397A22B482FF500DF4702 /* HowManyTimesView */,
+				EA63979E2B481FEC00DF4702 /* PriorityView */,
+				EA6397A32B48300200DF4702 /* AlertView */,
 			);
 			path = PlannerView;
 			sourceTree = "<group>";
@@ -154,6 +157,38 @@
 				EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */,
 			);
 			path = TimeSettingView;
+			sourceTree = "<group>";
+		};
+		EA63979E2B481FEC00DF4702 /* PriorityView */ = {
+			isa = PBXGroup;
+			children = (
+				EA208F362B2DCB8500CA3A67 /* PriorityView.swift */,
+			);
+			path = PriorityView;
+			sourceTree = "<group>";
+		};
+		EA6397A12B482FEB00DF4702 /* TaskView */ = {
+			isa = PBXGroup;
+			children = (
+				EA208F312B2DCB1800CA3A67 /* TaskView.swift */,
+			);
+			path = TaskView;
+			sourceTree = "<group>";
+		};
+		EA6397A22B482FF500DF4702 /* HowManyTimesView */ = {
+			isa = PBXGroup;
+			children = (
+				EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */,
+			);
+			path = HowManyTimesView;
+			sourceTree = "<group>";
+		};
+		EA6397A32B48300200DF4702 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				EA208F382B2DCBA300CA3A67 /* AlertView.swift */,
+			);
+			path = AlertView;
 			sourceTree = "<group>";
 		};
 		EACF07232AFA25AC0000CD2E = {
@@ -376,6 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA63979D2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift in Sources */,
 				EACF074E2AFB451A0000CD2E /* ViewDrawable.swift in Sources */,
 				EA6397992B4416E100DF4702 /* SelectTimePickerView.swift in Sources */,
 				EA208E692B2054DE00CA3A67 /* ToDoListView.swift in Sources */,

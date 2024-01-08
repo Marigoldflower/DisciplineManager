@@ -34,6 +34,15 @@ final class TaskView: UIView {
         return textField
     }()
     
+    let detailTaskTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 15
+        textView.layer.borderColor = UIColor.disciplinePurple.cgColor
+        textView.layer.borderWidth = 1.0
+        
+        return textView
+    }()
+    
     // MARK: - StackView
     private lazy var taskStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [taskLabel, taskTextField])

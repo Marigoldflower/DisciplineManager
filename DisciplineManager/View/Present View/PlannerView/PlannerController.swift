@@ -10,6 +10,7 @@ import SnapKit
 import ReactorKit
 import RxCocoa
 
+
 final class PlannerController: UIViewController, View {
     // MARK: - Tap Gestures
     lazy var startTapGestures = UITapGestureRecognizer(target: self, action: #selector(startTimeIsTapped))
@@ -36,7 +37,12 @@ final class PlannerController: UIViewController, View {
         return view
     }()
     
-    private let priorityView: PriorityView = {
+    private let howManyTimesToRepeatTheTask: HowManyTimesToRepeatTheTask = {
+        let view = HowManyTimesToRepeatTheTask()
+        return view
+    }()
+    
+    let priorityView: PriorityView = {
         let view = PriorityView()
         return view
     }()
@@ -217,15 +223,84 @@ extension PlannerController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
+        priorityView.highButton.rx.tap
+            .map { PlannerViewModel.Action.highButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        priorityView.mediumButton.rx.tap
+            .map { PlannerViewModel.Action.mediumButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        priorityView.lowButton.rx.tap
+            .map { PlannerViewModel.Action.lowButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.highButtonIsSelected }
+            .subscribe(onNext: { [weak self] highButtonTapped in
+                if highButtonTapped {
+                    self?.priorityView.buttons.forEach {
+                        $0.backgroundColor = .disciplineBackground
+                        $0.setTitleColor(.disciplineBlack, for: .normal)
+                    }
+                    
+                    self?.priorityView.highButton.backgroundColor = .disciplinePink
+                    self?.priorityView.highButton.setTitleColor(.white, for: .normal)
+                    self?.priorityView.highButton.alpha = 0
+                    
+                    UIView.animate(withDuration: 0.45) {
+                        self?.priorityView.highButton.alpha = 1
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
         
+        reactor.state
+            .map { $0.mediumButtonIsSelected }
+            .subscribe(onNext: { [weak self] mediumButtonTapped in
+                if mediumButtonTapped {
+                    self?.priorityView.buttons.forEach {
+                        $0.backgroundColor = .disciplineBackground
+                        $0.setTitleColor(.disciplineBlack, for: .normal)
+                    }
+                    
+                    self?.priorityView.mediumButton.backgroundColor = .disciplineYellow
+                    self?.priorityView.mediumButton.setTitleColor(.white, for: .normal)
+                    self?.priorityView.mediumButton.alpha = 0
+                    
+                    UIView.animate(withDuration: 0.45) {
+                        self?.priorityView.mediumButton.alpha = 1
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.lowButtonIsSelected }
+            .subscribe(onNext: { [weak self] lowButtonTapped in
+                if lowButtonTapped {
+                    self?.priorityView.buttons.forEach {
+                        $0.backgroundColor = .disciplineBackground
+                        $0.setTitleColor(.disciplineBlack, for: .normal)
+                    }
+                    
+                    self?.priorityView.lowButton.backgroundColor = .disciplineBlue
+                    self?.priorityView.lowButton.setTitleColor(.white, for: .normal)
+                    self?.priorityView.lowButton.alpha = 0
+                    
+                    UIView.animate(withDuration: 0.45) {
+                        self?.priorityView.lowButton.alpha = 1
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
-    
 }
-
 
 extension PlannerController: ViewDrawable {
     func configureUI() {
@@ -238,7 +313,7 @@ extension PlannerController: ViewDrawable {
     }
     
     func setAutolayout() {
-        [taskView, timeSettingView, priorityView, alertView, createPlanButton].forEach { view.addSubview($0) }
+        [taskView, timeSettingView, howManyTimesToRepeatTheTask, priorityView, alertView, createPlanButton].forEach { view.addSubview($0) }
         
         taskView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading)
@@ -254,11 +329,58 @@ extension PlannerController: ViewDrawable {
             make.height.equalTo(110)
         }
         
+        howManyTimesToRepeatTheTask.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalTo(timeSettingView.snp.bottom)
+            make.height.equalTo(110)
+        }
+        
+        priorityView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalTo(howManyTimesToRepeatTheTask.snp.bottom)
+            make.height.equalTo(110)
+        }
+        
+        alertView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.top.equalTo(priorityView.snp.bottom)
+            make.height.equalTo(110)
+        }
+        
         createPlanButton.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading).offset(20)
             make.trailing.equalTo(view.snp.trailing).offset(-20)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             make.height.equalTo(45)
         }
+    }
+    
+    private func setPriorityButtonColor(buttonType: PriorityButtonType) {
+        switch buttonType {
+        case .high:
+                
+            priorityView.highButton.backgroundColor = .disciplinePink
+            priorityView.highButton.setTitleColor(.white, for: .normal)
+            
+            priorityView.mediumButton.backgroundColor = .disciplineYellow
+            priorityView.mediumButton.setTitleColor(.white, for: .normal)
+            
+            priorityView.lowButton.backgroundColor = .disciplineBlue
+            priorityView.lowButton.setTitleColor(.white, for: .normal)
+        case .medium:
+            priorityView.mediumButton.backgroundColor = .disciplineYellow
+            priorityView.mediumButton.setTitleColor(.white, for: .normal)
+        case .low:
+            priorityView.lowButton.backgroundColor = .disciplineBlue
+            priorityView.lowButton.setTitleColor(.white, for: .normal)
+        }
+    }
+    
+    private func setSelectedButtonColorOnly(with buttonType: PriorityButtonType) {
+        priorityView.highButton.backgroundColor = .disciplinePink
+        priorityView.highButton.setTitleColor(.white, for: .normal)
     }
 }
