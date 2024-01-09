@@ -34,18 +34,23 @@ final class TaskView: UIView {
         return textField
     }()
     
-    let detailTaskTextView: UITextView = {
+    lazy var detailTaskTextView: UITextView = {
         let textView = UITextView()
         textView.layer.cornerRadius = 15
         textView.layer.borderColor = UIColor.disciplinePurple.cgColor
         textView.layer.borderWidth = 1.0
-        
+        textView.backgroundColor = .disciplineBackground
+        textView.delegate = self
+        textView.text = "추가적인 정보를 적어주세요 😚"
+        textView.textColor = UIColor.lightGray
+        textView.font = .LINESeedRegular(size: 14)
+        textView.textContainerInset = UIEdgeInsets(top: 7, left: 7, bottom: 0, right: 0)
         return textView
     }()
     
     // MARK: - StackView
     private lazy var taskStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [taskLabel, taskTextField])
+        let stack = UIStackView(arrangedSubviews: [taskLabel, taskTextField, detailTaskTextView])
         stack.axis = .vertical
         stack.spacing = 15
         return stack
@@ -83,6 +88,28 @@ extension TaskView: ViewDrawable {
             make.leading.equalTo(self.snp.leading).offset(20)
             make.trailing.equalTo(self.snp.trailing).offset(-20)
             make.height.equalTo(50)
+        }
+        
+        detailTaskTextView.snp.makeConstraints { make in
+            make.leading.equalTo(self.snp.leading).offset(20)
+            make.trailing.equalTo(self.snp.trailing).offset(-20)
+            make.height.equalTo(115)
+        }
+    }
+}
+
+extension TaskView: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "추가적인 정보를 적어주세요 😚"
+            textView.textColor = UIColor.lightGray
         }
     }
 }

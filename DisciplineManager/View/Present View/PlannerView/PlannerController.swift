@@ -10,6 +10,15 @@ import SnapKit
 import ReactorKit
 import RxCocoa
 
+protocol SendPlanDelegate: AnyObject {
+    func sendPlan(_ plan: String)
+    func sendDetailPlan(_ plan: String)
+    func sendTime(start: String, end: String)
+    func sendHowManyTimesToRepeat(_ repeat: String)
+    func sendPriority(_ priority: String)
+    func sendAlert(isOn: Bool)
+}
+
 
 final class PlannerController: UIViewController, View {
     // MARK: - Tap Gestures
@@ -18,6 +27,9 @@ final class PlannerController: UIViewController, View {
     
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
+    
+    // MARK: - Delegate
+    weak var delegate: SendPlanDelegate?
     
     // MARK: - ViewModel
     let plannerViewModel = PlannerViewModel()
@@ -101,7 +113,6 @@ final class PlannerController: UIViewController, View {
     private func setTapGestures() {
         timeSettingView.startDateButton.addGestureRecognizer(startTapGestures)
         timeSettingView.endDateButton.addGestureRecognizer(endTapGestures)
-        
     }
     
     // MARK: - objc
@@ -223,82 +234,61 @@ extension PlannerController: Bindable {
     }
     
     func bindAction(_ reactor: Reactor) {
-        priorityView.highButton.rx.tap
-            .map { PlannerViewModel.Action.highButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        priorityView.mediumButton.rx.tap
-            .map { PlannerViewModel.Action.mediumButtonTapped }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        priorityView.lowButton.rx.tap
-            .map { PlannerViewModel.Action.lowButtonTapped }
+        createPlanButton.rx.tap
+            .map { PlannerViewModel.Action.createPlanButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: Reactor) {
         reactor.state
-            .map { $0.highButtonIsSelected }
-            .subscribe(onNext: { [weak self] highButtonTapped in
-                if highButtonTapped {
-                    self?.priorityView.buttons.forEach {
-                        $0.backgroundColor = .disciplineBackground
-                        $0.setTitleColor(.disciplineBlack, for: .normal)
-                    }
-                    
-                    self?.priorityView.highButton.backgroundColor = .disciplinePink
-                    self?.priorityView.highButton.setTitleColor(.white, for: .normal)
-                    self?.priorityView.highButton.alpha = 0
-                    
-                    UIView.animate(withDuration: 0.45) {
-                        self?.priorityView.highButton.alpha = 1
-                    }
+            .map { $0.receivedPlan }
+            .subscribe(onNext: { [weak self] createPlanButtonTapped in
+                if createPlanButtonTapped {
+                    self?.sendTotalPlanToTodoController()
+                    self?.dismiss(animated: true)
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func sendTotalPlanToTodoController() {
+        sendPlan()
+        sendDetailPlan()
+        sendStartTimeAndEndTime()
+        sendRepetition()
+        sendPriority()
+    }
+    
+    private func sendPlan() {
+        guard let plan = taskView.taskTextField.text else { return }
+        delegate?.sendPlan(plan)
+    }
+    
+    private func sendDetailPlan() {
+        guard let detailPlan = taskView.detailTaskTextView.text else { return }
+        delegate?.sendDetailPlan(detailPlan)
+    }
+    
+    private func sendStartTimeAndEndTime() {
+        let startTime = timeSettingView.startTime
+        let endTime = timeSettingView.endTime
         
-        reactor.state
-            .map { $0.mediumButtonIsSelected }
-            .subscribe(onNext: { [weak self] mediumButtonTapped in
-                if mediumButtonTapped {
-                    self?.priorityView.buttons.forEach {
-                        $0.backgroundColor = .disciplineBackground
-                        $0.setTitleColor(.disciplineBlack, for: .normal)
-                    }
-                    
-                    self?.priorityView.mediumButton.backgroundColor = .disciplineYellow
-                    self?.priorityView.mediumButton.setTitleColor(.white, for: .normal)
-                    self?.priorityView.mediumButton.alpha = 0
-                    
-                    UIView.animate(withDuration: 0.45) {
-                        self?.priorityView.mediumButton.alpha = 1
-                    }
-                }
-            })
-            .disposed(by: disposeBag)
+        delegate?.sendTime(start: startTime, end: endTime)
+    }
+    
+    private func sendRepetition() {
+        let repetition = howManyTimesToRepeatTheTask.selectedRepetition
+        delegate?.sendHowManyTimesToRepeat(repetition)
+    }
+    
+    private func sendPriority() {
+        guard let priority = priorityView.selectedPriority else { return }
+        delegate?.sendPriority(priority)
+    }
+    
+    private func sendAlert() {
         
-        reactor.state
-            .map { $0.lowButtonIsSelected }
-            .subscribe(onNext: { [weak self] lowButtonTapped in
-                if lowButtonTapped {
-                    self?.priorityView.buttons.forEach {
-                        $0.backgroundColor = .disciplineBackground
-                        $0.setTitleColor(.disciplineBlack, for: .normal)
-                    }
-                    
-                    self?.priorityView.lowButton.backgroundColor = .disciplineBlue
-                    self?.priorityView.lowButton.setTitleColor(.white, for: .normal)
-                    self?.priorityView.lowButton.alpha = 0
-                    
-                    UIView.animate(withDuration: 0.45) {
-                        self?.priorityView.lowButton.alpha = 1
-                    }
-                }
-            })
-            .disposed(by: disposeBag)
     }
 }
 
@@ -319,7 +309,7 @@ extension PlannerController: ViewDrawable {
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(120)
+            make.height.equalTo(240)
         }
         
         timeSettingView.snp.makeConstraints { make in
@@ -356,31 +346,5 @@ extension PlannerController: ViewDrawable {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             make.height.equalTo(45)
         }
-    }
-    
-    private func setPriorityButtonColor(buttonType: PriorityButtonType) {
-        switch buttonType {
-        case .high:
-                
-            priorityView.highButton.backgroundColor = .disciplinePink
-            priorityView.highButton.setTitleColor(.white, for: .normal)
-            
-            priorityView.mediumButton.backgroundColor = .disciplineYellow
-            priorityView.mediumButton.setTitleColor(.white, for: .normal)
-            
-            priorityView.lowButton.backgroundColor = .disciplineBlue
-            priorityView.lowButton.setTitleColor(.white, for: .normal)
-        case .medium:
-            priorityView.mediumButton.backgroundColor = .disciplineYellow
-            priorityView.mediumButton.setTitleColor(.white, for: .normal)
-        case .low:
-            priorityView.lowButton.backgroundColor = .disciplineBlue
-            priorityView.lowButton.setTitleColor(.white, for: .normal)
-        }
-    }
-    
-    private func setSelectedButtonColorOnly(with buttonType: PriorityButtonType) {
-        priorityView.highButton.backgroundColor = .disciplinePink
-        priorityView.highButton.setTitleColor(.white, for: .normal)
     }
 }

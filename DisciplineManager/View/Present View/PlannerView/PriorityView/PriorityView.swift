@@ -7,16 +7,22 @@
 
 import UIKit
 import SnapKit
+import ReactorKit
+import RxCocoa
 
-enum PriorityButtonType: String {
-    case high
-    case medium
-    case low
-}
-
-final class PriorityView: UIView {
+final class PriorityView: UIView, View {
+    
+    // MARK: - SelectedPriority
+    var selectedPriority: String?
+    
+    // MARK: - DisposeBag
+    var disposeBag = DisposeBag()
+    
     // MARK: - Data
     lazy var buttons: [UIButton] = [highButton, mediumButton, lowButton]
+    
+    // MARK: - ViewModel
+    let priorityViewModel = PriorityViewModel()
     
     // MARK: - UI Components
     private let priorityLabel: UILabel = {
@@ -74,11 +80,93 @@ final class PriorityView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        reactor = priorityViewModel
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension PriorityView: Bindable {
+    func bind(reactor: PriorityViewModel) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    func bindAction(_ reactor: Reactor) {
+        highButton.rx.tap
+            .map { PriorityViewModel.Action.highButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mediumButton.rx.tap
+            .map { PriorityViewModel.Action.mediumButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        lowButton.rx.tap
+            .map { PriorityViewModel.Action.lowButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.highButtonIsSelected }
+            .subscribe(onNext: { [weak self] highButtonTapped in
+                if highButtonTapped {
+                    self?.setUnselectedButton()
+                    self?.setSelectedButton(of: self!.highButton, with: .disciplinePink)
+                    self?.setSelectedPriority(of: self!.highButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
+        reactor.state
+            .map { $0.mediumButtonIsSelected }
+            .subscribe(onNext: { [weak self] mediumButtonTapped in
+                if mediumButtonTapped {
+                    self?.setUnselectedButton()
+                    self?.setSelectedButton(of: self!.mediumButton, with: .disciplineYellow)
+                    self?.setSelectedPriority(of: self!.mediumButton)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.lowButtonIsSelected }
+            .subscribe(onNext: { [weak self] lowButtonTapped in
+                if lowButtonTapped {
+                    self?.setUnselectedButton()
+                    self?.setSelectedButton(of: self!.lowButton, with: .disciplineBlue)
+                    self?.setSelectedPriority(of: self!.lowButton)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setUnselectedButton() {
+        self.buttons.forEach {
+            $0.backgroundColor = .disciplineBackground
+            $0.setTitleColor(.disciplineBlack, for: .normal)
+        }
+    }
+    
+    private func setSelectedButton(of button: UIButton, with color: UIColor) {
+        button.backgroundColor = color
+        button.setTitleColor(.white, for: .normal)
+        button.alpha = 0
+        
+        UIView.animate(withDuration: 0.45) {
+            button.alpha = 1
+        }
+    }
+    
+    private func setSelectedPriority(of button: UIButton) {
+        self.selectedPriority = button.titleLabel?.text
     }
 }
 

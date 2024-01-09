@@ -11,21 +11,15 @@ import ReactorKit
 final class PlannerViewModel: Reactor {
     
     enum Action {
-        case highButtonTapped
-        case mediumButtonTapped
-        case lowButtonTapped
+        case createPlanButtonTapped
     }
     
     enum Mutation {
-        case settingHighColor(Bool)
-        case settingMediumColor(Bool)
-        case settingLowColor(Bool)
+        case sendPlanToToDoController(Bool)
     }
 
     struct State {
-        var highButtonIsSelected: Bool = false
-        var mediumButtonIsSelected: Bool = false
-        var lowButtonIsSelected: Bool = false
+        var receivedPlan: Bool = false
     }
     
     var initialState: State
@@ -36,22 +30,10 @@ final class PlannerViewModel: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .highButtonTapped:
+        case .createPlanButtonTapped:
             return Observable.concat([
-                Observable.just(Mutation.settingHighColor(true)),
-                Observable.just(Mutation.settingHighColor(false))
-            ])
-            
-        case .mediumButtonTapped:
-            return Observable.concat([
-                Observable.just(Mutation.settingMediumColor(true)),
-                Observable.just(Mutation.settingMediumColor(false))
-            ])
-            
-        case .lowButtonTapped:
-            return Observable.concat([
-                Observable.just(Mutation.settingLowColor(true)),
-                Observable.just(Mutation.settingLowColor(false))
+                Observable.just(Mutation.sendPlanToToDoController(true)),
+                Observable.just(Mutation.sendPlanToToDoController(false))
             ])
         }
     }
@@ -60,14 +42,8 @@ final class PlannerViewModel: Reactor {
         var newState = state
         
         switch mutation {
-        case .settingHighColor(let value):
-            newState.highButtonIsSelected = value
-            
-        case .settingMediumColor(let value):
-            newState.mediumButtonIsSelected = value
-            
-        case .settingLowColor(let value):
-            newState.lowButtonIsSelected = value
+        case .sendPlanToToDoController(let value):
+            newState.receivedPlan = value
         }
         
         return newState

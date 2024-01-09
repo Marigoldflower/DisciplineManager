@@ -10,6 +10,9 @@ import SnapKit
 
 final class HowManyTimesToRepeatTheTask: UIView {
     
+    // MARK: - SelectedRepetition
+    var selectedRepetition: String = "매일"
+    
     // MARK: - UI Components
     private let repeatLabel: UILabel = {
         let label = UILabel()
@@ -28,6 +31,7 @@ final class HowManyTimesToRepeatTheTask: UIView {
         segment.backgroundColor = .white
         segment.selectedSegmentTintColor = .disciplinePurple
         segment.selectedSegmentIndex = 1
+        selectedRepetition = segment.titleForSegment(at: segment.selectedSegmentIndex)!
         segment.layer.cornerRadius = 15
         segment.layer.masksToBounds = true
         return segment

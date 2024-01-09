@@ -286,3 +286,32 @@ extension TodoController: UITableViewDelegate {
     }
 }
 
+// PlannerController에서 설정한 할 일 목록들을 받아서 처리하는 Delegate ⭐️
+extension TodoController: SendPlanDelegate {
+    func sendPlan(_ plan: String) {
+        
+    }
+    
+    func sendDetailPlan(_ plan: String) {
+        
+    }
+    
+    func sendTime(start: String, end: String) {
+        
+    }
+    
+    func sendHowManyTimesToRepeat(_ repeat: String) {
+        
+    }
+    
+    func sendPriority(_ priority: String) {
+        
+    }
+    
+    func sendAlert(isOn: Bool) {
+        
+    }
+    
+    
+}
+

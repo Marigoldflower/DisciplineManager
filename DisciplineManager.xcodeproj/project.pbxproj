@@ -21,6 +21,7 @@
 		EA6397992B4416E100DF4702 /* SelectTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */; };
 		EA63979B2B441B3800DF4702 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63979A2B441B3800DF4702 /* TimePickerView.swift */; };
 		EA63979D2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */; };
+		EA6397A52B4D313900DF4702 /* PriorityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397A42B4D313900DF4702 /* PriorityViewModel.swift */; };
 		EACF07302AFA25AC0000CD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */; };
 		EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */; };
 		EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF07332AFA25AC0000CD2E /* TodoController.swift */; };
@@ -63,6 +64,7 @@
 		EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTimePickerView.swift; sourceTree = "<group>"; };
 		EA63979A2B441B3800DF4702 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowManyTimesToRepeatTheTask.swift; sourceTree = "<group>"; };
+		EA6397A42B4D313900DF4702 /* PriorityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewModel.swift; sourceTree = "<group>"; };
 		EACF072C2AFA25AC0000CD2E /* DisciplineManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisciplineManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EACF072F2AFA25AC0000CD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EACF07312AFA25AC0000CD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				EAE669692AFB71A200E1C378 /* TodoViewModel.swift */,
 				EADB7B182B0C9765005015B8 /* CalendarSheetViewModel.swift */,
 				EA6397632B3C400400DF4702 /* PlannerViewModel.swift */,
+				EA6397A42B4D313900DF4702 /* PriorityViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
 				EA208E6B2B22B32A00CA3A67 /* Fonts.swift in Sources */,
 				EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */,
+				EA6397A52B4D313900DF4702 /* PriorityViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

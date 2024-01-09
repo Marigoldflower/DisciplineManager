@@ -10,6 +10,13 @@ import SnapKit
 
 final class AlertView: UIView {
     
+    // MARK: - SelectedSwitch
+    var isOn = false {
+        didSet {
+            print("현재 알림 상태는 \(isOn)")
+        }
+    }
+    
     // MARK: - UI Components
     private let getAlertForThisTask: UILabel = {
         let label = UILabel()
@@ -19,9 +26,10 @@ final class AlertView: UIView {
         return label
     }()
     
-    private let switchControl: UISwitch = {
+    private lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
         switchControl.isOn = false
+        isOn = switchControl.isOn.toggle()
         switchControl.onTintColor = .disciplineBlue
         return switchControl
     }()
