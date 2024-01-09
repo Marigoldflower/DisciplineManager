@@ -14,9 +14,9 @@ protocol SendPlanDelegate: AnyObject {
     func sendPlan(_ plan: String)
     func sendDetailPlan(_ plan: String)
     func sendTime(start: String, end: String)
-    func sendHowManyTimesToRepeat(_ repeat: String)
+    func sendHowManyTimesToRepeat(_ repetition: String)
     func sendPriority(_ priority: String)
-    func sendAlert(isOn: Bool)
+    func sendAlert(with state: Bool)
 }
 
 
@@ -258,6 +258,7 @@ extension PlannerController: Bindable {
         sendStartTimeAndEndTime()
         sendRepetition()
         sendPriority()
+        sendAlertState()
     }
     
     private func sendPlan() {
@@ -287,8 +288,9 @@ extension PlannerController: Bindable {
         delegate?.sendPriority(priority)
     }
     
-    private func sendAlert() {
-        
+    private func sendAlertState() {
+        let alertState = alertView.alertState
+        delegate?.sendAlert(with: alertState)
     }
 }
 

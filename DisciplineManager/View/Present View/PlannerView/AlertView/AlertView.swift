@@ -7,15 +7,19 @@
 
 import UIKit
 import SnapKit
+import ReactorKit
+import RxCocoa
 
-final class AlertView: UIView {
+final class AlertView: UIView, View {
+    
+    // MARK: - DisposeBag
+    var disposeBag = DisposeBag()
     
     // MARK: - SelectedSwitch
-    var isOn = false {
-        didSet {
-            print("현재 알림 상태는 \(isOn)")
-        }
-    }
+    var alertState = false 
+    
+    // MARK: - ViewModel
+    let alertViewModel = AlertViewModel()
     
     // MARK: - UI Components
     private let getAlertForThisTask: UILabel = {
@@ -28,21 +32,43 @@ final class AlertView: UIView {
     
     private lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
-        switchControl.isOn = false
-        isOn = switchControl.isOn.toggle()
         switchControl.onTintColor = .disciplineBlue
         return switchControl
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        reactor = alertViewModel
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
+}
 
+extension AlertView: Bindable {
+    func bind(reactor: AlertViewModel) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    func bindAction(_ reactor: Reactor) {
+        switchControl.rx.isOn
+            .map { AlertViewModel.Action.alertIsChanged($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.alertStateIsChanged }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] switchIsToggled in
+                self?.alertState = switchIsToggled
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension AlertView: ViewDrawable {

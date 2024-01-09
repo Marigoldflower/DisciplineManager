@@ -26,6 +26,26 @@ final class TodoController: UIViewController, View {
     // MARK: - Data Sender & Receiver
     var selectedDate: Date?
     
+    // MARK: - Selected Plan Data
+    var plan = String()
+    var detailPlan = String()
+    var startTime = String() {
+        didSet {
+            print("현재 들어온 startTime은 \(startTime)")
+        }
+    }
+    var endTime = String()
+    var repetition = String()
+    var priority = String()
+    var alertIsOn = false
+    
+    // MARK: - Make New Plan
+    lazy var newPlan: TodoModel = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priority: priority, alertIsOn: alertIsOn) {
+        didSet {
+            print("newPlan에 값이 들어왔습니다!!")
+        }
+    }
+    
     // MARK: - UI Components
     private let todoHeaderView: TodoHeaderView = {
         let view = TodoHeaderView()
@@ -77,7 +97,7 @@ final class TodoController: UIViewController, View {
             .drive(self.todoListTableView.rx.items(cellIdentifier: ToDoListCell.identifier, cellType: ToDoListCell.self)) { index, element, cell in
                 cell.selectionStyle = .none
                 cell.toDoListView.time.text = element.time
-                cell.toDoListView.whatToDo.text = element.whatToDo
+                cell.toDoListView.whatToDo.text = element.plan
             }
             .disposed(by: disposeBag)
         
@@ -152,6 +172,7 @@ extension TodoController: Bindable {
     // 오늘 하루 계획을 짜는 뷰를 띄우기 (여기서부터 진행)
     private func presentPlanner() {
         plannerController = PlannerController()
+        plannerController.delegate = self
         setNavigationTitleAndButton(at: plannerController)
         setNavigationController(appearance: customNavigationBar())
     }
@@ -289,29 +310,28 @@ extension TodoController: UITableViewDelegate {
 // PlannerController에서 설정한 할 일 목록들을 받아서 처리하는 Delegate ⭐️
 extension TodoController: SendPlanDelegate {
     func sendPlan(_ plan: String) {
-        
+        self.plan = plan
     }
     
     func sendDetailPlan(_ plan: String) {
-        
+        self.detailPlan = plan
     }
     
     func sendTime(start: String, end: String) {
-        
+        self.startTime = start
+        self.endTime = end
     }
     
-    func sendHowManyTimesToRepeat(_ repeat: String) {
-        
+    func sendHowManyTimesToRepeat(_ repetition: String) {
+        self.repetition = repetition
     }
     
     func sendPriority(_ priority: String) {
-        
+        self.priority = priority
     }
     
-    func sendAlert(isOn: Bool) {
-        
+    func sendAlert(with state: Bool) {
+        self.alertIsOn = state
     }
-    
-    
 }
 
