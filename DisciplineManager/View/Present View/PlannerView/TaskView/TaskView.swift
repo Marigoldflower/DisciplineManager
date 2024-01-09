@@ -44,7 +44,7 @@ final class TaskView: UIView {
         textView.text = "추가적인 정보를 적어주세요 😚"
         textView.textColor = UIColor.lightGray
         textView.font = .LINESeedRegular(size: 14)
-        textView.textContainerInset = UIEdgeInsets(top: 7, left: 7, bottom: 0, right: 0)
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
         return textView
     }()
     

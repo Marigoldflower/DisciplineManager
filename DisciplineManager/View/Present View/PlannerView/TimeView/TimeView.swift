@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TimeSettingView: UIView {
+final class TimeView: UIView {
     
     // MARK: - StartTime & EndTime
     lazy var startTime = setStartTimeLabel() {
@@ -108,7 +108,7 @@ final class TimeSettingView: UIView {
     }
 }
 
-extension TimeSettingView: ViewDrawable {
+extension TimeView: ViewDrawable {
     func configureUI() {
         setBackgroundColor()
         setAutolayout()

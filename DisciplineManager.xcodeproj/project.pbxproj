@@ -13,7 +13,7 @@
 		EA208F2D2B2B3AD200CA3A67 /* StringEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */; };
 		EA208F302B2C954100CA3A67 /* PlannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F2F2B2C954100CA3A67 /* PlannerController.swift */; };
 		EA208F322B2DCB1800CA3A67 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F312B2DCB1800CA3A67 /* TaskView.swift */; };
-		EA208F352B2DCB5100CA3A67 /* TimeSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F342B2DCB5100CA3A67 /* TimeSettingView.swift */; };
+		EA208F352B2DCB5100CA3A67 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F342B2DCB5100CA3A67 /* TimeView.swift */; };
 		EA208F372B2DCB8500CA3A67 /* PriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F362B2DCB8500CA3A67 /* PriorityView.swift */; };
 		EA208F392B2DCBA300CA3A67 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F382B2DCBA300CA3A67 /* AlertView.swift */; };
 		EA6397642B3C400400DF4702 /* PlannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397632B3C400400DF4702 /* PlannerViewModel.swift */; };
@@ -58,7 +58,7 @@
 		EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEffect.swift; sourceTree = "<group>"; };
 		EA208F2F2B2C954100CA3A67 /* PlannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerController.swift; sourceTree = "<group>"; };
 		EA208F312B2DCB1800CA3A67 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
-		EA208F342B2DCB5100CA3A67 /* TimeSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingView.swift; sourceTree = "<group>"; };
+		EA208F342B2DCB5100CA3A67 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		EA208F362B2DCB8500CA3A67 /* PriorityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityView.swift; sourceTree = "<group>"; };
 		EA208F382B2DCBA300CA3A67 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		EA6397632B3C400400DF4702 /* PlannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerViewModel.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 			children = (
 				EA208F2F2B2C954100CA3A67 /* PlannerController.swift */,
 				EA6397A12B482FEB00DF4702 /* TaskView */,
-				EA6397972B4416C100DF4702 /* TimeSettingView */,
+				EA6397972B4416C100DF4702 /* TimeView */,
 				EA6397A22B482FF500DF4702 /* HowManyTimesView */,
 				EA63979E2B481FEC00DF4702 /* PriorityView */,
 				EA6397A32B48300200DF4702 /* AlertView */,
@@ -156,13 +156,13 @@
 			path = PlannerView;
 			sourceTree = "<group>";
 		};
-		EA6397972B4416C100DF4702 /* TimeSettingView */ = {
+		EA6397972B4416C100DF4702 /* TimeView */ = {
 			isa = PBXGroup;
 			children = (
-				EA208F342B2DCB5100CA3A67 /* TimeSettingView.swift */,
+				EA208F342B2DCB5100CA3A67 /* TimeView.swift */,
 				EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */,
 			);
-			path = TimeSettingView;
+			path = TimeView;
 			sourceTree = "<group>";
 		};
 		EA63979E2B481FEC00DF4702 /* PriorityView */ = {
@@ -446,7 +446,7 @@
 				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
 				EA6397922B3EBF4600DF4702 /* CustomDatePickerEntity.swift in Sources */,
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
-				EA208F352B2DCB5100CA3A67 /* TimeSettingView.swift in Sources */,
+				EA208F352B2DCB5100CA3A67 /* TimeView.swift in Sources */,
 				EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */,
 				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
