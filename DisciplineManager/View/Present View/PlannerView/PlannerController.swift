@@ -137,11 +137,19 @@ final class PlannerController: UIViewController, View {
     }
     
     private func setStartTimePicker() {
+        setStartTimePickerUI()
+        setStartTimePickerAutoLayout()
+        setStartTimePickerAnimate()
+        setStartTimePickerButtonAction()
+    }
+    
+    private func setStartTimePickerUI() {
         startTimePicker = TimePickerView()
         startTimePicker.layer.cornerRadius = 15
         startTimePicker.layer.masksToBounds = true
-        startTimePicker.alpha = 0
-
+    }
+    
+    private func setStartTimePickerAutoLayout() {
         [startTimePicker].forEach { view.addSubview($0) }
         
         startTimePicker.snp.makeConstraints { make in
@@ -150,20 +158,33 @@ final class PlannerController: UIViewController, View {
             make.width.equalTo(200)
             make.height.equalTo(175)
         }
-        
+    }
+    
+    private func setStartTimePickerAnimate() {
+        startTimePicker.alpha = 0
         UIView.animate(withDuration: 0.3) {
             self.startTimePicker.alpha = 1
         }
-        
+    }
+    
+    private func setStartTimePickerButtonAction() {
         startTimePicker.selectButton.addTarget(self, action: #selector(sendPickerStartTimetoTimeSettingView), for: .touchUpInside)
     }
     
     private func setEndTimePicker() {
+        setEndTimePickerUI()
+        setEndTimePickerAutoLayout()
+        setEndTimePickerAnimate()
+        setEndTimePickerButtonAction()
+    }
+    
+    private func setEndTimePickerUI() {
         endTimePicker = TimePickerView()
         endTimePicker.layer.cornerRadius = 15
         endTimePicker.layer.masksToBounds = true
-        endTimePicker.alpha = 0
-        
+    }
+    
+    private func setEndTimePickerAutoLayout() {
         [endTimePicker].forEach { view.addSubview($0) }
         
         endTimePicker.snp.makeConstraints { make in
@@ -172,11 +193,16 @@ final class PlannerController: UIViewController, View {
             make.width.equalTo(200)
             make.height.equalTo(175)
         }
-        
+    }
+    
+    private func setEndTimePickerAnimate() {
+        endTimePicker.alpha = 0
         UIView.animate(withDuration: 0.3) {
             self.endTimePicker.alpha = 1
         }
-        
+    }
+    
+    private func setEndTimePickerButtonAction() {
         endTimePicker.selectButton.addTarget(self, action: #selector(sendPickerEndTimetoTimeSettingView), for: .touchUpInside)
     }
     

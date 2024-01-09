@@ -14,7 +14,6 @@ protocol HeaderViewSelectedDateDelegate: AnyObject {
 }
 
 final class TodoHeaderView: UIView {
-    
     // MARK: - Data Receiver
     // CalendarController에서 선택한 날짜
     var dateWhichIsSentToCalendarController: Date? {
@@ -54,6 +53,15 @@ final class TodoHeaderView: UIView {
         return button
     }()
     
+    private let alertButton: UIButton = {
+        let button = UIButton()
+        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .medium)
+        let bellImage = UIImage(systemName: "bell", withConfiguration: buttonConfig)
+        button.setImage(bellImage, for: .normal)
+        button.tintColor = .systemGray
+        return button
+    }()
+    
     // MARK: - StackView
     private lazy var dateButtonStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [setDateButton_TextVersion, setDateButton_ImageVersion])
@@ -85,7 +93,7 @@ extension TodoHeaderView: ViewDrawable {
     }
     
     func setAutolayout() {
-        [dateButtonStackView, calendar].forEach { self.addSubview($0) }
+        [dateButtonStackView, calendar, alertButton].forEach { self.addSubview($0) }
         
         dateButtonStackView.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading).offset(20)
@@ -97,6 +105,11 @@ extension TodoHeaderView: ViewDrawable {
             make.trailing.equalTo(self.snp.trailing)
             make.top.equalTo(dateButtonStackView.snp.bottom).offset(10)
             make.height.equalTo(240)
+        }
+        
+        alertButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.snp.trailing).offset(-20)
+            make.centerY.equalTo(dateButtonStackView.snp.centerY)
         }
     }
     

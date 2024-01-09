@@ -29,20 +29,21 @@ final class TodoController: UIViewController, View {
     // MARK: - Selected Plan Data
     var plan = String()
     var detailPlan = String()
-    var startTime = String() {
-        didSet {
-            print("현재 들어온 startTime은 \(startTime)")
-        }
-    }
+    var startTime = String()
     var endTime = String()
     var repetition = String()
     var priority = String()
-    var alertIsOn = false
-    
-    // MARK: - Make New Plan
-    lazy var newPlan: TodoModel = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priority: priority, alertIsOn: alertIsOn) {
+    var alertIsOn = false {
         didSet {
-            print("newPlan에 값이 들어왔습니다!!")
+            newPlan = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priority: priority, alertIsOn: alertIsOn)
+            makeNewPlan()
+        }
+    }
+    
+    // MARK: - New Plan
+    var newPlan: TodoModel = TodoModel(plan: String(), detailPlan: String(), time: String(), repetition: String(), priority: String(), alertIsOn: false) {
+        didSet {
+            print("새로 들어온 newPlan은 \(newPlan)")
         }
     }
     
@@ -107,6 +108,18 @@ final class TodoController: UIViewController, View {
                 self?.todoListTableView.reloadData()
             })
             .disposed(by: disposeBag)
+    }
+    
+    // 새로운 Plan을 만들 때, 시간 순서에 따라서 TodoModel 배열의 순서를 정해야 함 ⭐️
+    private func makeNewPlan() {
+        todoViewModel.todoList.append(newPlan)
+        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "a hh:mm"
+//
+//        todoViewModel.todoList.sort { dateFormatter.date(from: $0.plan)! < dateFormatter.date(from: $1.plan)! }
+        
+        todoViewModel.getTodoList()
     }
 }
 

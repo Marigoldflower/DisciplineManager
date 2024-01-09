@@ -21,8 +21,8 @@ final class TodoViewModel: Reactor {
     }
     
     var todoList: [TodoModel] = [
-        TodoModel(plan: "오전 7:20", time: "기상"),
-        TodoModel(plan: "오후 11:00", time: "굿 나잇!")
+        TodoModel(plan: "기상", time: "오전 7:20"),
+        TodoModel(plan: "굿 나잇!", time: "오후 11:00")
     ]
     
     enum Action {

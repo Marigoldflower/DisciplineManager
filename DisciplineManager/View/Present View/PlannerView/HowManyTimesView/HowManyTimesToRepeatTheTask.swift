@@ -7,11 +7,19 @@
 
 import UIKit
 import SnapKit
+import ReactorKit
+import RxCocoa
 
-final class HowManyTimesToRepeatTheTask: UIView {
+final class HowManyTimesToRepeatTheTask: UIView, View {
+    
+    // MARK: - DisposeBag
+    var disposeBag = DisposeBag()
     
     // MARK: - SelectedRepetition
     var selectedRepetition: String = "매일"
+    
+    // MARK: - ViewModel
+    let repetitionViewModel = RepetitionViewModel()
     
     // MARK: - UI Components
     private let repeatLabel: UILabel = {
@@ -47,11 +55,37 @@ final class HowManyTimesToRepeatTheTask: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        reactor = repetitionViewModel
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+extension HowManyTimesToRepeatTheTask: Bindable {
+    func bind(reactor: RepetitionViewModel) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    func bindAction(_ reactor: Reactor) {
+        segmentedControl.rx.selectedSegmentIndex
+            .map { self.segmentedControl.titleForSegment(at: $0) ?? "" }
+            .map { RepetitionViewModel.Action.selectSegment($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.selectedSegment }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] selectedRepetition in
+                self?.selectedRepetition = selectedRepetition
+            })
+            .disposed(by: disposeBag)
     }
 }
 
