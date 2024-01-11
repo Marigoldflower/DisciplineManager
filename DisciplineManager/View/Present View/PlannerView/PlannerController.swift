@@ -19,11 +19,10 @@ protocol SendPlanDelegate: AnyObject {
     func sendAlert(with state: Bool)
 }
 
-
 final class PlannerController: UIViewController, View {
     // MARK: - Tap Gestures
-    lazy var startTapGestures = UITapGestureRecognizer(target: self, action: #selector(startTimeIsTapped))
-    lazy var endTapGestures = UITapGestureRecognizer(target: self, action: #selector(endTimeIsTapped))
+    lazy var startTapGestures = UITapGestureRecognizer(target: self, action: #selector(startTimeViewIsTapped))
+    lazy var endTapGestures = UITapGestureRecognizer(target: self, action: #selector(endTimeViewIsTapped))
     
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
@@ -123,7 +122,7 @@ final class PlannerController: UIViewController, View {
     }
     
     // MARK: - objc
-    @objc func startTimeIsTapped() {
+    @objc func startTimeViewIsTapped() {
         removeEndTimePickerIfEndTimePickerIsExisted()
         setStartTimePicker()
         sendTimeViewStartTimetoPicker()
@@ -200,7 +199,7 @@ final class PlannerController: UIViewController, View {
         startTimePicker.startTimeReceiver = startTime
     }
     
-    @objc func endTimeIsTapped() {
+    @objc func endTimeViewIsTapped() {
         removeStartTimePickerIfStartTimePickerIsExisted()
         setEndTimePicker()
         sendTimeViewEndTimetoPicker()
