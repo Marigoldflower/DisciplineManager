@@ -17,7 +17,6 @@
 		EA208F372B2DCB8500CA3A67 /* PriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F362B2DCB8500CA3A67 /* PriorityView.swift */; };
 		EA208F392B2DCBA300CA3A67 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F382B2DCBA300CA3A67 /* AlertView.swift */; };
 		EA6397642B3C400400DF4702 /* PlannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397632B3C400400DF4702 /* PlannerViewModel.swift */; };
-		EA6397922B3EBF4600DF4702 /* CustomDatePickerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397912B3EBF4600DF4702 /* CustomDatePickerEntity.swift */; };
 		EA6397992B4416E100DF4702 /* SelectTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */; };
 		EA63979B2B441B3800DF4702 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63979A2B441B3800DF4702 /* TimePickerView.swift */; };
 		EA63979D2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */; };
@@ -62,7 +61,6 @@
 		EA208F362B2DCB8500CA3A67 /* PriorityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityView.swift; sourceTree = "<group>"; };
 		EA208F382B2DCBA300CA3A67 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		EA6397632B3C400400DF4702 /* PlannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerViewModel.swift; sourceTree = "<group>"; };
-		EA6397912B3EBF4600DF4702 /* CustomDatePickerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerEntity.swift; sourceTree = "<group>"; };
 		EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTimePickerView.swift; sourceTree = "<group>"; };
 		EA63979A2B441B3800DF4702 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		EA63979C2B4814FA00DF4702 /* HowManyTimesToRepeatTheTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowManyTimesToRepeatTheTask.swift; sourceTree = "<group>"; };
@@ -241,7 +239,6 @@
 				EADB7B222B1860C3005015B8 /* AppColors.swift */,
 				EA208E6A2B22B32A00CA3A67 /* Fonts.swift */,
 				EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */,
-				EA6397912B3EBF4600DF4702 /* CustomDatePickerEntity.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -444,7 +441,6 @@
 				EADB7B192B0C9765005015B8 /* CalendarSheetViewModel.swift in Sources */,
 				EADB7B1B2B0DB35E005015B8 /* ToDoListCell.swift in Sources */,
 				EACF074C2AFA3E8E0000CD2E /* SettingController.swift in Sources */,
-				EA6397922B3EBF4600DF4702 /* CustomDatePickerEntity.swift in Sources */,
 				EACF074A2AFA3E500000CD2E /* DeviceBlockController.swift in Sources */,
 				EA208F352B2DCB5100CA3A67 /* TimeView.swift in Sources */,
 				EADB7B232B1860C3005015B8 /* AppColors.swift in Sources */,

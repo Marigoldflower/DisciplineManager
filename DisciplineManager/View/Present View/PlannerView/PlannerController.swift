@@ -296,11 +296,22 @@ extension PlannerController: Bindable {
             .map { $0.receivedPlan }
             .subscribe(onNext: { [weak self] createPlanButtonTapped in
                 if createPlanButtonTapped {
+                    self?.checkRequiredAreaIsFilled()
                     self?.sendTotalPlanToTodoController()
                     self?.dismiss(animated: true)
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func checkRequiredAreaIsFilled() {
+        if taskView.taskTextField.state.isEmpty {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.LINESeedRegular(size: 15) as Any,
+                .foregroundColor: UIColor.disciplinePink.cgColor
+            ]
+            taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "꼭 적어주셔야 합니다!!", attributes: attributes)
+        }
     }
     
     private func sendTotalPlanToTodoController() {

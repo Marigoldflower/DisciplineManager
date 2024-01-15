@@ -36,7 +36,7 @@ final class TodoController: UIViewController, View {
     var alertIsOn = false {
         didSet {
             newPlan = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priority: priority, alertIsOn: alertIsOn)
-            makeNewPlan()
+            makePlan(with: newPlan)
         }
     }
     
@@ -111,7 +111,7 @@ final class TodoController: UIViewController, View {
     }
     
     // 새로운 Plan을 만들 때, 시간 순서에 따라서 TodoModel 배열의 순서를 정해야 함 ⭐️
-    private func makeNewPlan() {
+    private func makePlan(with newPlan: TodoModel) {
         todoViewModel.todoList.append(newPlan)
         
 //        let dateFormatter = DateFormatter()
