@@ -34,7 +34,7 @@ final class MainTabBarController: UITabBarController {
     private func setTabBarColor() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        tabBar.backgroundColor = .systemGray5
+        tabBar.backgroundColor = .disciplineBackground
         tabBar.tintColor = .disciplinePurple
     }
     

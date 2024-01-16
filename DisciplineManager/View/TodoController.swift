@@ -32,18 +32,19 @@ final class TodoController: UIViewController, View {
     var startTime = String()
     var endTime = String()
     var repetition = String()
-    var priority = String()
+    var priorityColor = UIColor()
     var alertIsOn = false {
         didSet {
-            newPlan = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priority: priority, alertIsOn: alertIsOn)
-            makePlan(with: newPlan)
+            newPlan = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priorityColor: priorityColor, alertIsOn: alertIsOn)
         }
     }
     
     // MARK: - New Plan
-    var newPlan: TodoModel = TodoModel(plan: String(), detailPlan: String(), time: String(), repetition: String(), priority: String(), alertIsOn: false) {
+    var newPlan: TodoModel = TodoModel(plan: String(), detailPlan: String(), time: String(), repetition: String(), priorityColor: UIColor(), alertIsOn: false) {
         didSet {
             print("새로 들어온 newPlan은 \(newPlan)")
+            makePlan(with: newPlan)
+            // 메소드로 만들어서 처리할 게 아니라 ViewModel에 있는
         }
     }
     
@@ -99,6 +100,7 @@ final class TodoController: UIViewController, View {
                 cell.selectionStyle = .none
                 cell.toDoListView.time.text = element.time
                 cell.toDoListView.whatToDo.text = element.plan
+                cell.toDoListView.priorityColorView.backgroundColor = element.priorityColor
             }
             .disposed(by: disposeBag)
         
@@ -120,6 +122,10 @@ final class TodoController: UIViewController, View {
 //        todoViewModel.todoList.sort { dateFormatter.date(from: $0.plan)! < dateFormatter.date(from: $1.plan)! }
         
         todoViewModel.getTodoList()
+    }
+    
+    private func setPriorityColor(with newPlan: TodoModel) {
+        
     }
 }
 
@@ -313,7 +319,7 @@ extension TodoController: UITableViewDelegate {
         }
         let pointConfiguration = UIImage.SymbolConfiguration(pointSize: 13.5)
         deleteAction.image = UIImage(systemName: "trash", withConfiguration: pointConfiguration)
-        deleteAction.backgroundColor = .disciplineGreen
+        deleteAction.backgroundColor = .disciplineBlue
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
@@ -339,8 +345,8 @@ extension TodoController: SendPlanDelegate {
         self.repetition = repetition
     }
     
-    func sendPriority(_ priority: String) {
-        self.priority = priority
+    func sendPriorityColor(_ priorityColor: UIColor) {
+        self.priorityColor = priorityColor
     }
     
     func sendAlert(with state: Bool) {

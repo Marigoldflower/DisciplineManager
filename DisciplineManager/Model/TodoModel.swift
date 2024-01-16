@@ -12,15 +12,15 @@ struct TodoModel {
     var detailPlan: String
     var time: String
     var repetition: String
-    var priority: String
+    var priorityColor: UIColor
     var alertIsOn: Bool
     
-    init(plan: String, detailPlan: String, time: String, repetition: String, priority: String, alertIsOn: Bool) {
+    init(plan: String, detailPlan: String, time: String, repetition: String, priorityColor: UIColor, alertIsOn: Bool) {
         self.plan = plan
         self.time = time
         self.detailPlan = detailPlan
         self.repetition = repetition
-        self.priority = priority
+        self.priorityColor = priorityColor
         self.alertIsOn = alertIsOn
     }
     
@@ -29,7 +29,7 @@ struct TodoModel {
         self.time = time
         self.detailPlan = ""
         self.repetition = ""
-        self.priority = ""
+        self.priorityColor = UIColor()
         self.alertIsOn = false
     }
 }

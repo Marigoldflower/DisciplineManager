@@ -15,7 +15,7 @@ protocol SendPlanDelegate: AnyObject {
     func sendDetailPlan(_ plan: String)
     func sendTime(start: String, end: String)
     func sendHowManyTimesToRepeat(_ repetition: String)
-    func sendPriority(_ priority: String)
+    func sendPriorityColor(_ priorityColor: UIColor)
     func sendAlert(with state: Bool)
 }
 
@@ -296,21 +296,23 @@ extension PlannerController: Bindable {
             .map { $0.receivedPlan }
             .subscribe(onNext: { [weak self] createPlanButtonTapped in
                 if createPlanButtonTapped {
-                    self?.checkRequiredAreaIsFilled()
-                    self?.sendTotalPlanToTodoController()
-                    self?.dismiss(animated: true)
+                    self?.checkWheterTextFieldIsEmpty()
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    private func checkRequiredAreaIsFilled() {
-        if taskView.taskTextField.state.isEmpty {
+    private func checkWheterTextFieldIsEmpty() {
+        if taskView.taskTextField.text?.isEmpty == true {
             let attributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.LINESeedRegular(size: 15) as Any,
-                .foregroundColor: UIColor.disciplinePink.cgColor
+                .foregroundColor: UIColor.disciplinePink,
+                    .font: UIFont.LINESeedRegular(size: 15) as Any
             ]
-            taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "꼭 적어주셔야 합니다!!", attributes: attributes)
+
+            taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "해야 할 일을 적어주세요 😚", attributes: attributes)
+        } else {
+            sendTotalPlanToTodoController()
+            dismiss(animated: true)
         }
     }
     
@@ -329,8 +331,14 @@ extension PlannerController: Bindable {
     }
     
     private func sendDetailPlan() {
-        guard let detailPlan = taskView.detailTaskTextView.text else { return }
-        delegate?.sendDetailPlan(detailPlan)
+        guard var detailPlan = taskView.detailTaskTextView.text else { return }
+        
+        if detailPlan == "추가적인 정보를 적어주세요 😚" {
+            detailPlan = ""
+            delegate?.sendDetailPlan(detailPlan)
+        } else {
+            delegate?.sendDetailPlan(detailPlan)
+        }
     }
     
     private func sendStartTimeAndEndTime() {
@@ -346,8 +354,8 @@ extension PlannerController: Bindable {
     }
     
     private func sendPriority() {
-        guard let priority = priorityView.selectedPriority else { return }
-        delegate?.sendPriority(priority)
+        guard let priorityColor = priorityView.selectedPriorityColor else { return }
+        delegate?.sendPriorityColor(priorityColor)
     }
     
     private func sendAlertState() {

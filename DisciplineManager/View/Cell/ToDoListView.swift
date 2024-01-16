@@ -50,6 +50,12 @@ final class ToDoListView: UIView {
         return label
     }()
     
+    let priorityColorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .disciplineBackground
+        return view
+    }()
+    
     // MARK: - StackView
     private lazy var timeAndWhatToDoStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [time, whatToDo])
@@ -125,7 +131,7 @@ extension ToDoListView: ViewDrawable {
     }
     
     func setAutolayout() {
-        [checkButton, timeAndWhatToDoStack, whatToDoErased].forEach { self.addSubview($0)}
+        [checkButton, timeAndWhatToDoStack, whatToDoErased, priorityColorView].forEach { self.addSubview($0)}
         
         checkButton.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading).offset(20)
@@ -140,6 +146,13 @@ extension ToDoListView: ViewDrawable {
         // 할 일 목록 지워진 버전을 할 일 목록과 겹쳐놓는다.
         whatToDoErased.snp.makeConstraints { make in
             make.edges.equalTo(whatToDo)
+        }
+        
+        priorityColorView.snp.makeConstraints { make in
+            make.width.equalTo(25)
+            make.height.equalTo(105)
+            make.trailing.equalTo(self.snp.trailing)
+            make.centerY.equalTo(self.snp.centerY)
         }
     }
 }

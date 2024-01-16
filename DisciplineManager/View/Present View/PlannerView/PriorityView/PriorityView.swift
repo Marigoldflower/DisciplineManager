@@ -13,7 +13,7 @@ import RxCocoa
 final class PriorityView: UIView, View {
     
     // MARK: - SelectedPriority
-    var selectedPriority: String?
+    var selectedPriorityColor: UIColor?
     
     // MARK: - DisposeBag
     var disposeBag = DisposeBag()
@@ -166,7 +166,7 @@ extension PriorityView: Bindable {
     }
     
     private func setSelectedPriority(of button: UIButton) {
-        self.selectedPriority = button.titleLabel?.text
+        self.selectedPriorityColor = button.backgroundColor
     }
 }
 
