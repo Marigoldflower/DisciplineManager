@@ -19,7 +19,7 @@ final class TaskView: UIView {
         return label
     }()
     
-    let taskTextField: UITextField = {
+    lazy var taskTextField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 15
         textField.layer.borderColor = UIColor.disciplinePurple.cgColor
@@ -55,7 +55,7 @@ final class TaskView: UIView {
         stack.spacing = 15
         return stack
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()

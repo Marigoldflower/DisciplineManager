@@ -32,7 +32,7 @@ final class TodoController: UIViewController, View {
     var startTime = String()
     var endTime = String()
     var repetition = String()
-    var priorityColor = UIColor()
+    var priorityColor = UIColor.clear
     var alertIsOn = false {
         didSet {
             newPlan = TodoModel(plan: plan, detailPlan: detailPlan, time: startTime + " - " + endTime, repetition: repetition, priorityColor: priorityColor, alertIsOn: alertIsOn)
@@ -40,7 +40,7 @@ final class TodoController: UIViewController, View {
     }
     
     // MARK: - New Plan
-    var newPlan: TodoModel = TodoModel(plan: String(), detailPlan: String(), time: String(), repetition: String(), priorityColor: UIColor(), alertIsOn: false) {
+    var newPlan: TodoModel = TodoModel(plan: String(), detailPlan: String(), time: String(), repetition: String(), priorityColor: UIColor.clear, alertIsOn: false) {
         didSet {
             print("새로 들어온 newPlan은 \(newPlan)")
             makePlan(with: newPlan)

@@ -296,24 +296,46 @@ extension PlannerController: Bindable {
             .map { $0.receivedPlan }
             .subscribe(onNext: { [weak self] createPlanButtonTapped in
                 if createPlanButtonTapped {
-                    self?.checkWheterTextFieldIsEmpty()
+                    self?.checkTextFieldRequirements()
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    private func checkWheterTextFieldIsEmpty() {
+    private func checkTextFieldRequirements() {
         if taskView.taskTextField.text?.isEmpty == true {
-            let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.disciplinePink,
-                    .font: UIFont.LINESeedRegular(size: 15) as Any
-            ]
-
-            taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "해야 할 일을 적어주세요 😚", attributes: attributes)
+            letUsersTypeSomeTexts()
         } else {
-            sendTotalPlanToTodoController()
-            dismiss(animated: true)
+            if taskView.taskTextField.text!.count > 50 {
+                letUsersTypeTextsCountsUnder50()
+            } else {
+                requirementsAllFulfilled_SendDataAndDismiss()
+            }
         }
+    }
+    
+    private func letUsersTypeSomeTexts() {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.disciplinePink,
+            .font: UIFont.LINESeedRegular(size: 15) as Any
+        ]
+        
+        taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "해야 할 일을 적어주세요 😚", attributes: attributes)
+    }
+    
+    private func letUsersTypeTextsCountsUnder50() {
+        taskView.taskTextField.text = ""
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.disciplinePink,
+            .font: UIFont.LINESeedRegular(size: 15) as Any
+        ]
+        
+        taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "50자 이내로 적어주세요 😚", attributes: attributes)
+    }
+    
+    private func requirementsAllFulfilled_SendDataAndDismiss() {
+        sendTotalPlanToTodoController()
+        dismiss(animated: true)
     }
     
     private func sendTotalPlanToTodoController() {

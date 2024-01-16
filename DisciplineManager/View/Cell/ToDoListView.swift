@@ -50,6 +50,12 @@ final class ToDoListView: UIView {
         return label
     }()
     
+    let detailMemoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .red
+        return imageView
+    }()
+    
     let priorityColorView: UIView = {
         let view = UIView()
         view.backgroundColor = .disciplineBackground
@@ -131,7 +137,7 @@ extension ToDoListView: ViewDrawable {
     }
     
     func setAutolayout() {
-        [checkButton, timeAndWhatToDoStack, whatToDoErased, priorityColorView].forEach { self.addSubview($0)}
+        [checkButton, timeAndWhatToDoStack, whatToDoErased, detailMemoImageView, priorityColorView].forEach { self.addSubview($0)}
         
         checkButton.snp.makeConstraints { make in
             make.leading.equalTo(self.snp.leading).offset(20)
@@ -143,9 +149,19 @@ extension ToDoListView: ViewDrawable {
             make.centerY.equalTo(self.snp.centerY)
         }
         
+        whatToDo.snp.makeConstraints { make in
+            make.width.equalTo(180)
+        }
+        
         // 할 일 목록 지워진 버전을 할 일 목록과 겹쳐놓는다.
         whatToDoErased.snp.makeConstraints { make in
             make.edges.equalTo(whatToDo)
+        }
+        
+        detailMemoImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(40)
+            make.trailing.equalTo(priorityColorView.snp.leading).offset(-30)
+            make.centerY.equalTo(self.snp.centerY)
         }
         
         priorityColorView.snp.makeConstraints { make in
