@@ -28,6 +28,7 @@ final class TaskView: UIView {
         textField.leftView = paddingView
         textField.leftViewMode = .always
         let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
             .font: UIFont.LINESeedRegular(size: 15) as Any
         ]
         textField.attributedPlaceholder = NSAttributedString(string: "해야 할 일을 적어주세요 😚", attributes: attributes)
@@ -41,7 +42,7 @@ final class TaskView: UIView {
         textView.layer.borderWidth = 1.0
         textView.backgroundColor = .disciplineBackground
         textView.delegate = self
-        textView.text = "추가적인 정보를 적어주세요 😚"
+        textView.text = "더 기록해야 할 추가적인 정보는 여기에 적어주세요 😚"
         textView.textColor = UIColor.lightGray
         textView.font = .LINESeedRegular(size: 14)
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
@@ -108,7 +109,7 @@ extension TaskView: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "추가적인 정보를 적어주세요 😚"
+            textView.text = "더 기록해야 할 추가적인 정보는 여기에 적어주세요 😚"
             textView.textColor = UIColor.lightGray
         }
     }

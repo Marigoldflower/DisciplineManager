@@ -306,8 +306,8 @@ extension PlannerController: Bindable {
         if taskView.taskTextField.text?.isEmpty == true {
             letUsersTypeSomeTexts()
         } else {
-            if taskView.taskTextField.text!.count > 50 {
-                letUsersTypeTextsCountsUnder50()
+            if taskView.taskTextField.text!.count > 30 {
+                letUsersTypeTextsCountsUnder30()
             } else {
                 requirementsAllFulfilled_SendDataAndDismiss()
             }
@@ -323,14 +323,14 @@ extension PlannerController: Bindable {
         taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "해야 할 일을 적어주세요 😚", attributes: attributes)
     }
     
-    private func letUsersTypeTextsCountsUnder50() {
+    private func letUsersTypeTextsCountsUnder30() {
         taskView.taskTextField.text = ""
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.disciplinePink,
             .font: UIFont.LINESeedRegular(size: 15) as Any
         ]
         
-        taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "50자 이내로 적어주세요 😚", attributes: attributes)
+        taskView.taskTextField.attributedPlaceholder = NSAttributedString(string: "글자 수가 너무 많아요 30자 이내로 적어주세요 😚", attributes: attributes)
     }
     
     private func requirementsAllFulfilled_SendDataAndDismiss() {
@@ -355,7 +355,7 @@ extension PlannerController: Bindable {
     private func sendDetailPlan() {
         guard var detailPlan = taskView.detailTaskTextView.text else { return }
         
-        if detailPlan == "추가적인 정보를 적어주세요 😚" {
+        if detailPlan == "더 기록해야 할 추가적인 정보는 여기에 적어주세요 😚" {
             detailPlan = ""
             delegate?.sendDetailPlan(detailPlan)
         } else {

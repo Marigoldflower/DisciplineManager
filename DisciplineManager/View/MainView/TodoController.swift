@@ -49,6 +49,8 @@ final class TodoController: UIViewController, View {
     }
     
     // MARK: - UI Components
+    private let detailMemoController = DetailMemoController()
+    
     private let todoHeaderView: TodoHeaderView = {
         let view = TodoHeaderView()
         return view
@@ -67,6 +69,7 @@ final class TodoController: UIViewController, View {
         table.register(ToDoListCell.self, forCellReuseIdentifier: ToDoListCell.identifier)
         table.backgroundColor = .disciplineBackground
         table.separatorStyle = .none
+        table.rowHeight = UITableView.automaticDimension
         table.delegate = self
         return table
     }()
@@ -96,11 +99,12 @@ final class TodoController: UIViewController, View {
         
         todoViewModel.todo
             .asDriver(onErrorJustReturn: [])
-            .drive(self.todoListTableView.rx.items(cellIdentifier: ToDoListCell.identifier, cellType: ToDoListCell.self)) { index, element, cell in
+            .drive(self.todoListTableView.rx.items(cellIdentifier: ToDoListCell.identifier, cellType: ToDoListCell.self)) { [weak self] index, element, cell in
                 cell.selectionStyle = .none
-                cell.toDoListView.time.text = element.time
-                cell.toDoListView.whatToDo.text = element.plan
-                cell.toDoListView.priorityColorView.backgroundColor = element.priorityColor
+                self?.setTimeTo(cell: cell, with: element)
+                self?.setPlanTo(cell: cell, with: element)
+                self?.setDetailPlanTo(cell: cell, with: element)
+                self?.setPriorityColorViewTo(cell: cell, with: element)
             }
             .disposed(by: disposeBag)
         
@@ -112,20 +116,80 @@ final class TodoController: UIViewController, View {
             .disposed(by: disposeBag)
     }
     
+    private func setTimeTo(cell: ToDoListCell, with element: TodoModel) {
+        cell.toDoListView.time.text = element.time
+    }
+    
+    private func setPlanTo(cell: ToDoListCell, with element: TodoModel) {
+        cell.toDoListView.plan.text = element.plan
+    }
+    
+    private func setDetailPlanTo(cell: ToDoListCell, with element: TodoModel) {
+        if element.detailPlan.count != 0 {
+            makeDetailMemoButton(cell: cell)
+            sendValueToDetailMemo(with: element)
+        }
+    }
+    
+    private func sendValueToDetailMemo(with element: TodoModel) {
+        detailMemoController.detailMemoView.plan.text = element.plan
+        detailMemoController.detailMemoView.detailPlan.text = element.detailPlan
+    }
+    
+    private func makeDetailMemoButton(cell: ToDoListCell) {
+        makeDetailMemoButtonImage(in: cell)
+        setAutolayoutToDetailMemoButton(in: cell)
+        setDetailMemoButtonAction(in: cell)
+    }
+    
+    private func makeDetailMemoButtonImage(in cell: ToDoListCell) {
+        cell.toDoListView.detailMemoButton = UIButton()
+        cell.toDoListView.detailMemoButton.tintColor = .systemGray
+        let buttonConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light, scale: .default)
+        let documentImage = UIImage(systemName: "doc.text", withConfiguration: buttonConfig)
+        cell.toDoListView.detailMemoButton.setImage(documentImage, for: .normal)
+    }
+    
+    private func setAutolayoutToDetailMemoButton(in cell: ToDoListCell) {
+        [cell.toDoListView.detailMemoButton].forEach { cell.addSubview($0) }
+        
+        cell.toDoListView.detailMemoButton.snp.makeConstraints { make in
+            make.trailing.equalTo(cell.toDoListView.priorityColorView.snp.leading).offset(-30)
+            make.centerY.equalTo(cell.snp.centerY)
+            make.width.equalTo(25)
+            make.height.equalTo(30)
+        }
+    }
+    
+    private func setDetailMemoButtonAction(in cell: ToDoListCell) {
+        cell.toDoListView.detailMemoButton.addTarget(self, action: #selector(detailMemoButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setPriorityColorViewTo(cell: ToDoListCell, with element: TodoModel) {
+        cell.toDoListView.priorityColorView.backgroundColor = element.priorityColor
+    }
+    
     // 새로운 Plan을 만들 때, 시간 순서에 따라서 TodoModel 배열의 순서를 정해야 함 ⭐️
     private func makePlan(with newPlan: TodoModel) {
         todoViewModel.todoList.append(newPlan)
         
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "a hh:mm"
-//
-//        todoViewModel.todoList.sort { dateFormatter.date(from: $0.plan)! < dateFormatter.date(from: $1.plan)! }
+        //        let dateFormatter = DateFormatter()
+        //        dateFormatter.dateFormat = "a hh:mm"
+        //
+        //        todoViewModel.todoList.sort { dateFormatter.date(from: $0.plan)! < dateFormatter.date(from: $1.plan)! }
         
         todoViewModel.getTodoList()
     }
     
-    private func setPriorityColor(with newPlan: TodoModel) {
-        
+    // MARK: - @objc
+    @objc func detailMemoButtonTapped() {
+        presentDetailMemoController()
+    }
+    
+    private func presentDetailMemoController() {
+        detailMemoController.modalPresentationStyle = .overCurrentContext
+        detailMemoController.modalTransitionStyle = .crossDissolve
+        self.present(detailMemoController, animated: true, completion: nil)
     }
 }
 
@@ -302,7 +366,7 @@ extension TodoController: HeaderViewSelectedDateDelegate {
 extension TodoController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 130
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A990A680E36039286119C647 /* Pods_DisciplineManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4C05F3C9A96D99F167C603 /* Pods_DisciplineManager.framework */; };
+		EA18D1C22B56A0A700732760 /* DetailMemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA18D1C12B56A0A700732760 /* DetailMemoController.swift */; };
+		EA18D1C62B57CBFF00732760 /* DetailMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA18D1C52B57CBFF00732760 /* DetailMemoView.swift */; };
 		EA208E692B2054DE00CA3A67 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208E682B2054DE00CA3A67 /* ToDoListView.swift */; };
 		EA208E6B2B22B32A00CA3A67 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208E6A2B22B32A00CA3A67 /* Fonts.swift */; };
 		EA208F2D2B2B3AD200CA3A67 /* StringEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */; };
@@ -52,6 +54,8 @@
 		7B4E7907976E3811B0DF7102 /* Pods-DisciplineManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisciplineManager.debug.xcconfig"; path = "Target Support Files/Pods-DisciplineManager/Pods-DisciplineManager.debug.xcconfig"; sourceTree = "<group>"; };
 		8B2595B71D532FF4A3149125 /* Pods-DisciplineManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisciplineManager.release.xcconfig"; path = "Target Support Files/Pods-DisciplineManager/Pods-DisciplineManager.release.xcconfig"; sourceTree = "<group>"; };
 		9B4C05F3C9A96D99F167C603 /* Pods_DisciplineManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DisciplineManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA18D1C12B56A0A700732760 /* DetailMemoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoController.swift; sourceTree = "<group>"; };
+		EA18D1C52B57CBFF00732760 /* DetailMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoView.swift; sourceTree = "<group>"; };
 		EA208E682B2054DE00CA3A67 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		EA208E6A2B22B32A00CA3A67 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		EA208F2C2B2B3AD200CA3A67 /* StringEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEffect.swift; sourceTree = "<group>"; };
@@ -123,6 +127,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		EA18D1C72B57D5E400732760 /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */,
+				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		EA18D1C82B57D5EF00732760 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				EACF07332AFA25AC0000CD2E /* TodoController.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
 		EA208F292B2B364300CA3A67 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,14 +152,13 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
-		EA208F2E2B2C951C00CA3A67 /* Present View */ = {
+		EA208F2E2B2C951C00CA3A67 /* DetailMemoView */ = {
 			isa = PBXGroup;
 			children = (
-				EADB7B162B0C745E005015B8 /* CalendarSheetController.swift */,
-				EA63979A2B441B3800DF4702 /* TimePickerView.swift */,
-				EA208F332B2DCB1C00CA3A67 /* PlannerView */,
+				EA18D1C12B56A0A700732760 /* DetailMemoController.swift */,
+				EA18D1C52B57CBFF00732760 /* DetailMemoView.swift */,
 			);
-			path = "Present View";
+			path = DetailMemoView;
 			sourceTree = "<group>";
 		};
 		EA208F332B2DCB1C00CA3A67 /* PlannerView */ = {
@@ -158,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				EA208F342B2DCB5100CA3A67 /* TimeView.swift */,
+				EA63979A2B441B3800DF4702 /* TimePickerView.swift */,
 				EA6397982B4416E100DF4702 /* SelectTimePickerView.swift */,
 			);
 			path = TimeView;
@@ -266,9 +287,10 @@
 			isa = PBXGroup;
 			children = (
 				EA208F292B2B364300CA3A67 /* TabBar */,
-				EADB7B1D2B0DB47B005015B8 /* TodoHeaderView.swift */,
-				EACF07332AFA25AC0000CD2E /* TodoController.swift */,
-				EA208F2E2B2C951C00CA3A67 /* Present View */,
+				EA18D1C72B57D5E400732760 /* HeaderView */,
+				EA18D1C82B57D5EF00732760 /* MainView */,
+				EA208F2E2B2C951C00CA3A67 /* DetailMemoView */,
+				EA208F332B2DCB1C00CA3A67 /* PlannerView */,
 				EACF07452AFA3E030000CD2E /* MotivationController.swift */,
 				EACF07472AFA3E310000CD2E /* AchievementController.swift */,
 				EACF07492AFA3E500000CD2E /* DeviceBlockController.swift */,
@@ -424,6 +446,7 @@
 				EA208F372B2DCB8500CA3A67 /* PriorityView.swift in Sources */,
 				EA208F2D2B2B3AD200CA3A67 /* StringEffect.swift in Sources */,
 				EADB7B202B0E0C9E005015B8 /* TodoModel.swift in Sources */,
+				EA18D1C62B57CBFF00732760 /* DetailMemoView.swift in Sources */,
 				EA6397642B3C400400DF4702 /* PlannerViewModel.swift in Sources */,
 				EA208F392B2DCBA300CA3A67 /* AlertView.swift in Sources */,
 				EACF07342AFA25AC0000CD2E /* TodoController.swift in Sources */,
@@ -447,6 +470,7 @@
 				EACF07462AFA3E030000CD2E /* MotivationController.swift in Sources */,
 				EACF07322AFA25AC0000CD2E /* SceneDelegate.swift in Sources */,
 				EA208E6B2B22B32A00CA3A67 /* Fonts.swift in Sources */,
+				EA18D1C22B56A0A700732760 /* DetailMemoController.swift in Sources */,
 				EAE6696A2AFB71A200E1C378 /* TodoViewModel.swift in Sources */,
 				EA6397A52B4D313900DF4702 /* PriorityViewModel.swift in Sources */,
 			);
