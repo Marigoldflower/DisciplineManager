@@ -11,12 +11,39 @@ import SnapKit
 
 final class DetailMemoView: UIView {
     // MARK: - UI Components
-    let navBar: UIView = {
-        let navBar = UIView()
-        navBar.backgroundColor = .disciplinePurple
+    let navBar: DetailMemoNavBar = {
+        let navBar = DetailMemoNavBar()
         return navBar
     }()
     
+    lazy var taskTextField: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 15
+        textField.layer.borderColor = UIColor.disciplinePurple.cgColor
+        textField.layer.borderWidth = 1.0
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height)) // 원하는 패딩 크기로 변경
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font: UIFont.LINESeedRegular(size: 15) as Any
+        ]
+        textField.attributedPlaceholder = NSAttributedString(string: "해야 할 일을 적어주세요 😚", attributes: attributes)
+        return textField
+    }()
+    
+    lazy var detailTaskTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 15
+        textView.layer.borderColor = UIColor.disciplinePurple.cgColor
+        textView.layer.borderWidth = 1.0
+        textView.backgroundColor = .disciplineBackground
+        textView.text = "더 기록해야 할 추가적인 정보는 여기에 적어주세요 😚"
+        textView.textColor = UIColor.lightGray
+        textView.font = .LINESeedRegular(size: 14)
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
+        return textView
+    }()
     
     
     let plan: UILabel = {

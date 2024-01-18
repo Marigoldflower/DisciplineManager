@@ -20,7 +20,12 @@ protocol SendPlanDelegate: AnyObject {
 }
 
 final class PlannerController: UIViewController, View {
+    
+    // MARK: - Device Height
+    let deviceHeight = UIScreen.main.bounds.height
+    
     // MARK: - Tap Gestures
+    lazy var keyboardTapGestures = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     lazy var startTapGestures = UITapGestureRecognizer(target: self, action: #selector(startTimeViewIsTapped))
     lazy var endTapGestures = UITapGestureRecognizer(target: self, action: #selector(endTimeViewIsTapped))
     
@@ -97,7 +102,7 @@ final class PlannerController: UIViewController, View {
         removeStartTimePickerWhenUserTap(somewhere: touch)
         removeEndTimePickerWhenUserTap(somewhere: touch)
     }
-    
+ 
     private func removeStartTimePickerWhenUserTap(somewhere: UITouch) {
         if startTimePicker != nil {
             if somewhere != startTimePicker {
@@ -117,11 +122,24 @@ final class PlannerController: UIViewController, View {
     }
     
     private func setTapGestures() {
+        setKeyboardDismissGestures()
+        setTimeViewTapGestures()
+    }
+    
+    private func setKeyboardDismissGestures() {
+        self.view.addGestureRecognizer(keyboardTapGestures)
+    }
+    
+    private func setTimeViewTapGestures() {
         timeView.startDateButton.addGestureRecognizer(startTapGestures)
         timeView.endDateButton.addGestureRecognizer(endTapGestures)
     }
     
     // MARK: - objc
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
+    
     @objc func startTimeViewIsTapped() {
         removeEndTimePickerIfEndTimePickerIsExisted()
         setStartTimePicker()
@@ -403,7 +421,7 @@ extension PlannerController: ViewDrawable {
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(240)
+            make.height.equalTo(deviceHeight / 5)
         }
         
         timeView.snp.makeConstraints { make in
